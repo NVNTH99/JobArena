@@ -1,0 +1,14 @@
+body {
+  margin: 0;
+  display: flex;
+}
+
+div{
+  padding: 0;
+  width: 100%;
+}
+
+p{
+  margin: 0;
+}
+
