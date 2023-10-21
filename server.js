@@ -35,9 +35,9 @@ app.get('/jobs',(req,res)=>{ //This retrieves the list of jobs that are availabl
     })
 })
 
-app.get('/login',(req,res)=>{
-    res.redirect('/login')
-})
+// app.get('/login',(req,res)=>{
+//     res.redirect('/login')
+// })
 
 app.post('/login/submit',(req,res)=>{ //The function is made such that it return true if the login details are correct and returns false if the login details are wrong
     const username = req.body.username

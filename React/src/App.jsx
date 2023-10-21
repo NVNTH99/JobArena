@@ -5,6 +5,7 @@ import NoPage from './Pages/NoPage';
 import Login from './Pages/Login';
 
 function App() {
+  // const history = useHistory();
   return (
   <>
     <BrowserRouter>

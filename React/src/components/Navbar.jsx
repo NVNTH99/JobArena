@@ -1,7 +1,7 @@
 import React from "react";
-import { redirect } from "react-router-dom";
-import axios from 'axios'
-import { response } from "express";
+import { Link } from "react-router-dom";
+// import { response } from "express";
+import Login from "../Pages/Login";
 
 function Navbar(){
     return(
@@ -24,20 +24,14 @@ function Logo(){
 }
 
 function NavItems(){
-    const redirect = () =>{
-        axios.get('localhost:3000/login')
-        .then(response => {
-            console.log("Redirect")
-        })
-        .catch(error => {
-            console.log("Some Error")
-        })
-    }
+    // const redirect = () =>{
+    //     history.push('/login')
+    // }
 
     return(
         <div className="NavItems">
             <nav>
-                <li><button onClick={redirect}>Login</button></li>
+                <li><Link to="/login">Login</Link></li>
             </nav>
         </div>
     )
