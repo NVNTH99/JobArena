@@ -86,7 +86,7 @@ function Login(){
                                 </input>
                             </div>
                             <button className="button">
-                                <button className="bn30">Login</button>
+                                <button className="bn30" onClick={loginfunc}>Login</button>
                             </button>
                         </form>
                         <div className="guestbtn extra-link">
