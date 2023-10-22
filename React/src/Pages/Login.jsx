@@ -85,9 +85,9 @@ function Login(){
 
                                 </input>
                             </div>
-                            <button className="button">
+                            <div className="button">
                                 <button className="bn30" onClick={loginfunc}>Login</button>
-                            </button>
+                            </div>
                         </form>
                         <div className="guestbtn extra-link">
                             <a className="guest_text" href="/">Continue as guest</a>

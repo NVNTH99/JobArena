@@ -12,6 +12,7 @@ const conn = mysql.createConnection({
 });
 
 let user_id = null;
+let job_id = null;
 
 conn.connect((err) => {
     if (err) throw err;
@@ -40,7 +41,7 @@ app.get('/jobs',(req,res)=>{ //This retrieves the list of jobs that are availabl
 app.post('/login',(req,res)=>{ //The function is made such that it return true if the login details are correct and returns false if the login details are wrong
     const username = req.body.username
     const password = req.body.password
-    console.log(username,password)
+    // console.log(username,password)
     conn.query('SELECT* from login_details where username=? and password=?',[username,password],(error,result)=>{
         if(error){
             res.status(500).send('Internal Server Error')
@@ -56,6 +57,8 @@ app.post('/login',(req,res)=>{ //The function is made such that it return true i
         }
     })
 })
+
+
 
 app.listen(3000, ()=>{
     console.log("Listening on port http://localhost:3000/");
