@@ -86,7 +86,7 @@ function Login(){
                                 </input>
                             </div>
                             <button className="button">
-                                <a href="/"><button className="bn30">Login</button></a>
+                                <button className="bn30">Login</button>
                             </button>
                         </form>
                         <div className="guestbtn extra-link">
