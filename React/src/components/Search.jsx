@@ -2,10 +2,13 @@ import React from "react";
 
 function Search(){
     return(
-        <div className="search-container">
-            <SearchBar/>
+        <section className="search-container">
+                <div>
+                    <SearchBar/>
+                    <Filter/>
+                </div>
             <hr></hr>
-        </div>
+        </section>
     )
 }
 function SearchBar(){
@@ -14,6 +17,14 @@ function SearchBar(){
             <input type="text" placeholder="Search"></input>
             <img src = "/Search_alt.png"></img>
         </div>
+    )
+}
+
+function Filter(){
+    return(
+        <button className="filter-button">
+            <img src = "/Filter.jpg"></img>
+        </button>
     )
 }
 

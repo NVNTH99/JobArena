@@ -25,13 +25,14 @@ CREATE TABLE Organizations(
 );
 
 CREATE TABLE Recruiter_details(
-    rec_id integer AUTO_INCREMENT,
+    rec_id integer,
     prof_pic BLOB,
     First_name varchar(30),
     Last_name varchar(30),
     org_id integer,
     PRIMARY KEY (rec_id),
-    FOREIGN KEY (org_id) REFERENCES Organizations(org_id)
+    FOREIGN KEY (org_id) REFERENCES Organizations(org_id),
+    FOREIGN KEY (rec_id) REFERENCES Login_details(id)
 );
 
 CREATE TABLE Jobs(
@@ -53,7 +54,7 @@ CREATE TABLE Jobs(
 );
 
 CREATE TABLE Candidate_details(
-    cand_id integer AUTO_INCREMENT,
+    cand_id integer,
     prof_pic BLOB,
     First_name varchar(30),
     Last_name varchar(30),
@@ -68,7 +69,8 @@ CREATE TABLE Candidate_details(
     Resume BLOB,
     Skills text,
     preference_category text,
-    PRIMARY KEY (cand_id)
+    PRIMARY KEY (cand_id),
+    FOREIGN KEY (cand_id) REFERENCES Login_details(id)
 );
 
 CREATE TABLE Work_Exp(
@@ -127,3 +129,10 @@ CREATE TABLE Notifications(
     message text,
     FOREIGN KEY (cand_id) REFERENCES Candidate_details(cand_id)
 );
+
+INSERT INTO login_details (username,password,type) VALUES 
+('Amal', 'Amal@1234', 'candidate'),
+('Aditya', 'Adit@1234', 'recruiter'),
+('Gigil', 'Gigi@1234', 'candidate'),
+('Thalzih', 'Thal@1234', 'recruiter'),
+('Navaneeth', 'Nava@1234', 'candidate');
