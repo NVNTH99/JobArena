@@ -1,4 +1,7 @@
-import React,{ useState } from "react";
+import React from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUser} from '@fortawesome/free-solid-svg-icons'
+import { faLock } from "@fortawesome/free-solid-svg-icons";
 import './Login.css'
 // import { response } from "express";
 import axios from 'axios'
@@ -46,24 +49,11 @@ function Login(){
                     <div className="screen__content">
                         <form className="login">
                             <div className="login__field">
-                                <i className="login__icon fa fa-solid fa-user"></i>
-                                <input 
-                                name="username"
-                                nametype="text" 
-                                className="login__input" 
-                                placeholder="Username"
-                                value={credentials.username}
-                                onChange={(e)=>{
-                                    const {name,value} = e.target
-                                    setcred((prevCredentials)=>({
-                                        ...prevCredentials,
-                                        [name]:value
-                                    }))
-                                }}
-                                >
-                                </input>
+                                <FontAwesomeIcon className="login__icon" icon={faUser}/>
+                                <input type="text" className="login__input" placeholder="Username"></input>
                             </div>
                             <div className="login__field">
+                                <FontAwesomeIcon className="login__icon" icon={faLock}/>
                                 <i className="login__icon fa fa-lock"></i>
                                 <input 
                                 name="password" 
@@ -82,7 +72,7 @@ function Login(){
                                 </input>
                             </div>
                             <button className="button">
-                                <button className="bn30" onClick={loginfunc}>Login</button>
+                                <a href="/"><button className="bn30">Login</button></a>
                             </button>
                         </form>
                         <div className="guestbtn extra-link">
