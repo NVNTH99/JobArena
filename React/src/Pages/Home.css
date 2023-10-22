@@ -3,6 +3,11 @@
   src: url(/Khyay-Regular.ttf);
 }
 
+body{
+  margin: 0;
+  display: flex;
+}
+
 #Navbar{
   background-color: black;
   max-width: 100%;
@@ -33,8 +38,33 @@
   color: #F82222;
 }
 
-.NavItems{
-  flex: 0 0 70%;
+.NavItems {
+  flex: 0 0 75%;
+  display: flex;
+  justify-content: flex-end;
+  color: #fff;
+  padding: 10px;
+  align-items: center;
+}
+
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-link {
+  margin-left: auto;
+}
+
+.nav-link a {
+  text-decoration: none;
+  color: #FFFFFF;
+  font-family: "Myanmar Khyay-Regular", Helvetica;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  font-size: 23px;
 }
 
 .profile-icon{
@@ -50,7 +80,7 @@
 .profile-icon > img{
   z-index: 1;
   position: relative;
-  left: 50%;
+  left: 40%;
 }
 
 .ellipse{
@@ -59,7 +89,7 @@
   background-size: cover;
   border-radius: 33.5px;
   height: 67px;
-  left: 55.5%;
+  left: 46.5%;
   top: 12px;
   width: 67px;
 }
@@ -67,11 +97,14 @@
 .search-container{
   position: relative;
   text-align: center;
+  max-height: max-content;
 }
 
-.search-box{
-  top: 20px;
-  margin: auto;
+.search-box {
+  position: absolute;
+  top: 50px; 
+  left: 50%; 
+  transform: translateX(-50%); 
   display: flex;
   align-items: center;
   background-color: #f6f6f6;
@@ -79,7 +112,7 @@
   padding: 8px;
   border: 2px solid black;
   border-radius: 6px;
-  gap: 5px;
+  gap: 12px;
 }
 
 .search-box > input[type="text"], input[type="text"]:focus{

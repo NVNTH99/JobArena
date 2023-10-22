@@ -4,7 +4,6 @@ function Search(){
     return(
         <div className="search-container">
             <SearchBar/>
-            <hr></hr>
         </div>
     )
 }

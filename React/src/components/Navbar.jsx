@@ -1,7 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-// import { response } from "express";
-import Login from "../Pages/Login";
 
 function Navbar(){
     return(
@@ -23,26 +21,26 @@ function Logo(){
     );
 }
 
-function NavItems(){
-    // const redirect = () =>{
-    //     history.push('/login')
-    // }
-
-    return(
-        <div className="NavItems">
-            <nav>
-                <li><Link to="/login">Login</Link></li>
-            </nav>
-        </div>
-    )
-}
+function NavItems() {
+    return (
+      <div className="NavItems">
+        <nav>
+          <ul>
+            <li className="nav-link">
+              <Link to="/login">Login</Link>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    );
+  }
 
 function Profile(){
     return(
-    <div className="profile-icon">
-        <div className="ellipse"></div>
-        <img src="/User_circle.png"></img>
-    </div>
+        <div className="profile-icon">
+            <div className="ellipse"></div>
+            <img src="/User_circle.png"></img>
+        </div>
     )
 }
 
