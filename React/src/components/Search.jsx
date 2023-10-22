@@ -23,9 +23,7 @@ function SearchBar(){
 function Filter(){
     return(
         <button className="filter-button">
-            {/* <span></span> */}
             <img src = "/Filter.jpg"></img>
-            {/* <span></span> */}
         </button>
     )
 }
