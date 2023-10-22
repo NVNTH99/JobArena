@@ -50,7 +50,21 @@ function Login(){
                         <form className="login">
                             <div className="login__field">
                                 <FontAwesomeIcon className="login__icon" icon={faUser}/>
-                                <input type="text" className="login__input" placeholder="Username"></input>
+                                <input 
+                                name="username"
+                                nametype="text" 
+                                className="login__input" 
+                                placeholder="Username"
+                                value={credentials.username}
+                                onChange={(e)=>{
+                                    const {name,value} = e.target
+                                    setcred((prevCredentials)=>({
+                                        ...prevCredentials,
+                                        [name]:value
+                                    }))
+                                }}
+                                >
+                                </input>
                             </div>
                             <div className="login__field">
                                 <FontAwesomeIcon className="login__icon" icon={faLock}/>
