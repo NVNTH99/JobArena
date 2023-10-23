@@ -229,6 +229,12 @@ nav ul {
   margin-bottom: 0.75%;
 }
 
+.selected-job-bottom{
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+}
+
 .apply-container{
   position: relative;
   padding: 1%;
