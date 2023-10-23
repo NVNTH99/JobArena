@@ -21,11 +21,12 @@ const Tab = styled.button`
 const ButtonGroup = styled.div`
   display: flex;
 `;
-const types = ["pending","invited","rejected"];
+const types = ["Pending","Shortlisted","Offered","Rejected"];
 const colors = {
-    "pending":"rgb(152,152,152)",
-    "rejected":"rgb(228,107,107)",
-    "invited":"rgb(141,223,121)",
+    "Pending":"rgb(152,152,152)",
+    "Rejected":"rgb(228,107,107)",
+    "Shortlisted":"rgb(205, 234, 100)",
+    "Offered":"rgb(141,223,121)",
 }
 
 function customStyle(type){
@@ -54,7 +55,7 @@ function TabGroup(props) {
       <p />
       <div className="scroll">
         <ul>
-            {currentCandidateList.map((candidate, index) => (
+            {currentCandidateList.map((candidate) => (
 
                 <CandidateListCard candidate={candidate}/>
 
