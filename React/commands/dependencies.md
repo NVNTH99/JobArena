@@ -12,7 +12,8 @@ npm i --save @fortawesome/free-solid-svg-icons
 npm i --save @fortawesome/free-regular-svg-icons
 npm i --save @fortawesome/free-brands-svg-icons
 npm i --save @fortawesome/react-fontawesome@latest
-npm install styled-components
+npm i styled-components
+npm i particlesjs --save
 
 # For Server Dependencies
 
