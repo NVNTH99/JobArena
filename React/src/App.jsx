@@ -5,7 +5,6 @@ import NoPage from './Pages/NoPage';
 import Login from './Pages/Login';
 import JobApplication from './Pages/JobApplication';
 import CandidateProfle from "./Pages/CandidateProfile";
-import SelectedJobInfo from './components/SelectedJobInfo';
 
 function App() {
   // const history = useHistory();

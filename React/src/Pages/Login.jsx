@@ -120,7 +120,7 @@ function Login(){
                             </div>
                         </form>
                         <div className="guestbtn extra-link">
-                            <a className="guest_text" href="/">Continue as guest</a>
+                            <a className="guest_text" href="/home">Continue as guest</a>
                             <div className="guest_text">Don't have an account? <a className="up" href="/">Sign up</a> </div>
                         </div>
                     </div>
