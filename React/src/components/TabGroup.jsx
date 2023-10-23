@@ -55,10 +55,8 @@ function TabGroup(props) {
       <p />
       <div className="scroll">
         <ul>
-            {currentCandidateList.map((candidate) => (
-
-                <CandidateListCard candidate={candidate}/>
-
+            {currentCandidateList.map((candidate, index) => (
+                <CandidateListCard  key = {index} candidate={candidate}/>
             ))}
         </ul>
       </div>

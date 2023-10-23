@@ -20,7 +20,7 @@ function UpcomingCard(props){
         <div>
             <div className="upcoming">
                 <h2>Upcoming Events</h2>
-                {events.map((event,index)=> (<Event event={event}/>))}
+                {events.map((event,index)=> (<Event key = {index} event={event}/>))}
             </div>
         </div>
     );
@@ -59,4 +59,8 @@ export default UpcomingCard
 
 // .eventCard .line1{
 //     color: rgb(80,89,103);
+// }
+
+// .upcoming h2{
+//     margin:0;
 // }
