@@ -16,7 +16,7 @@
     /* background: red; */
 }
 
-p{
+.job-app p{
     width:80%;
 }
 
@@ -50,11 +50,11 @@ p{
     margin:2rem 4rem 0rem 4rem;
 }
 
-h3,h2{
+.job-app h3,h2{
     margin:0;
 }
 
-hr{
+.job-app hr{
     margin : 1rem;
 }
 
