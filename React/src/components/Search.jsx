@@ -3,10 +3,10 @@ import React from "react";
 function Search(){
     return(
         <section className="search-container">
-                <div>
-                    <SearchBar/>
-                    <Filter/>
-                </div>
+            <div>
+                <SearchBar/>
+                {/* <Filter/> */}
+            </div>
             <hr></hr>
         </section>
     )

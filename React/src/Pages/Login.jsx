@@ -2,6 +2,8 @@ import React,{ useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser} from '@fortawesome/free-solid-svg-icons'
 import { faLock } from "@fortawesome/free-solid-svg-icons";
+import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
+
 import './Login.css'
 // import { response } from "express";
 import axios from 'axios'
@@ -21,29 +23,56 @@ function Login(){
         axios.post('http://localhost:3000/login',credentials)
         .then(response => {
             if(typeof response.data === 'string'){
-                setretrieval(response.data)
+                setretrieval(response.data);
                 if(retrieved === 'candidate'){
                     // history.push()
                 }
-                else{
+                // else{
 
-                }
+                // }
             }
             else{
                 setcred({
                     username:'',
                     password:''
-                })
-                seterror('Invalid login credentials')
+                });
+                seterror('Invalid login credentials');
             }
         })
         .catch(error => {
-            console.log("Error while logging in")
+            console.log("Error while logging in");
+            seterror('An error occurred while logging in');
         })
     }
 
     return(
         <>
+        <section className="bg">
+        <div className="mainflex">
+            <div className="nav">
+                <h1 className="jh1">JOB <span className="redA">A</span>RENA</h1>
+                <h3 className="spaner loader jh3">
+                    <span className="m">U</span>
+                    <span className="m">N</span>
+                    <span className="m">L</span>
+                    <span className="m">O</span>
+                    <span className="m">C</span>
+                    <span className="m">K</span>
+                    <span className="m">&nbsp;</span>
+                    <span className="m">y</span>
+                    <span className="m">o</span>
+                    <span className="m">u</span>
+                    <span className="m">r</span>
+                    <span className="m">&nbsp;</span>
+                    <span className="m">C</span>
+                    <span className="m">A</span>
+                    <span className="m">R</span>
+                    <span className="m">E</span>
+                    <span className="m">E</span>
+                    <span className="m">R</span>
+                </h3>
+            </div>
+
             <div className="container">
                 <div className="screen">
                     <div className="screen__content">
@@ -68,7 +97,7 @@ function Login(){
                             </div>
                             <div className="login__field">
                                 <FontAwesomeIcon className="login__icon" icon={faLock}/>
-                                <i className="login__icon fa fa-lock"></i>
+                           
                                 <input 
                                 name="password" 
                                 type="password" 
@@ -85,6 +114,7 @@ function Login(){
 
                                 </input>
                             </div>
+                            {error && <p className="lerror"><FontAwesomeIcon icon={faTriangleExclamation}/> &nbsp;{error}</p>}
                             <div className="button">
                                 <button className="bn30" onClick={loginfunc}>Login</button>
                             </div>
@@ -101,7 +131,10 @@ function Login(){
                         <span className="screen__background__shape screen__background__shape1"></span>
                     </div>
                 </div>
-            </div>
+                </div>
+        </div>
+        <canvas class="background"></canvas>
+        </section>
         </>
     )
 }
