@@ -44,7 +44,7 @@ for(var i=0;i<candidate_list.length;i++){
 
 function JobApplication(){
     return(
-        <>
+        <div className="job-app">
             <Navbar/>
             <div className="box">
                 <div className="left">
@@ -64,7 +64,7 @@ function JobApplication(){
                     <UpcomingCard event={events}/>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 
