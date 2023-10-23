@@ -133,7 +133,7 @@ function Login(){
                 </div>
                 </div>
         </div>
-        <canvas class="background"></canvas>
+        <canvas className="background"></canvas>
         </section>
         </>
     )
