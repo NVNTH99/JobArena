@@ -58,8 +58,16 @@ app.post('/login',(req,res)=>{ //The function is made such that it return true i
     })
 })
 
-app.get('.recruiter/jobs',(req,res)=>{
-    const query = `Select Title, Organizations.organization_name,Location,Category,Description from `
+app.get('/recruiter/jobs',(req,res)=>{ //Recruiter homepage
+    const query = `Select Jobs.job_id,Title,Organizations.organization_name,Location,Category,Description,COUNT(App_id) as count from Jobs inner join Applications on Jobs.job_id=Applications.job_id inner join Recruiter_details on Recruiter_details.rec_id = Jobs.rec_id inner join Organizations on Organizations.org_id = Recruiter_details.org_id where Jobs.rec_id=${user_id} group by Jobs.job_id;`
+    conn.query(query,(error,result)=>{
+        if(error){
+            res.status(500).send('Internal Server Error')
+        }
+        else{
+            res.send(result)
+        }
+    })
 })
 
 
@@ -103,9 +111,8 @@ app.get('recruiter/upcoming',(req,res)=>{
 
 const runQuery = () => {
     const query = 'DELETE from Interviews where DATE_TIME<NOW();';
-    connection.query(query, (error, results, fields) => {
+    conn.query(query, (error, results, fields) => {
         if (error) throw error;
-        console.log('Results: ', results);
     });
 };
   
