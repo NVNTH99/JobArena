@@ -27,22 +27,16 @@ app.get('/',(req,res)=>{ //When the user visits localhost:3000 it redirects him 
 })
 
 app.get('/jobs',(req,res)=>{
-    const searchQuery = req.query.searchQuery; // Retrieving search query from query parameters
-     
-    // Performing a SQL query to retrieve jobs based on the search query
-    const query = `SELECT * FROM jobs WHERE Title LIKE '%${searchQuery}%'`; 
-
-    //print query
-   
-  
+    const searchQuery = req.query.searchQuery;
+    const query = `SELECT * FROM jobs inner join Recruiter_details on Recruiter_details.rec_id=jobs.rec_id inner join Organizations on Organizations.org_id=Recruiter_details.org_id WHERE Title LIKE '%${searchQuery}%' or category LIKE '%${searchQuery}%' or Organizations.organization_name LIKE '%${searchQuery}%';` 
     conn.query(query, (error, result) => {
       if (error) {
         console.error('Error fetching jobs:', error);
         res.status(500).send('Internal Server Error');
       } else {
         //print result
-        console.log(result);
-        res.send(result); // Sending the list of jobs as a response
+        // console.log(result);
+        res.send(result); 
       }
     });
   });
