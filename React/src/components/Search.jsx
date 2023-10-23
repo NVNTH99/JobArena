@@ -37,7 +37,7 @@ function Search(){
         <section className="search-container">
                 <div>
                     <SearchBar  onSearch ={setSearchQuery}  />
-                    <Filter/>
+                    {/* <Filter/> */}
                 </div>
             <hr></hr>
         </section>
