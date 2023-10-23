@@ -225,15 +225,6 @@
 	border-radius: 60px;
 }
 
-input {
-  padding: 12px;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  color: #4C489D;
-  background-color: #e0e0e0;
-}
-
 .login {
 	width: 350px;
 	padding: 30px;
@@ -260,6 +251,10 @@ input {
 	font-weight: 700;
 	width: 100%;
 	transition: .2s;
+  border-radius: 5px;
+  font-size: 16px;
+  color: #4C489D;
+  background-color: #e0e0e0;
 }
 
 .login__input:active,
