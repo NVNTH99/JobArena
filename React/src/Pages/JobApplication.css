@@ -1,32 +1,29 @@
+.acceptButton{
+    background: rgb(141,223,121);
+    border: 0;
+    border-radius: 0.25rem;
+    padding: 0.25rem;
+    margin-right: 0.3rem;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+    font-family: "Myanmar Khyay-Regular", Helvetica;
+}
+
 .box{
     width:100%;
 }
 
-.scroll{
-    max-height: 25rem;
-    overflow-x: hidden;
-    overflow-y: scroll;
+.buttonSpan{
+    margin-left: 22em;
 }
 
-.left{
-    margin-left: 1rem;
-    width: 70%;
-    float: left;
-    
-    /* background: red; */
-}
-
-.job-app p{
-    width:80%;
-}
-
-.right{
-    /* background: blue; */
-    width: 25%;
-    float:right;
-    border-left:solid 1pt;
-    margin-top: 2rem;
-    height: 40rem;
+.card{
+    margin : 10pt;
+    padding : 10pt 10pt;
+    background-color : rgb(242, 242, 242);
+    border-radius : 10pt;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width : 80%;
 }
 
 .circle{
@@ -37,33 +34,108 @@
     height: 1.5rem;
 }
 
-.job_application{
-    font-family: "Myanmar Khyay-Regular", Helvetica;
-    font-style: normal;
-    /* font-size: medium; */
+.eventCard{
+    margin-top:10pt;
+    background: rgb(217,217,217);
+    border-radius: 5pt;
+    padding: 10pt;
+    width:16.25rem;
+}
+
+.eventCard h4{
+    margin:0;
+    color: rgb(80,89,103);
+}
+
+.eventCard .line1,.line2{
+    font-size: 10pt;
+}
+
+.eventCard .line1{
+    color: rgb(80,89,103);
 }
 
 .heading2{
-    margin:0rem 4rem 0rem 4rem;
-}
-.margin{
-    margin:2rem 4rem 0rem 4rem;
+    margin-left:4rem;
 }
 
-.job-app h3,h2{
+.inviteButton{
+    background: rgb(205, 234, 100);
+    border: 0;
+    border-radius: 0.25rem;
+    padding: 0.25rem;
+    margin-right: 0.3rem;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+    font-family: "Myanmar Khyay-Regular", Helvetica;
+}
+
+
+
+.inviteCard{
+    margin-left:5rem;
+}
+
+.job_application{
+    font-family: "Myanmar Khyay-Regular", Helvetica;
+    font-style: normal;
+}
+
+.box .left{
+    margin-left: 1rem;
+    width: 70%;
+    float: left;
+}
+
+.margin{
+    margin:2rem 0rem 0rem 4rem;
+}
+
+.rejectButton{
+    background: rgb(228,107,107);
+    border: 0;
+    border-radius: 0.25rem;
+    padding: 0.25rem;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+    font-family: "Myanmar Khyay-Regular", Helvetica;
+}
+
+.right{
+    width: 25%;
+    float:right;
+    border-left:solid 1pt;
+    margin-top: 2rem;
+    height: 44rem;
+}
+
+.scroll{
+    max-height: 25rem;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.desc{
+    width:80%;
+}
+
+.margin h2{
     margin:0;
 }
 
-.job-app hr{
+.left hr{
     margin : 1rem;
 }
 
-.card{
-    margin : 10pt;
-    padding : 10pt 10pt;
-    background-color : rgb(222, 222, 222);
-    border-radius : 10pt;
+.upcoming{
+    margin : 5%;
+    padding: 5%;
+    background:rgb(242, 242, 242);
+    border-radius: 1rem;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    transition: 0.3s;
-    width : 80%;
+    height: 30rem;
+    width: 18rem;
+    font-family: "Myanmar Khyay-Regular", Helvetica;
+}
+
+.upcoming h2{
+    margin:0;
 }

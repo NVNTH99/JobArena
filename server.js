@@ -10,6 +10,7 @@ const conn = mysql.createConnection({
     password: '',
     database: 'jobarena'
 });
+ 
 
 let user_id = null;
 
@@ -25,17 +26,26 @@ app.get('/',(req,res)=>{ //When the user visits localhost:3000 it redirects him 
     res.sendFile(path.join(__dirname,'React' , 'dist' ,'index.html'));
 })
 
-app.get('/jobs',(req,res)=>{ //This retrieves the list of jobs that are available, will modify later to handle search
-    const searchQuery = req.body.data.searchQuery
-    conn.query('SELECT* from jobs',(error,result)=>{
-        if(error){
-            res.status(500).send('Internal Server Error')
-        }
-        else{
-            res.send(result)
-        }
-    })
-})
+app.get('/jobs',(req,res)=>{
+    const searchQuery = req.query.searchQuery; // Retrieving search query from query parameters
+     
+    // Performing a SQL query to retrieve jobs based on the search query
+    const query = `SELECT * FROM jobs WHERE Title LIKE '%${searchQuery}%'`; 
+
+    //print query
+   
+  
+    conn.query(query, (error, result) => {
+      if (error) {
+        console.error('Error fetching jobs:', error);
+        res.status(500).send('Internal Server Error');
+      } else {
+        //print result
+        console.log(result);
+        res.send(result); // Sending the list of jobs as a response
+      }
+    });
+  });
 
 app.post('/login',(req,res)=>{ //The function is made such that it return true if the login details are correct and returns false if the login details are wrong
     const username = req.body.username
