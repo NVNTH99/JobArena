@@ -5,7 +5,9 @@ import NoPage from './Pages/NoPage';
 import Login from './Pages/Login';
 import JobApplication from './Pages/JobApplication';
 import CandidateProfle from "./Pages/CandidateProfile";
-import SelectedJobInfo from './components/SelectedJobInfo';
+import CandidateHome from './Pages/CandidateHome';
+import RecruiterHome from './Pages/RecruiterHome';
+import Cand_profile from './Pages/cand_profile';
 
 function App() {
   // const history = useHistory();
@@ -13,12 +15,15 @@ function App() {
   <>
     <BrowserRouter>
       <Routes>
-        <Route index element={<Home/>} />
+        <Route index element={<Login/>} />
         <Route path="/home" element={<Home/>}/>
         <Route path="*" element={<NoPage/>}/>
         <Route path="/login" element={<Login/>}/>
+        <Route path="/recruiter/home" element={<RecruiterHome/>}/>
+        <Route path="/candidate" element={<CandidateHome/>}/>
         <Route path="/recruiter/job_application" element={<JobApplication/>}/>
         <Route path="/recruiter/candidate_profile" element={<CandidateProfle/>}/>
+        <Route path="/candidate/profile" element={<Cand_profile/>}/>
       </Routes>
     </BrowserRouter>
   </>
