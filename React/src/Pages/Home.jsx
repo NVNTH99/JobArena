@@ -31,6 +31,10 @@ import './Home.css';
 function Home(){
     const [jobs,setJobs] = useState([])
 
+    // useEffect(()=>{
+    //   setJobs(temp)
+    // },[])
+
     return (
       <>
         <Navbar userType = "none"/>
