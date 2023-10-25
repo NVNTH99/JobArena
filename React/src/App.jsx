@@ -17,9 +17,11 @@ function App() {
         <Route path="/home" element={<Home/>}/>
         <Route path="*" element={<NoPage/>}/>
         <Route path="/login" element={<Login/>}/>
+        <Route path="/recruiter/home" element={<RecruiterHome/>}/>
         <Route path="/candidate" element={<CandidateHome/>}/>
         <Route path="/recruiter/job_application" element={<JobApplication/>}/>
         <Route path="/recruiter/candidate_profile" element={<CandidateProfle/>}/>
+        <Route path="/candidate/profile" element={<cand_profile/>}/>
       </Routes>
     </BrowserRouter>
   </>
