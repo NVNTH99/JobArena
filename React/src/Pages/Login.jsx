@@ -7,7 +7,7 @@ import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 import './Login.css'
 // import { response } from "express";
 import axios from 'axios'
-// import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 function Login(){
     const [credentials, setcred] = useState({
@@ -24,12 +24,19 @@ function Login(){
         .then(response => {
             if(typeof response.data === 'object'){
                 setretrieval(response.data);
-                if(retrieved === 'candidate'){
-                    // history.push()
+                if(retrieved.type === 'candidate'){
+                    history.push({
+                        pathname: "/candidate/home",
+                        state : { user_id: retrieved.user_id }
+                    });
                 }
-                // else{
-
-                // }
+                else{
+                    history.push("/recruiter/home")
+                    history.push({
+                        pathname: "/recruiter/home",
+                        state : { user_id: retrieved.user_id }
+                    })
+                }
             }
             else{
                 setcred({
