@@ -1,0 +1,52 @@
+
+.alllll *{
+    font-family: "Myanmar Khyay-Regular", Helvetica;
+}
+
+#yourjobs{
+    font-size: 3rem;
+    margin: 1rem 4rem;
+}
+
+#hrr{
+    margin: 0 auto;
+    width:90%;
+    height: 3px;
+    background-color: #d2d2d2;
+    border: 1px solid #d2d2d2;
+}
+
+.lhs{
+    width:67vw;
+    float: left;
+    margin: 10px 50px;
+}
+
+.form-label{
+    font-weight: 600;
+}
+
+.savebtn{
+    background-color: #E8ac66;
+    width: 10rem;
+    height: 2.5rem;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 0;   
+    text-decoration: none;
+}
+
+.savebtn p{
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin: 0;
+    color: black;
+}
+
+#formsavebtn{
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+}

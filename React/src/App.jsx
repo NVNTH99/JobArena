@@ -7,6 +7,7 @@ import JobApplication from './Pages/JobApplication';
 import CandidateProfle from "./Pages/CandidateProfile";
 import CandidateHome from './Pages/CandidateHome';
 import RecruiterHome from './Pages/RecruiterHome';
+import Cand_profile from './Pages/cand_profile';
 
 function App() {
   // const history = useHistory();
@@ -22,7 +23,7 @@ function App() {
         <Route path="/candidate" element={<CandidateHome/>}/>
         <Route path="/recruiter/job_application" element={<JobApplication/>}/>
         <Route path="/recruiter/candidate_profile" element={<CandidateProfle/>}/>
-        <Route path="/candidate/profile" element={<cand_profile/>}/>
+        <Route path="/candidate/profile" element={<Cand_profile/>}/>
       </Routes>
     </BrowserRouter>
   </>
