@@ -15,14 +15,14 @@ function Login(){
         password: ''
     })
     // const history = useHistory();
-    const [retrieved , setretrieval] = useState('')
+    const [retrieved , setretrieval] = useState({})
     const [error, seterror] = useState('')
 
     const loginfunc = (e) => {
         e.preventDefault();
         axios.post('http://localhost:3000/login',credentials)
         .then(response => {
-            if(typeof response.data === 'string'){
+            if(typeof response.data === 'object'){
                 setretrieval(response.data);
                 if(retrieved === 'candidate'){
                     // history.push()

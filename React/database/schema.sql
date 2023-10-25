@@ -11,15 +11,15 @@ DROP TABLE IF EXISTS Organizations;
 DROP TABLE IF EXISTS Login_details;
 
 CREATE TABLE Login_details(
-    id integer AUTO_INCREMENT,
+    id integer,
     username varchar(255) UNIQUE,
     password varchar(255),
     type varchar(20),
-    PRIMARY KEY (id)
+    PRIMARY Key(id)
 );
 
 CREATE TABLE Organizations(
-    org_id integer AUTO_INCREMENT,
+    org_id integer,
     Organization_name varchar(50),
     PRIMARY KEY(org_id)
 );
@@ -36,7 +36,7 @@ CREATE TABLE Recruiter_details(
 );
 
 CREATE TABLE Jobs(
-    job_id integer AUTO_INCREMENT,
+    job_id integer,
     Title varchar(30),
     Description text,
     Responsibility text,
@@ -107,7 +107,7 @@ CREATE TABLE Education(
 );
 
 CREATE TABLE Applications(
-    App_id integer AUTO_INCREMENT,
+    App_id integer,
     cand_id integer,
     job_id integer,
     status varchar(20),
