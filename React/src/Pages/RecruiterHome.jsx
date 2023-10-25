@@ -8,3 +8,5 @@ function RecruiterHome(){
     return <>
     </>
 }
+
+export default RecruiterHome

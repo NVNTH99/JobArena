@@ -6,6 +6,7 @@ import Login from './Pages/Login';
 import JobApplication from './Pages/JobApplication';
 import CandidateProfle from "./Pages/CandidateProfile";
 import CandidateHome from './Pages/CandidateHome';
+import RecruiterHome from './Pages/RecruiterHome';
 
 function App() {
   // const history = useHistory();
