@@ -1,5 +1,6 @@
 import React from "react";
 import Navbar from "../components/Navbar";
+import Heading from "../components/Heading";
 import JobInfo from "../components/JobInfo";
 import UpcomingCard from "../components/UpcomingCard";
 import "./CandidateRecommendedJobs.css";
@@ -39,11 +40,8 @@ function CandidateRecommendedJobs(){
     return(
         <>
         <Navbar userType = {"candidate"}/>
+        <Heading title = "Recommended jobs for you" />
         <div className="recommended-jobs-body">
-            <div className="recommended-jobs-top">
-                <h1>Recommended jobs for you</h1>
-                <hr></hr>
-            </div>
             <div className="candidate-bottom">
                 <JobInfo jobs = {jobs}/>
                 <div className="candidate-upcoming">
