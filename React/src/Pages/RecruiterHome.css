@@ -1,0 +1,135 @@
+.recruiter-home-body *{
+    font-family: "Myanmar Khyay-Regular", Helvetica;
+    font-style: normal;
+    line-height: normal;
+}
+
+.recruiter-home-body{
+    display: flex;
+    flex-direction: column;
+}
+
+.recruiter-home-body > div{
+    display: flex;
+    padding: 2% 1% 1% 2%;
+    box-sizing: border-box;
+}
+
+.recruiter-home-body >  hr{
+    border-style: none;
+    border-top: 3px solid #E4E4E4;
+    width: 95%;
+    height: 1px;
+}
+
+.recruiter-home-body h1{ 
+    margin: 0;
+    margin-left: 4%;
+    font-weight: bold;
+}
+
+.recruiter-home-body > div:first-child > div:nth-child(2){
+    display: flex;
+    justify-content: right;
+}
+
+.add-job-button{
+    display: flex;
+    gap: 5%;
+    padding: 0.75%;
+    margin-right: 7%;
+    font-size: 18px;
+    background-color: #8ddf78;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0px 4px 4px #00000040;
+    justify-content: center;
+    width: 30%;
+    cursor: pointer;
+}
+
+.add-job-button p{
+    font-weight: 600;
+    font-size: 22px;
+}
+
+.recruiter-home-bottom{
+    display: flex;
+    height: 70vh;
+}
+
+.recruiter-home-bottom > div:nth-child(2){
+    display: flex;
+    padding: 1%;
+    justify-content: center;
+}
+
+.recruiter-home-bottom > div:nth-child(2) > div{
+    margin: 0;
+}
+
+.recruiter-jobs-container{
+    display: flex;
+    flex-direction: column;
+    gap: 6%;
+    overflow-y: scroll;
+    flex: 0 0 65%;
+    padding: 1%;
+    justify-items: center;
+}
+
+.recruiters-job-card{
+    display: flex;
+    width: 90%;
+    background-color: #f2f2f2;
+    border-radius: 10px;
+    box-shadow: 0px 4px 4px #00000040;
+    padding: 2%;
+    gap: 10%;
+}
+
+.recruiters-job-card-content{
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 50%;
+}
+
+.recruiters-job-card-content *{
+    margin-bottom: 0.5%;
+}
+
+.recruiters-job-card-content p{
+    margin-top: 2%;
+    color: #464646;
+}
+
+.recruiters-job-card-buttons{
+    display: flex;
+    flex-direction: column;
+    gap: 9%;
+    align-items: flex-end;
+}
+
+.rec-job-card-button{
+    padding: 3%;
+    width: 60%;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0px 4px 4px #00000040;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.applicants{
+    margin-top: 4.5%;
+    font-weight: 600;
+}
+
+.grey{
+    background-color: #989898;
+}
+
+.red{
+    background-color: #E46B6B;
+}

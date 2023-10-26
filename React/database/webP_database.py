@@ -1,22 +1,18 @@
-import mysql.connector
+import sqlite3
 
-conn = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="",
-    database="jobarena"
-)
-
+conn = sqlite3.connect('jobarena.db')
 cursor = conn.cursor()
 
 with open('schema.sql', 'r') as file:
     sql = file.read()
 
-sql = sql.split(";")
+sql_commands = sql.split(";")
 
-# print(sql)
-for query in sql:
-    cursor.execute(query)
+for command in sql_commands:
+    try:
+        cursor.execute(command)
+    except sqlite3.OperationalError as e:
+        print(f"Command skipped: {e}")
 
 conn.commit()
 conn.close()

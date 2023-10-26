@@ -1,0 +1,15 @@
+.recommended-jobs-body *{
+    font-family: "Myanmar Khyay-Regular", Helvetica;
+    font-style: normal;
+    line-height: normal;
+}
+
+.recommended-jobs-body{
+    padding: 1%;
+    box-sizing: border-box;
+}
+
+.recommended-jobs-body h1{
+    margin: 0;
+    margin-bottom: 2%;
+}
