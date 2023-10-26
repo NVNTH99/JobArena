@@ -2,7 +2,7 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import Search from "../components/Search";
 import JobInfo from "../components/JobInfo";
-import UpcomingCard from "../components/UpcomingCard";
+import CandidateUpcomingCard from "../components/CandidateUpcomingCard";
 import RecommendedCard from "../components/recommendedCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -33,11 +33,13 @@ var jobs = [
 ]
 
 var upcoming = [
-    {title:"Job Title", name:"Candidate Name", id:"#CandidateID" , date:"dd/mm/yyyy", time:"hh:mm"},
-    {title:"Job Title", name:"Candidate Name", id:"#CandidateID" , date:"dd/mm/yyyy", time:"hh:mm"},
-    {title:"Job Title", name:"Candidate Name", id:"#CandidateID" , date:"dd/mm/yyyy", time:"hh:mm"},
+    {company: "Company Name", location: "Location", title:"Job Title", name:"Candidate Name", id:"#CandidateID" , date:"dd/mm/yyyy", time:"hh:mm"},
+    {company: "Company Name", location: "Location", title:"Job Title", name:"Candidate Name", id:"#CandidateID" , date:"dd/mm/yyyy", time:"hh:mm"},
+    {company: "Company Name", location: "Location", title:"Job Title", name:"Candidate Name", id:"#CandidateID" , date:"dd/mm/yyyy", time:"hh:mm"},
+    {company: "Company Name", location: "Location", title:"Job Title", name:"Candidate Name", id:"#CandidateID" , date:"dd/mm/yyyy", time:"hh:mm"},
+    {company: "Company Name", location: "Location", title:"Job Title", name:"Candidate Name", id:"#CandidateID" , date:"dd/mm/yyyy", time:"hh:mm"},
+    {company: "Company Name", location: "Location", title:"Job Title", name:"Candidate Name", id:"#CandidateID" , date:"dd/mm/yyyy", time:"hh:mm"},
 ]
-var events = {"upcoming":upcoming};
 
 function CandidateHome(){
     return(
@@ -48,7 +50,7 @@ function CandidateHome(){
             <div className="candidate-bottom">
                 <JobInfo jobs = {jobs}/>
                 <div className="candidate-upcoming">
-                    <UpcomingCard event={events}/>
+                    <CandidateUpcomingCard upcoming = {upcoming}/>
                 </div>
             </div>
         </>
@@ -75,8 +77,7 @@ function RecommendedJobs(props){
                     <div>
                         <Viewmore/>
                     </div>
-                </div>
-                
+                </div>    
             </div>
             <hr></hr>
         </div>

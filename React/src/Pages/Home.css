@@ -240,6 +240,7 @@ nav ul {
   flex-direction: column;
   overflow-y: scroll;
   padding: 2%;
+  box-sizing: border-box;
 }
 
 .apply-container{

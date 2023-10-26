@@ -1,0 +1,104 @@
+@font-face {
+    font-family: "Urbanist-SemiBold";
+    src: url(/Urbanist-SemiBold.ttf);
+}
+  
+.applied-jobs-body{
+    font-family: "Myanmar Khyay-Regular", Helvetica;
+    font-style: normal;
+    line-height: normal;
+    display: flex ;
+    padding: 0 0 0 3%;
+    box-sizing: border-box;
+    height: 74vh;
+}
+
+.applied-jobs-body h4,h5,h6{
+    margin: 0;
+}
+
+.applied-info{
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 74%;
+}
+
+.applied-tabs{
+    display: flex;
+}
+
+.applied-tab-info{
+    display: flex;
+}
+
+.applied-tab-list{
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 45%;
+}
+
+.selected-applied-job-info{
+    display: flex;
+    flex-direction: column;
+}
+
+.candidate-upcoming-section{
+    display: flex;
+    padding: 3%;
+}
+
+.candidate-upcoming-container{
+    background-color: #f2f2f2;
+    border-radius: 10px;
+    box-shadow: 0px 4px 4px #00000040;
+    padding: 8% 4% 8% 4%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    height: 25rem;
+}
+
+.candidate-upcoming-container > div{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    overflow: auto;
+    padding: 2%;
+    align-items: center;
+    box-sizing: border-box;
+    height: 75%;
+}
+
+.candidate-upcoming-container h2{
+    font-family: "Myanmar Khyay-Regular", Helvetica;
+    font-style: normal;
+    line-height: normal;
+    margin: 0;
+    margin-bottom: 5%;
+    text-align: center;
+}
+
+.candidate-event-card{
+    background-color: #d9d9d9;
+    border-radius: 10px;
+    font-family: "Urbanist-SemiBold", Helvetica;
+    font-weight: 600;
+    padding: 4%;
+    box-sizing: border-box;
+}
+
+.candidate-event-card > p:first-child{
+    font-size: 16px;
+}
+
+.candidate-event-card >p:nth-child(2){
+    font-size: 15px;
+}
+
+.candidate-event-card > p:nth-child(3){
+    font-size: 14px;
+}
+
+
+
+
