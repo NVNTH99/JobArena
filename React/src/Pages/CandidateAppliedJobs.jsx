@@ -1,7 +1,9 @@
 import React from "react";
 import Navbar from "../components/Navbar";
 import Heading from "../components/Heading";
+import CandidateTab from "../components/CandidateTab";
 import CandidateUpcomingCard from "../components/CandidateUpcomingCard";
+import { faClock } from "@fortawesome/free-solid-svg-icons";
 import "./CandidateAppliedJobs.css";
 
 var upcoming = [
@@ -13,6 +15,13 @@ var upcoming = [
     {company: "Company Name", location: "Location", title:"Job Title", name:"Candidate Name", id:"#CandidateID" , date:"dd/mm/yyyy", time:"hh:mm"},
 ]
 
+var tabs = [
+    {name: "Pending", icon: faClock},
+    {name: "Shortlisted", icon: faClock},
+    {name: "Offered", icon: faClock},
+    {name: "Rejected", icon: faClock},
+]
+
 function CandidateAppliedJobs(){
     return(
         <>
@@ -20,8 +29,21 @@ function CandidateAppliedJobs(){
             <Heading title = "Applied Jobs"/>
             <div className="applied-jobs-body">
                 <div className="applied-info">
-                    <div className="applied-tabs">
-                        hello
+                    <div>
+                        <div className="applied-tabs">
+                            <div>
+                                {tabs.map((tab, index) =>
+                                    <CandidateTab 
+                                        key = {index} 
+                                        tabName = {tab.name} 
+                                        icon = {tab.icon}
+                                        color = {tab.color}
+                                        type = {tab.name}
+                                    />
+                                )}
+                            </div>
+                            <hr></hr>
+                        </div>
                     </div>
                     <div className="applied-tab-info">
                         <div className="applied-tab-list">

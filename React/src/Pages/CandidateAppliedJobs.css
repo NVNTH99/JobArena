@@ -7,8 +7,7 @@
     font-family: "Myanmar Khyay-Regular", Helvetica;
     font-style: normal;
     line-height: normal;
-    display: flex ;
-    padding: 0 0 0 3%;
+    display: flex;
     box-sizing: border-box;
     height: 74vh;
 }
@@ -21,10 +20,58 @@
     display: flex;
     flex-direction: column;
     flex: 0 0 74%;
+    padding: 1%;
+    box-sizing: border-box;
+}
+
+.applied-info > div{
+    display: flex;
+    box-sizing: border-box;
 }
 
 .applied-tabs{
     display: flex;
+    flex-direction: column;
+    padding: 2%;
+    box-sizing: border-box;
+}
+
+.applied-tabs hr{
+    border-style: none;
+    border-top: 3px solid #777777;
+    height: 1px;
+    width: 100%;
+    margin: 0;
+}
+
+.candidate-tab-button{
+    font-family: "Myanmar Khyay-Regular", Helvetica;
+    font-style: normal;
+    line-height: normal;
+    font-size: medium;
+    text-align: left;
+    border-radius: 8px 8px 0 0;
+    border: none;
+    padding: 1% 0.5% 1% 1.75%;
+    width: 20%;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.Pending{
+    background-color: #989898;
+}
+
+.Shortlisted{
+    background-color: rgb(242, 242, 84);
+}
+
+.Offered{
+    background-color: #8DDF79;
+}
+
+.Rejected{
+    background-color: #E46B6B;
 }
 
 .applied-tab-info{
