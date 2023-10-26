@@ -1,0 +1,197 @@
+.candpro{
+    display: flex;
+    flex-direction: column;
+}
+
+.candpro h2{
+    font-family: "Myanmar Khyay-Regular", Helvetica;
+    padding: 1rem 1rem 0rem 3rem;
+
+}
+
+.candpro hr{
+    margin: 0rem 1.5rem 0rem 1.5rem ;
+}
+
+.candpro_container{
+    display: flex;
+}
+
+.candpro .left{
+    display: flex;
+    flex-direction: column;
+    height: 50rem;
+    padding: 2rem;
+    width: 70%;
+    font-family: "Myanmar Khyay-Regular", Helvetica;
+    float: left;
+}
+
+.left_column{
+    display: flex;
+    gap:2%;
+}
+
+.left .leftbox,.rightbox{
+    background: rgb(242,242,242);
+    padding-top: 1.25rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    font-family: "Myanmar Khyay-Regular", Helvetica;
+    display: flex;
+    flex-direction: column;
+    gap: 3%;
+    height: 50rem;
+}
+
+.leftbox{
+    text-align: center;
+}
+
+.leftbox .candidate_dp_div{
+    padding-top: 4%;
+    display: flex;
+    width:100%;
+    justify-content: center;
+}
+
+.leftbox .candidate_dp{
+    height: 5rem;
+    width: 5rem;
+    border-radius: 50%;
+}
+
+.cand_element_box{
+    display: flex;
+}
+
+.cand_element_box_left{
+    padding: 2% 0% 0% 7%;
+    display: flex;
+    flex-direction: column;
+    max-width: 50%;
+}
+
+.cand_line_left{
+    display: flex;
+    text-align: left;
+    margin-top: 10%;
+}
+
+.cand_image{
+    height: 65%;
+    width: 20%;
+}
+
+.cand_data_box{
+    /* padding-left: 5%;
+   
+    text-wrap: wrap; */
+    /* width: 0; */
+    max-width: 70%;
+  
+
+}
+
+.cand_label{
+    color: rgb(105,105,105);
+    font-size: 10pt;
+}
+
+.cand_data {
+    font-size: 12pt;
+    word-wrap: break-word;
+    display: block;
+    /* width: 50%;   */
+}
+
+.cand_address{
+    text-align: left;
+    padding: 5%;
+    width: 80%;
+    display: flex;  
+}
+
+.cand_address_box{
+    background: rgb(217,217,217);
+    border-radius: 15px;
+    height: 7rem;
+    padding: 5%;
+    max-width: 90%;
+}
+
+.cand_skills_box{
+    display: flex;
+    padding: 0% 5% 0% 5%;
+    width: 80%;
+}
+
+.cand_skills_box .cand_label{
+    width: 40%;
+}
+
+.cand_skills{
+    display: flex;
+    gap: 2%;
+    overflow: scroll;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 0.1px;
+    height: 7px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+background: rgb(242,242,242);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+background: #555;
+}
+
+.cand_skill{
+    background: rgb(80,89,103);
+    color: white;
+    border-radius: 12px;
+    padding: 1.5%;
+    font-size: 90%;
+}
+
+.cand_element_box_right{
+    padding-top: 2%;
+    display: flex;
+    flex-direction: column;
+    max-width: 50%;
+}
+
+.cand_line_right{
+    display: flex;
+    text-align: left;
+    margin-top: 10%;
+}
+
+.candpro .right{
+    height: 37rem;
+}
+
+.cand_pro_buttons{
+    text-align: right;
+    float: left;
+    padding-top: 1rem;
+    width: 100%;
+}
+
+
+
+.cand_wrap {
+    /* max-width: 5%; Adjust the max-width as needed */
+    word-wrap: break-word;
+}

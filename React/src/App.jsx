@@ -4,7 +4,7 @@ import Home from './Pages/Home';
 import NoPage from './Pages/NoPage';
 import Login from './Pages/Login';
 import JobApplication from './Pages/JobApplication';
-import CandidateProfle from "./Pages/CandidateProfile";
+import CandidateProfle from "./Pages/RecruiterCandidateProfile";
 
 function App() {
   // const history = useHistory();

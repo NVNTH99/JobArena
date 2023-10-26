@@ -28,7 +28,7 @@ var upcoming = [
     {title:"Job Title", name:"Candidate Name", id:"#CandidateID" , date:"dd/mm/yyyy", time:"hh:mm"},
     {title:"Job Title", name:"Candidate Name", id:"#CandidateID" , date:"dd/mm/yyyy", time:"hh:mm"},
 ]
-var events = {"upcoming":upcoming};
+// var events = {"upcoming":upcoming};
 
 var candidateList = {"Pending":[],"Rejected":[],"Shortlisted":[],"Offered":[]};
 for(var i=0;i<candidate_list.length;i++){
@@ -61,7 +61,7 @@ function JobApplication(){
                     <TabGroup candidateList={candidateList}/> 
                 </div>
                 <div className="right">
-                    <UpcomingCard event={events}/>
+                    <UpcomingCard event={upcoming}/>
                 </div>
             </div>
         </div>

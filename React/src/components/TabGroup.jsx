@@ -35,6 +35,7 @@ function customStyle(type){
 }
 
 function TabGroup(props) {
+  console.log("Navaneeth is a bitch"+props.candidateList);
   const [active, setActive] = useState(types[0]);
   var candidateList = props.candidateList;
   const currentCandidateList = candidateList[active];

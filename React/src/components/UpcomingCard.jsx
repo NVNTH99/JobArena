@@ -15,7 +15,7 @@ function Event(props){
 }
 
 function UpcomingCard(props){
-    var events = props.event["upcoming"];
+    var events = props.event;
     return(
         <div>
             <div className="upcoming">
