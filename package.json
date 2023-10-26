@@ -3,5 +3,9 @@
     "express": "^4.18.2",
     "mysql": "^2.18.1",
     "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "async": "^3.2.4",
+    "sqlite3": "^5.1.6"
   }
 }

@@ -4,39 +4,45 @@ import Search from "../components/Search";
 import JobInfo from "../components/JobInfo";
 import './Home.css';
 
-var jobs = [
-  {
-    title:"Job Title", 
-    company: "Company Name", 
-    location:"Location", 
-    category: "Category", 
-    description:"Short description of the job - Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for "
-  },
-  {
-    title:"Job 2", 
-    company: "Company Name", 
-    location:"Location", 
-    category: "Category", 
-    description:"Short description of the job - Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for "
-  },
-  {
-    title:"Job 3", 
-    company: "Company Name", 
-    location:"Location", 
-    category: "Category", 
-    description:"Short description of the job - Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for "
-  }
-]
+// const temp = [
+//     {
+//         title:"Job Title", 
+//         company: "Company Name", 
+//         location:"Location", 
+//         category: "Category", 
+//         description:"Short description of the job - Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for "
+//     },
+//     {
+//         title:"Job 2", 
+//         company: "Company Name", 
+//         location:"Location", 
+//         category: "Category", 
+//         description:"Short description of the job - Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for "
+//     },
+//     {
+//         title:"Job 3", 
+//         company: "Company Name", 
+//         location:"Location", 
+//         category: "Category", 
+//         description:"Short description of the job - Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for "
+//     }
+// ]
 
 function Home(){
+    const [jobs,setJobs] = useState([])
+
+    // useEffect(()=>{
+    //   setJobs(temp)
+    // },[])
 
     return (
       <>
         <Navbar userType = "none"/>
-        <Search/>
+        <Search setData={setJobs}/>
         <JobInfo jobs = {jobs}/>
       </>
     )
 }
+
 
 export default Home

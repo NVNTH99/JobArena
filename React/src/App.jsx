@@ -20,7 +20,7 @@ function App() {
         <Route path="*" element={<NoPage/>}/>
         <Route path="/login" element={<Login/>}/>
         <Route path="/recruiter/home" element={<RecruiterHome/>}/>
-        <Route path="/candidate" element={<CandidateHome/>}/>
+        <Route path="/candidate/home" element={<CandidateHome/>}/>
         <Route path="/recruiter/job_application" element={<JobApplication/>}/>
         <Route path="/recruiter/candidate_profile" element={<CandidateProfle/>}/>
         <Route path="/candidate/profile" element={<Cand_profile/>}/>

@@ -5,10 +5,10 @@ import PropTypes from 'prop-types';
 
 
 
-function Search(){
+const Search = React.memo(( {setData} ) => {
 
     const [searchQuery, setSearchQuery] = useState('');
-    const [data, setData] = useState([]);
+    // const [data, setData] = useState([]);
 
     const fetchData = async () => {
         try {
@@ -42,7 +42,7 @@ function Search(){
             <hr></hr>
         </section>
     )
-}
+})
 
 
 
