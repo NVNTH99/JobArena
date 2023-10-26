@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState,useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Search from "../components/Search";
 import JobInfo from "../components/JobInfo";
@@ -7,30 +7,32 @@ import RecommendedCard from "../components/recommendedCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import './CandidateHome.css';
+import { useLocation } from "react-router-dom";
+import axios from 'axios'
 
-var jobs = [
-    {
-      title:"Job Title", 
-      company: "Company Name", 
-      location:"Location", 
-      category: "Category", 
-      description:"Short description of the job - Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for "
-    },
-    {
-      title:"Job 2", 
-      company: "Company Name", 
-      location:"Location", 
-      category: "Category", 
-      description:"Short description of the job - Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for "
-    },
-    {
-      title:"Job 3", 
-      company: "Company Name", 
-      location:"Location", 
-      category: "Category", 
-      description:"Short description of the job - Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for "
-    }
-]
+// var jobs = [
+//     {
+//       title:"Job Title", 
+//       company: "Company Name", 
+//       location:"Location", 
+//       category: "Category", 
+//       description:"Short description of the job - Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for "
+//     },
+//     {
+//       title:"Job 2", 
+//       company: "Company Name", 
+//       location:"Location", 
+//       category: "Category", 
+//       description:"Short description of the job - Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for "
+//     },
+//     {
+//       title:"Job 3", 
+//       company: "Company Name", 
+//       location:"Location", 
+//       category: "Category", 
+//       description:"Short description of the job - Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for "
+//     }
+// ]
 
 var upcoming = [
     {title:"Job Title", name:"Candidate Name", id:"#CandidateID" , date:"dd/mm/yyyy", time:"hh:mm"},
@@ -40,11 +42,32 @@ var upcoming = [
 var events = {"upcoming":upcoming};
 
 function CandidateHome(){
+    const location = useLocation()
+    const {user_id} = location.state
+    const [recJobs,setrecjobs] = useState([])
+    const [jobs,setJobs] = useState([])
+
+    useEffect(()=>{
+        console.log(user_id)
+        axios.get('http://localhost:3000/candidate/recommended', {
+            params: {
+                user_id : user_id,
+                limit : 3
+            }
+        })
+        .then(response => {
+            setrecjobs(response.data)
+        })
+        .catch(error => {
+            console.error('Error fetching records', error);
+        })
+    },[])
+    
     return(
         <>
             <Navbar userType = {"candidate"}/>
-            <RecommendedJobs recJobs = {jobs}/> 
-            <Search/>
+            <RecommendedJobs recJobs = {recJobs}/> 
+            <Search setData={setJobs}/>
             <div className="candidate-bottom">
                 <JobInfo jobs = {jobs}/>
                 <div className="candidate-upcoming">

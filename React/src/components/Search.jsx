@@ -30,9 +30,6 @@ const Search = React.memo(( {setData} ) => {
      fetchData();
   }, [searchQuery]);
 
-
-   
-
     return(
         <section className="search-container">
                 <div>

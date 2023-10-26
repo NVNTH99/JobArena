@@ -44,7 +44,7 @@ CREATE TABLE Jobs(
     Deadline TIMESTAMP,
     Location varchar(50),
     salary integer,
-    work_dayy integer,
+    work_days integer,
     work_hours varchar(15),
     job_type varchar(15),
     category text,

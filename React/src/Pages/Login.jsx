@@ -1,42 +1,33 @@
-import React,{ useState } from "react";
+import React,{ useState,useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser} from '@fortawesome/free-solid-svg-icons'
 import { faLock } from "@fortawesome/free-solid-svg-icons";
 import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
+import { Link } from 'react-router-dom';
 
 import './Login.css'
 // import { response } from "express";
 import axios from 'axios'
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function Login(){
     const [credentials, setcred] = useState({
         username:'',
         password: ''
     })
-    // const history = useHistory();
+    const navigate = useNavigate();
     const [retrieved , setretrieval] = useState({})
     const [error, seterror] = useState('')
 
     const loginfunc = (e) => {
         e.preventDefault();
+        // console.log(`${process.env.ROOT}/login`)
         axios.post('http://localhost:3000/login',credentials)
         .then(response => {
             if(typeof response.data === 'object'){
-                setretrieval(response.data);
-                if(retrieved.type === 'candidate'){
-                    history.push({
-                        pathname: "/candidate/home",
-                        state : { user_id: retrieved.user_id }
-                    });
-                }
-                else{
-                    history.push("/recruiter/home")
-                    history.push({
-                        pathname: "/recruiter/home",
-                        state : { user_id: retrieved.user_id }
-                    })
-                }
+                // console.log(0)
+                setretrieval(response.data)
+                // console.log(retrieved)
             }
             else{
                 setcred({
@@ -51,6 +42,16 @@ function Login(){
             seterror('An error occurred while logging in');
         })
     }
+
+    useEffect(()=>{
+        if(retrieved.type === 'candidate'){
+            // console.log(2)
+            navigate('/candidate/home', { state: { user_id: retrieved.user_id } })
+        }
+        else if(retrieved.type === 'recruiter'){
+            navigate("/recruiter/home", { state: { user_id: retrieved.user_id } })
+        }
+    },[retrieved])
 
     return(
         <>
@@ -127,7 +128,7 @@ function Login(){
                             </div>
                         </form>
                         <div className="guestbtn extra-link">
-                            <a className="guest_text" href="/home">Continue as guest</a>
+                            <Link to="/home" className="guest_text">Continue as guest</Link>
                             <div className="guest_text">Don't have an account? <a className="up" href="/">Sign up</a> </div>
                         </div>
                     </div>
