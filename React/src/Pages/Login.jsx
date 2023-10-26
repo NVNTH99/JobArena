@@ -7,7 +7,6 @@ import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 import './Login.css'
 // import { response } from "express";
 import axios from 'axios'
-import { useHistory } from 'react-router-dom';
 
 function Login(){
     const [credentials, setcred] = useState({
