@@ -14,6 +14,7 @@ npm i --save @fortawesome/free-brands-svg-icons
 npm i --save @fortawesome/react-fontawesome@latest
 npm i styled-components
 npm i particlesjs --save
+npm install react-bootstrap bootstrap
 
 # For Server Dependencies
 
