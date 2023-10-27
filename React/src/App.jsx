@@ -8,7 +8,9 @@ import CandidateProfle from "./Pages/CandidateProfile";
 import CandidateHome from './Pages/CandidateHome';
 import RecruiterHome from './Pages/RecruiterHome';
 import Cand_profile from './Pages/cand_profile';
-
+import CandidateRecommendedJobs from './Pages/CandidateRecommendedJobs';
+import RecruiterAddJob from './Pages/RecruiterAddJob';
+import CandidateAppliedJobs from './Pages/CandidateAppliedJobs';
 function App() {
   // const history = useHistory();
   return (
@@ -17,13 +19,17 @@ function App() {
       <Routes>
         <Route index element={<Login/>} />
         <Route path="/home" element={<Home/>}/>
-        <Route path="*" element={<NoPage/>}/>
         <Route path="/login" element={<Login/>}/>
-        <Route path="/recruiter/home" element={<RecruiterHome/>}/>
         <Route path="/candidate/home" element={<CandidateHome/>}/>
+        <Route path="/candidate/profile" element={<Cand_profile/>}/>
+        <Route path="/candidate/recommended_jobs" element={<CandidateRecommendedJobs/>}/>
+        <Route path="/candidate/applied_jobs" element={<CandidateAppliedJobs/>}/>
+        <Route path="/recruiter/home" element={<RecruiterHome/>}/>
         <Route path="/recruiter/job_application" element={<JobApplication/>}/>
         <Route path="/recruiter/candidate_profile" element={<CandidateProfle/>}/>
-        <Route path="/candidate/profile" element={<Cand_profile/>}/>
+        <Route path="/recruiter/applied_candidates" element={<RecruiterAddJob/>}/>
+        
+        <Route path="*" element={<NoPage/>}/>
       </Routes>
     </BrowserRouter>
   </>

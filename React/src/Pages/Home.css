@@ -183,6 +183,7 @@ nav ul {
   padding: 2%;
   border: none;
   border-radius: 10px;
+  cursor: pointer;
 }
 
 .job-title-card:hover{
@@ -208,14 +209,15 @@ nav ul {
   padding: 2%;
 }
 
+.selected-job-top h1, h2, h3{
+  margin: 0;
+}
+
 .selected-job-top{
   display: flex;
   flex-direction: column;
 }
 
-.selected-job-top h1, h3{
-  margin: 0;
-}
 
 .selected-job-top > hr{
   border-style: none;
@@ -229,10 +231,15 @@ nav ul {
   margin-bottom: 0.75%;
 }
 
+.selected-job-top > div > div:first-child{
+  padding: 2%;
+}
+
 .selected-job-bottom{
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
+  padding: 2%;
 }
 
 .apply-container{
