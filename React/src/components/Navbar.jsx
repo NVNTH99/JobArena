@@ -27,11 +27,11 @@ function NavItems(props) {
     let notification = null;
     var navitems = [];
     if(props.userType === "candidate"){
-      navitems = [{navTitle: "Home", link: "/home"}, {navTitle: "Applied Jobs", link: "/AppliedJobs"}, {navTitle: "notification", link: ""}];
+      navitems = [{navTitle: "Home", link: "/candidate/home"}, {navTitle: "Applied Jobs", link: "/candidate/applied_jobs"}, {navTitle: "notification", link: ""}];
       notification = true;
     }
     else if(props.userType === "recruiter"){
-      navitems = [{navTitle: "Home", link: "/home"}];
+      navitems = [{navTitle: "Home", link: "/recruiter/home"}];
     }
     else{
       navitems = [{navTitle: "Login", link: "/login"}];
