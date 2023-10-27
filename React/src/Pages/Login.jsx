@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser} from '@fortawesome/free-solid-svg-icons'
 import { faLock } from "@fortawesome/free-solid-svg-icons";
 import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
 import './Login.css'
 // import { response } from "express";
@@ -126,8 +127,8 @@ function Login(){
                             </div>
                         </form>
                         <div className="guestbtn extra-link">
-                            <a className="guest_text" href="/home">Continue as guest</a>
-                            <div className="guest_text">Don't have an account? <a className="up" href="/">Sign up</a> </div>
+                            <Link className="guest_text" to="/home">Continue as guest</Link>
+                            <div className="guest_text">Don't have an account? <Link className="up" to="/signup"></Link></div>
                         </div>
                     </div>
                     <div className="screen__background">
