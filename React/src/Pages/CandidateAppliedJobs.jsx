@@ -4,6 +4,9 @@ import Heading from "../components/Heading";
 import CandidateTab from "../components/CandidateTab";
 import CandidateUpcomingCard from "../components/CandidateUpcomingCard";
 import { faClock } from "@fortawesome/free-solid-svg-icons";
+import { faListCheck } from "@fortawesome/free-solid-svg-icons";
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import "./CandidateAppliedJobs.css";
 
 var upcoming = [
@@ -17,9 +20,9 @@ var upcoming = [
 
 var tabs = [
     {name: "Pending", icon: faClock},
-    {name: "Shortlisted", icon: faClock},
-    {name: "Offered", icon: faClock},
-    {name: "Rejected", icon: faClock},
+    {name: "Shortlisted", icon: faListCheck},
+    {name: "Offered", icon: faCheck},
+    {name: "Rejected", icon: faXmark},
 ]
 
 function CandidateAppliedJobs(){
@@ -37,7 +40,6 @@ function CandidateAppliedJobs(){
                                         key = {index} 
                                         tabName = {tab.name} 
                                         icon = {tab.icon}
-                                        color = {tab.color}
                                         type = {tab.name}
                                     />
                                 )}
