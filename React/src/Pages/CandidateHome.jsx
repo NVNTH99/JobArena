@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import Search from "../components/Search";
 import JobInfo from "../components/JobInfo";
@@ -6,6 +6,7 @@ import CandidateUpcomingCard from "../components/CandidateUpcomingCard";
 import RecommendedCard from "../components/recommendedCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 import './CandidateHome.css';
 
 var jobs = [
@@ -42,13 +43,14 @@ var upcoming = [
 ]
 
 function CandidateHome(){
+    const [selectedRecommendedJob, setSelectedRecommendedJob] = useState(null);
     return(
         <>
             <Navbar userType = {"candidate"}/>
-            <RecommendedJobs recJobs = {jobs}/> 
+            <RecommendedJobs recJobs = {jobs} setSelectedRecommendedJob = {setSelectedRecommendedJob}/> 
             <Search/>
             <div className="candidate-bottom">
-                <JobInfo jobs = {jobs}/>
+                <JobInfo jobs = {jobs} selectedRecommendedJob = {selectedRecommendedJob} />
                 <div className="candidate-upcoming">
                     <CandidateUpcomingCard upcoming = {upcoming}/>
                 </div>
@@ -71,6 +73,7 @@ function RecommendedJobs(props){
                                 company = {job.company}
                                 location = {job.location}
                                 category = {job.category}
+                                setSelectedRecommendedJob = {props.setSelectedRecommendedJob}
                             />
                         )}
                     </div>
@@ -86,10 +89,10 @@ function RecommendedJobs(props){
 
 function Viewmore(){
     return(
-        <div className="view-more">
+        <Link className="view-more" to="/candidate/applied_jobs">
             <h4>View more</h4>
             <FontAwesomeIcon size="lg" icon={faPlus} />
-        </div>
+        </Link>
     )
 }
 

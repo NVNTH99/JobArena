@@ -22,7 +22,6 @@ function SelectedJobInfo(props){
           <div className="selected-job-bottom">
             <h2>Job Description:</h2>
           </div>
-
         </div>
     )
 }
