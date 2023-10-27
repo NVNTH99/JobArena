@@ -1,7 +1,25 @@
+import axios from "axios";
+// import { response } from "express";
 import React from "react";
 
 
 function SelectedJobInfo(props){
+
+    const Apply = () => {
+        axios.post('http://localhost:3000/candidate/jobapply',{
+          params: {
+            user_id : props.user_id,
+            job_id : props.job_id
+          }
+        })
+        .then(response => {
+          //Try to update the jobs list in the candidate home page
+        })
+        .catch(error => {
+          console.log("Internal Server Error applying for job")
+        })
+    }
+
     return(
         <div className="selected-job-info">
 
@@ -13,7 +31,7 @@ function SelectedJobInfo(props){
                 <h3>{props.category}</h3>
               </div>
               <div className="apply-container"> 
-                <button className="apply-button">Apply</button>
+                <button className="apply-button" onClick={Apply}>Apply</button> {/*onClick={Apply}*/}
               </div>
             </div>
             <hr></hr>

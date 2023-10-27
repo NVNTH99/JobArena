@@ -4,6 +4,7 @@ function JobTitle(props){
 
     const handleClick = () => {
         const newJob = {
+            job_id: props.job_id,
             title: props.title,
             company: props.company,
             location: props.location,

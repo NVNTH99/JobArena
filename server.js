@@ -22,7 +22,7 @@ app.get('/',(req,res)=>{ //When the user visits localhost:3000 it redirects him 
 })
 
 app.post('/signup/candidate',(req,res)=>{
-
+    
 })
 
 app.post('/signup/recruiter',(req,res)=>{
@@ -31,7 +31,10 @@ app.post('/signup/recruiter',(req,res)=>{
 
 app.get('/jobs', (req, res) => {
     const searchQuery = req.query.searchQuery;
-    const query = `SELECT * FROM jobs inner join Recruiter_details on Recruiter_details.rec_id=jobs.rec_id inner join Organizations on Organizations.org_id=Recruiter_details.org_id WHERE Title LIKE '%${searchQuery}%' or category LIKE '%${searchQuery}%' or Organizations.organization_name LIKE '%${searchQuery}%';`;
+    let query = `SELECT o.Organization_name,j.* from jobs j join Recruiter_details r on r.rec_id=j.rec_id join Organizations o on o.org_id=r.org_id WHERE j.Title LIKE '%${searchQuery}%' or j.category LIKE '%${searchQuery}%' or o.organization_name LIKE '%${searchQuery}%'`;
+    if(req.query.user_id){
+        query = query + ` AND NOT EXISTS ( SELECT 1 FROM Applications a WHERE a.cand_id = ${req.query.user_id} AND a.job_id = j.job_id)`
+    }
     requestQueue.push({ query: query, params: [] }, (error, result) => {
         if (error) {
             res.status(500).send('Internal Server Error');
@@ -56,7 +59,7 @@ app.get('/candidate/recommended',(req,res)=>{
             if(result.length == 1){
                 console.log(result)
                 const pref = result[0].preference_category.split(',').map(value=>"category like '%" + value + "%'")
-                const query2 = "Select* from jobs where " + pref.join(" or ") + limit
+                const query2 = "Select o.Organization_name,j.* from jobs j join Recruiter_details r on r.rec_id=j.rec_id join Organizations o on o.org_id=r.org_id where " + pref.join(" or ") + limit
                 requestQueue.push({ query: query2, params: [] }, (error, result) => {
                     if (error) {
                         res.status(500).send('Internal Server Error');
@@ -88,13 +91,30 @@ app.get('/candidate/upcoming',(req,res)=>{
 app.post('/candidate/jobapply',(req,res)=>{
     const user_id = req.query.user_id
     const job_id = req.query.job_id
-    const query = `INSERT INTO Applications (cand_id,job_id,status) values (${user_id},${job_id},'Pending')`
-    requestQueue.push({query: query, params: []},(error,result)=>{
+    // query below shd check whether any null values are there in candidat_details
+    // SELECT * FROM Candidate_details 
+    // WHERE cand_id = 5 
+    // AND (Gender IS NULL OR Disability IS NULL OR Date_of_Birth IS NULL);
+    const query1 = `INSERT INTO Applications (cand_id,job_id,status) values (${user_id},${job_id},'Pending')`
+    requestQueue.push({query: query1, params: []},(error,result)=>{
         if(error){
             res.status(500).send('Internal Server Error')
         }
         else{
-            console.log(`Inserted into Database Successfully ${user_id} ${job_id}`)
+            if(result.length==0){
+                const query2 = `INSERT INTO Applications (cand_id,job_id,status) values (${user_id},${job_id},'Pending')`
+                requestQueue.push({query: query2, params: []},(error,result)=>{
+                    if(error){
+                        res.status(500).send('Internal Server Error')
+                    }
+                    else{
+                        res.send(true)
+                    }
+                })
+            }
+            else{
+                res.send(false)
+            }
         }
     })
 })
@@ -111,7 +131,20 @@ app.get('/candidate/appliedjobs',(req,res)=>{
             res.status(500).send('Internal Server Error')
         }
         else{
-            console.log(`Inserted into Database Successfully ${user_id} ${job_id}`)
+            res.send(result)
+        }
+    })
+})
+
+app.post('/candidate/appliedjobs/withdraw',(req,res)=>{
+    const app_id = req.query.app_id
+    const query = `DELETE from Applications where App_id = ${app_id};`
+    requestQueue.push({query: query, params: []},(error,result)=>{
+        if(error){
+            res.status(500).send('Internal Server Error')
+        }
+        else{
+            res.send(true)
         }
     })
 })

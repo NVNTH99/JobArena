@@ -34,18 +34,22 @@ import axios from 'axios'
 //     }
 // ]
 
-var upcoming = [
-    {title:"Job Title", name:"Candidate Name", id:"#CandidateID" , date:"dd/mm/yyyy", time:"hh:mm"},
-    {title:"Job Title", name:"Candidate Name", id:"#CandidateID" , date:"dd/mm/yyyy", time:"hh:mm"},
-    {title:"Job Title", name:"Candidate Name", id:"#CandidateID" , date:"dd/mm/yyyy", time:"hh:mm"},
-]
-var events = {"upcoming":upcoming};
+// var upcoming = [
+//     {title:"Job Title", name:"Candidate Name", id:"#CandidateID" , date:"dd/mm/yyyy", time:"hh:mm"},
+//     {title:"Job Title", name:"Candidate Name", id:"#CandidateID" , date:"dd/mm/yyyy", time:"hh:mm"},
+//     {title:"Job Title", name:"Candidate Name", id:"#CandidateID" , date:"dd/mm/yyyy", time:"hh:mm"},
+// ]
+// var events = {"upcoming":upcoming};
+// const [upcoming, setupcoming] = useState([])
+// let upcoming = []
 
 function CandidateHome(){
     const location = useLocation()
     const {user_id} = location.state
+    // console.log(user_id)
     const [recJobs,setrecjobs] = useState([])
     const [jobs,setJobs] = useState([])
+    const [events, setevents] = useState({})
 
     useEffect(()=>{
         console.log(user_id)
@@ -61,17 +65,46 @@ function CandidateHome(){
         .catch(error => {
             console.error('Error fetching records', error);
         })
+        axios.get('http://localhost:3000/candidate/upcoming', {
+            params: {
+                user_id : user_id,
+            }
+        })
+        .then(response => {
+            setevents({"upcoming":response.data})
+        })
+        .catch(error => {
+            console.error('Error fetching records', error);
+        })
     },[])
+
+    // useEffect(()=>{
+    //     // console.log(user_id)
+    //     axios.get('http://localhost:3000/candidate/upcoming', {
+    //         params: {
+    //             user_id : user_id,
+    //         }
+    //     })
+    //     .then(response => {
+    //         setevents({"upcoming":response.data})
+    //     })
+    //     .catch(error => {
+    //         console.error('Error fetching records', error);
+    //     })
+    // },[])
+
+    // useEffect(()=>{
+    // },[upcoming])
     
     return(
         <>
             <Navbar userType = {"candidate"}/>
-            <RecommendedJobs recJobs = {recJobs}/> 
+            {recJobs && <RecommendedJobs recJobs = {recJobs}/>} {/* change to recJobs */}
             <Search setData={setJobs}/>
             <div className="candidate-bottom">
-                <JobInfo jobs = {jobs}/>
+                {jobs && <JobInfo jobs = {jobs} user_id={user_id}/>} {/*user_id={user_id}*/}
                 <div className="candidate-upcoming">
-                    <UpcomingCard event={events}/>
+                    {events.upcoming && <UpcomingCard event={events}/>}
                 </div>
             </div>
         </>
@@ -86,7 +119,8 @@ function RecommendedJobs(props){
                 <div>
                     <div>
                         {props.recJobs.map((job, index) =>
-                            <RecommendedCard 
+                            <RecommendedCard
+                                job_id = {job.job_id}
                                 key = {index}
                                 title = {job.title}
                                 company = {job.company}

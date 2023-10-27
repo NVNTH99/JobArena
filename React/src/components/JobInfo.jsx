@@ -11,6 +11,7 @@ const JobInfo = React.memo((props)=>{
           {
             props.jobs.map((job, index) => 
             <JobTitle
+              job_id ={job.job_id}
               key = {index}
               title = {job.title}
               company = {job.company}
@@ -24,6 +25,8 @@ const JobInfo = React.memo((props)=>{
         <div className="homejob-right">
             {currentJob === ""? null : 
                 <SelectedJobInfo
+                    user_id = {props.user_id}
+                    job_id = {currentJob.job_id}
                     title = {currentJob.title}
                     company = {currentJob.company}
                     location = {currentJob.location}

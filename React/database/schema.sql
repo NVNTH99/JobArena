@@ -76,22 +76,22 @@ CREATE TABLE Candidate_details(
 CREATE TABLE Work_Exp(
     cand_id integer,
     job_Title varchar(50),
-    org_id integer,
+    org_name varchar(100),
     start_year YEAR,
     end_year YEAR,
-    FOREIGN KEY (cand_id) REFERENCES Candidate_details(cand_id),
-    FOREIGN KEY (org_id) REFERENCES Organizations(org_id)
+    FOREIGN KEY (cand_id) REFERENCES Candidate_details(cand_id)
+    -- FOREIGN KEY (org_id) REFERENCES Organizations(org_id)
 );
 
 CREATE TABLE Projects(
     cand_id integer,
-    org_id integer,
+    org_name varchar(100),
     Project_Title varchar(50),
     Project_Desc text,
     start_date DATE,
     end_date DATE,
-    FOREIGN KEY (cand_id) REFERENCES Candidate_details(cand_id),
-    FOREIGN KEY (org_id) REFERENCES Organizations(org_id)
+    FOREIGN KEY (cand_id) REFERENCES Candidate_details(cand_id)
+    -- FOREIGN KEY (org_id) REFERENCES Organizations(org_id)
 );
 
 CREATE TABLE Education(
