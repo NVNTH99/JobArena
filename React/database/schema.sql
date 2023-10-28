@@ -182,12 +182,12 @@ INSERT INTO login_details (id,username,password,type) VALUES
 (2,'Aditya', 'Adit@1234', 'recruiter'),
 (3,'Gigil', 'Gigi@1234', 'candidate'),
 (4,'Thalzih', 'Thal@1234', 'recruiter'),
-(5,'Navaneeth', 'Nava@1234', 'candidate');
-(6,'Sreerag', 'Sree@1234', 'candidate');
-(7,'Nithin','Nithin@1234','recruiter');
-(8,'Christo' ,'Christo@1234','recruiter');
-(9,'Abhiram','Abhi@1234','candidate');
-(10,'Sreeraj','Sree@1234','recruiter');
+(5,'Navaneeth', 'Nava@1234', 'candidate'),
+(6,'Sreerag', 'Sree@1234', 'candidate'),
+(7,'Nithin','Nithin@1234','recruiter'),
+(8,'Christo' ,'Christo@1234','recruiter'),
+(9,'Abhiram','Abhi@1234','candidate'),
+(10,'Sreeraj','Sree@1234','recruiter'),
 (11,'Vimal','Vimal@2001','candidate');
 
 
@@ -201,9 +201,9 @@ INSERT INTO Organizations(org_id,Organization_name) VALUES
 
 INSERT INTO Recruiter_details(rec_id,First_name,Last_name,org_id) VALUES 
 (2,'Aditya','S',1),
-(4,'Thalzih','S',2);
-(7,'Nithin','S',3);
-(8,'Christo','S',4);
+(4,'Thalzih','S',2),
+(7,'Nithin','S',3),
+(8,'Christo','S',4),
 (10,'Sreeraj','S',5);
 
 INSERT INTO Jobs (job_id, Title, Description, Responsibility, Requirements, Deadline, Location, salary, work_dayy, work_hours, job_type, category, rec_id) VALUES 
