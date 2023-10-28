@@ -47,26 +47,7 @@
     height: 1.5rem;
 }
 
-.eventCard{
-    margin-top:10pt;
-    background: rgb(217,217,217);
-    border-radius: 5pt;
-    padding: 10pt;
-    width:16.25rem;
-}
 
-.eventCard h4{
-    margin:0;
-    color: rgb(80,89,103);
-}
-
-.eventCard .line1,.line2{
-    font-size: 10pt;
-}
-
-.eventCard .line1{
-    color: rgb(80,89,103);
-}
 
 .heading2{
     margin-left:4rem;
@@ -162,20 +143,8 @@
     margin : 1rem;
 }
 
-.upcoming{
-    /* margin : 5%; */
-    padding: 5%;
-    background:rgb(242, 242, 242);
-    border-radius: 1rem;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    height: 30rem;
-    width: 18rem;
-    font-family: "Myanmar Khyay-Regular", Helvetica;
-}
 
-.upcoming h2{
-    margin:0;
-}
+
 
 .ReactModalPortal{
     width: 0;
