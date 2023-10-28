@@ -7,6 +7,10 @@ import TimePicker from "react-time-picker";
 import 'react-time-picker/dist/TimePicker.css';
 // import '../Pages/RecruiterCandidateProfile.css'
 
+function InterviewSubmit(){
+
+}
+
 function InviteRejectButton(){
     const [isModalOpen, setModalOpen] = useState(false);
     const [startDate, setStartDate] = useState(new Date());
@@ -17,6 +21,10 @@ function InviteRejectButton(){
     const closeModal = () => {
       setModalOpen(false);
     }
+    const [selectedValue, setSelectedValue] = useState('link');
+    const handleRadioChange = (event) => {
+      setSelectedValue(event.target.value);
+    };
     return (
       <div>
         <button className="inviteButton" onClick={openModal}>Invite for interview</button>
@@ -34,23 +42,32 @@ function InviteRejectButton(){
             right:"auto",
             bottom:"auto",
             width:"20%",
-            height:"52%",
+            height:"55%",
             borderRadius:"15px"
           }
         }}
         >
           <h2 className="interview_form_heading">Schedule interview</h2>
-          <form className="interview_form">
+          <form className="interview_form" onSubmit={InterviewSubmit}>
+            <div className="interview_radio">
+              <label><input type="radio" name="radio" value="link" checked={selectedValue === 'link'} onChange={handleRadioChange}/>Link</label>
+              <label><input type="radio" name="radio" value="venue" checked={selectedValue === 'venue'} onChange={handleRadioChange}/>Venue</label>
+            </div>
             <div className="interview_venue">
-              Link/venue : 
-              <input className="interview_form_input" type="text"/>
+              {selectedValue === 'link' ? (
+                <div><input className="interview_form_input" type="text"/></div>
+              ) : selectedValue === 'venue' ? (
+                <div><input className="interview_form_input" type="text"/></div>
+              ) : (
+                <div>Select an option</div>
+              )}
             </div>
             <div className="interview_date">
-              Date :
+              Date
               <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
             </div>
             <div className="interview_time">
-              Time :
+              Time
               <TimePicker className="custom-time-picker-input" onChange={onChange} value={value} disableClock={true}/>
             </div>
             <input className="submit" type="submit"/>
