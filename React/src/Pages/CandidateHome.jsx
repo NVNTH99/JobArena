@@ -6,6 +6,7 @@ import CandidateUpcomingCard from "../components/CandidateUpcomingCard";
 import RecommendedCard from "../components/recommendedCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 import './CandidateHome.css';
 import { useLocation } from "react-router-dom";
 import axios from 'axios'
@@ -50,6 +51,7 @@ function CandidateHome(){
     const [recJobs,setrecjobs] = useState([])
     const [jobs,setJobs] = useState([])
     const [events, setevents] = useState({"upcoming":[]})
+    const [selectedRecommendedJob, setSelectedRecommendedJob] = useState(null);
 
     useEffect(()=>{
         console.log(user_id)
@@ -96,13 +98,14 @@ function CandidateHome(){
     // useEffect(()=>{
     // },[upcoming])
     
+    
     return(
         <>
             <Navbar userType = {"candidate"}/>
-            {recJobs && <RecommendedJobs recJobs = {recJobs}/>} {/* change to recJobs */}
+            {recJobs && <RecommendedJobs recJobs = {recJobs} setSelectedRecommendedJob = {setSelectedRecommendedJob}/>} {/* change to recJobs */}
             <Search setData={setJobs}/>
             <div className="candidate-bottom">
-                {jobs && <JobInfo jobs = {jobs} user_id={user_id}/>} {/*user_id={user_id}*/}
+                {jobs && <JobInfo jobs = {jobs} user_id={user_id} selectedRecommendedJob = {selectedRecommendedJob} />} {/*user_id={user_id}*/}
                 <div className="candidate-upcoming">
                     {events.upcoming && <CandidateUpcomingCard upcoming={events.upcoming}/>}
                 </div>
@@ -126,6 +129,7 @@ function RecommendedJobs(props){
                                 company = {job.company}
                                 location = {job.location}
                                 category = {job.category}
+                                setSelectedRecommendedJob = {props.setSelectedRecommendedJob}
                             />
                         )}
                     </div>
@@ -141,10 +145,10 @@ function RecommendedJobs(props){
 
 function Viewmore(){
     return(
-        <div className="view-more">
+        <Link className="view-more" to="/candidate/applied_jobs">
             <h4>View more</h4>
             <FontAwesomeIcon size="lg" icon={faPlus} />
-        </div>
+        </Link>
     )
 }
 

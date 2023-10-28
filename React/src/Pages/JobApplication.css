@@ -8,22 +8,35 @@
     font-family: "Myanmar Khyay-Regular", Helvetica;
 }
 
+.acceptButton:hover{
+    background: rgb(114, 210, 90) ;
+}
+
+.acceptButton:active {
+    background-color: #52b355;
+    box-shadow: 0 2px #cecece;
+    transform: translateY(0.5px);
+}
+
 .box{
     width:100%;
+    display: flex;
+    gap: 2%
 }
 
 .buttonSpan{
-    margin-left: 22em;
+    text-align: right;
 }
 
 .card{
-    margin : 10pt;
-    padding : 10pt 10pt;
+    /* margin : 10pt; */
+    padding : 1.5% 2% 1.5% 2%;
     background-color : rgb(242, 242, 242);
     border-radius : 10pt;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
-    width : 80%;
+    box-sizing: border-box;
+    display: flex;
 }
 
 .circle{
@@ -69,7 +82,15 @@
     font-family: "Myanmar Khyay-Regular", Helvetica;
 }
 
+.inviteButton:hover{
+    background: rgb(191, 218, 93) ;
+}
 
+.inviteButton:active {
+    background-color: rgb(162, 185, 81);
+    box-shadow: 0 2px #cecece;
+    transform: translateY(0.5px);
+}
 
 .inviteCard{
     margin-left:5rem;
@@ -82,12 +103,13 @@
 
 .box .left{
     margin-left: 1rem;
-    width: 70%;
+    width: 85%;
     float: left;
 }
 
 .margin{
-    margin:2rem 0rem 0rem 4rem;
+    padding:2% 0% 0% 4%;
+    box-sizing: border-box;
 }
 
 .rejectButton{
@@ -99,18 +121,33 @@
     font-family: "Myanmar Khyay-Regular", Helvetica;
 }
 
+.rejectButton:hover{
+    background: rgb(209, 98, 98) ;
+}
+
+.rejectButton:active {
+    background-color: rgb(194, 89, 89);
+    box-shadow: 0 2px #cecece;
+    transform: translateY(0.5px);
+}
+
 .right{
     width: 25%;
     float:right;
-    border-left:solid 1pt;
-    margin-top: 2rem;
+    /* border-left:solid 1pt; */
+    /* margin-top: 2rem; */
     height: 44rem;
+    padding: 1%;
 }
 
 .scroll{
+    padding: 1% 4% 1% 4%;
     max-height: 25rem;
-    overflow-x: hidden;
-    overflow-y: scroll;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10pt;
+    box-sizing: border-box;
 }
 
 .desc{
@@ -126,7 +163,7 @@
 }
 
 .upcoming{
-    margin : 5%;
+    /* margin : 5%; */
     padding: 5%;
     background:rgb(242, 242, 242);
     border-radius: 1rem;
@@ -138,4 +175,8 @@
 
 .upcoming h2{
     margin:0;
+}
+
+.ReactModalPortal{
+    width: 0;
 }

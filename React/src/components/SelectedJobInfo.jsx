@@ -38,7 +38,7 @@ function SelectedJobInfo(props){
                 <h3>{props.category}</h3>
               </div>
               <div className="apply-container"> 
-                <button className="apply-button" onClick={Apply}>Apply</button> {/*onClick={Apply}*/}
+                <AppliedButtons ActiveTab = {props.ActiveTab} Apply={Apply}/>
               </div>
             </div>
             <hr></hr>
@@ -47,9 +47,29 @@ function SelectedJobInfo(props){
           <div className="selected-job-bottom">
             <h2>Job Description:</h2>
           </div>
-
         </div>
     )
+}
+
+function AppliedButtons(props){
+  return(
+    <>
+      {(props.ActiveTab === "Pending" || props.ActiveTab === "Shortlisted") 
+      && <button className="Withdraw applied-jobs-button">Withdraw</button>}
+      {props.ActiveTab === "Offered" 
+        && 
+        <>
+          <button className="Accept applied-jobs-button">Accept</button>
+          <button className="Reject applied-jobs-button">Reject</button>
+        </>
+      }
+      {
+        props.ActiveTab === "Rejected"? <button className="Rejected applied-jobs-button">Rejected</button>:null
+      }
+
+      {props.ActiveTab != null ? null:<button className="apply-button" onClick={props.Apply}>Apply</button> {/*onClick={Apply}*/}}
+    </>
+  )
 }
 
 export default SelectedJobInfo

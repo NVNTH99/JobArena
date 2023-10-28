@@ -124,7 +124,7 @@ function JobApplication(){
                     {candidateList.Pending && candidateList.Rejected && candidateList.Shortlisted && candidateList.Offered && <TabGroup candidateList={candidateList}/>} {/*In case of error check here*/}
                 </div>
                 <div className="right">
-                    {events.upcoming && <UpcomingCard event={events}/>} {/*In case of error check here*/}
+                    {events.upcoming && <UpcomingCard event={events.upcoming}/>} {/*In case of error check here*/}
                 </div>
             </div>
         </div>

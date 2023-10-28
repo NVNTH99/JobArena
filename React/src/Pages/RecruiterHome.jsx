@@ -85,7 +85,7 @@ function RecruiterHome(){
                     <div>
                         <Link className="add-job-button" to="/recruiter/add_job">
                             <p>Add Job</p>
-                            <FontAwesomeIcon size="md" icon={faPlus}/>
+                            <FontAwesomeIcon icon={faPlus}/>
                         </Link>
                     </div>    
                 </div>
@@ -106,7 +106,7 @@ function RecruiterHome(){
                             )
                         }
                     </div>
-                    {events.upcoming && <UpcomingCard event = {events}/>} {/*In case of error check here*/}
+                    {events.upcoming && <UpcomingCard event = {events.upcoming}/>} {/*In case of error check here*/}
                 </div>
             </div>
         </>

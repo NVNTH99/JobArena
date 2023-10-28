@@ -1,5 +1,6 @@
 import React from "react";
 import {Link} from "react-router-dom";
+import InviteRejectButton from "./InviteRejectButton";
 
 
 function invite(App_id){
@@ -19,8 +20,7 @@ function Button(status,App_id){
   if (status==="pending"){
     return(
       <>
-        <button className="inviteButton" onClick={()=>invite(App_id)}>Invite for interview</button>
-        <button className="rejectButton" onClick={()=>reject(App_id)}>Reject</button>
+        <InviteRejectButton/>
       </>
     )
   }
@@ -32,18 +32,45 @@ function Button(status,App_id){
       </span>
     )
   }
+  if (status==="accepted"){
+    return(
+      <span style={{color:"rgb(114, 210, 90)"}}>
+        Accepted by candidate
+      </span>
+      
+    )
+  }
+  if (status==="candidate_rejected"){
+    return(
+      <span style={{color:"rgb(228,107,107)"}}>
+        Rejected by candidate
+      </span>
+      
+    )
+  }
+  if (status==="offered"){
+    return(
+      <span>
+        Candidate response pending
+      </span>
+      
+    )
+  }
 }
 
 
 function CandidateListCard(props){
   return(
     <div className="card job_application">
+      <div>
         <Link to={{
           pathname:"/recruiter/candidate_profile",
           state:{
             cand_id:props.candidate.id,
           }
-        }}>{props.candidate.name}</Link> {props.candidate.id} <span className="buttonSpan">{Button(props.candidate.status,props.candidate.App_id)}</span>
+        }}>{props.candidate.name}</Link> {props.candidate.id}
+      </div>
+      <div className="buttonSpan">{Button(props.candidate.status,props.candidate.App_id)}</div>
     </div>
   );
 }
