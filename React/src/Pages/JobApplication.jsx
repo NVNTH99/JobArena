@@ -4,7 +4,7 @@ import TabGroup from "../components/TabGroup";
 import "./JobApplication.css";
 import UpcomingCard from "../components/UpcomingCard";
 import { useLocation } from "react-router-dom"; //Added by Nava
-import { response } from "express";
+// import { response } from "express";
 
 // var job = {title:"Job Title", companyName:"Company name", location:"Location", category:"Category",
 // description:"Short description of the job - Lorem ipsum is placeholder text commonly used in the graphic, print, and publishingindustries for Short description of the job - Lorem ipsum is placeholder text commonly used in the graphic, print, and publishingindustries for"}
