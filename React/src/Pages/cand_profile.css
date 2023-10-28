@@ -1,32 +1,51 @@
 
-.alllll *{
+.alllllcp *{
     font-family: "Myanmar Khyay-Regular", Helvetica;
 }
 
-#yourjobs{
-    font-size: 3rem;
+#cprofile{
+    font-size: 2.5rem;
     margin: 1rem 4rem;
+    color: #4c489d;
 }
 
-#hrr{
-    margin: 0 auto;
+.hrrcp{
+    margin: 0 auto 1rem;
     width:90%;
-    height: 3px;
+    height: 2px;
     background-color: #d2d2d2;
     border: 1px solid #d2d2d2;
 }
 
-.lhs{
+#addcp{
+    position: relative;
+    background: linear-gradient(45deg, #6057A6, #864d88);
+    border-radius: 20px;
+}
+
+.lhscp{
     width:67vw;
     float: left;
     margin: 10px 50px;
+    position: relative;
+    overflow: hidden;
+    
 }
 
-.form-label{
-    font-weight: 600;
+.cpbg{
+    /* background-color:rgb(182, 182, 182); */
+    position: relative;
+    z-index: 5;
+    
+    padding: 0.5rem;
 }
 
-.savebtn{
+#formsavebtncp{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.savebtncp{
     background-color: #E8ac66;
     width: 10rem;
     height: 2.5rem;
@@ -38,15 +57,203 @@
     text-decoration: none;
 }
 
-.savebtn p{
+.savebtncp p{
     font-size: 1.3rem;
     font-weight: bold;
     margin: 0;
     color: black;
 }
 
-#formsavebtn{
+
+
+.candidate-profile-page input {
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #4c489d;
+    background-color: #ebebeb;
+  }
+
+.petticp{
     display: flex;
-    align-items: flex-end;
-    justify-content: flex-end;
+    /* align-items: center; */
+    justify-content: space-evenly;
 }
+
+.lblcp{
+    font-weight:600;
+    margin-bottom: 3px;
+    color: #ffefd6;
+}
+
+.cp__field {
+    width: 40%;
+  padding: 10px 0px;
+  display: flex;
+  flex-direction: column;
+}
+
+.cp__input {
+    border-bottom: 2px solid #e3e3e3;
+    padding: 10px;
+    padding-left: 24px;
+    font-weight: 700;
+    transition: 0.2s;
+    color: #4c489d;
+  }
+  
+  .cp__input:active,
+  .cp__input:focus,
+  .cp__input:hover {
+    outline: none;
+    border-bottom-color: #6a679e;
+  }
+
+  .dropdowncp {
+    width: 40%;
+    padding: 10px;
+    padding-left: 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #e3e3e3;
+    color: #4c489d;
+    font-weight: 700;
+}
+
+.catgrpcp{
+display: flex;
+}
+
+#langpluscp{
+    cursor: pointer;
+}
+
+#domainpluscp{
+    cursor: pointer;
+}
+
+#lang-listcp {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+
+#domain-listcp {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+
+.itemcp {
+    border-radius: 10px;
+    /* background-color: #fca8ff; */
+    background-color: #a6aaf5;
+    padding: 5px;
+    margin: 5px 0;
+}
+
+.itemcp button {
+    font-weight:bold;
+    margin-left: 1px;
+    background-color: transparent;
+    color: red;
+    border: none;
+    cursor: pointer;
+}
+
+.xtra-formcp{
+    display: flex;
+    flex-direction: column;
+}
+
+.xtra-headingcp{
+    margin: 1.5rem 3rem 1rem;
+}
+
+.petticp-btn{
+    display: flex;
+    justify-content: flex-end;
+    margin: 1rem;
+    margin-right: 4rem;
+   
+}
+
+.addwkcp{
+    width:100px;
+    height: 40px;
+    font-weight: 600;
+    border-radius: 20px ;
+    cursor: pointer;
+    background-color: #8ddf79;
+}
+
+.delwkcp{
+    width:100px;
+    height: 40px;
+    font-weight: 600;
+    border-radius: 20px ;
+    cursor: pointer;
+    background-color: #e36b6b;
+}
+
+.smhrr{
+    margin: 0 auto 1rem;
+    width:75%;
+    background-color: #d2d2d2;
+    border: 1px solid #d2d2d2;
+}
+
+.screen__backgroundcp {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+    -webkit-clip-path: inset(0 0 0 0);
+    clip-path: inset(0 0 0 0);
+    border-radius: 25px;
+  }
+  
+  .screen__background__shapecp {
+    transform: rotate(45deg);
+    position: absolute;
+  }
+  
+  .screen__background__shape1cp {
+    height: 520px;
+    width: 520px;
+    background: linear-gradient(90deg, #6C63AC, #1E1F26);
+    top: -50px;
+    right: 120px;
+    border-radius: 0 72px 0 0;
+  }
+  
+  .screen__background__shape2cp {
+    height: 220px;
+    width: 220px;
+    background: #6c63ac;
+    top: -172px;
+    right: 0;
+    border-radius: 32px;
+  }
+  
+  .screen__background__shape3cp {
+    height: 540px;
+    width: 190px;
+    background: linear-gradient(270deg, #5d54a4, #6a679e);
+    top: -24px;
+    right: 0;
+    border-radius: 32px;
+  }
+  
+  .screen__background__shape4cp {
+    height: 400px;
+    width: 200px;
+    background: linear-gradient(80deg, #6C63AC, #1E1F26);
+    top: 420px;
+    right: 50px;
+    border-radius: 60px;
+  }

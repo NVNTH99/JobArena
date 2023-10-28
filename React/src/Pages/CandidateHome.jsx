@@ -145,7 +145,7 @@ function RecommendedJobs(props){
 
 function Viewmore(){
     return(
-        <Link className="view-more" to="/candidate/applied_jobs">
+        <Link className="view-more" to="/candidate/recommended_jobs">
             <h4>View more</h4>
             <FontAwesomeIcon size="lg" icon={faPlus} />
         </Link>

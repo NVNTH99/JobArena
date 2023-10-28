@@ -29,7 +29,7 @@ function App() {
         <Route path="/recruiter/home" element={<RecruiterHome/>}/>
         <Route path="/recruiter/job_application" element={<JobApplication/>}/>
         <Route path="/recruiter/candidate_profile" element={<CandidateProfle/>}/>
-        <Route path="/recruiter/applied_candidates" element={<RecruiterAddJob/>}/>
+        <Route path="/recruiter/add_job" element={<RecruiterAddJob/>}/>
         
         <Route path="*" element={<NoPage/>}/>
       </Routes>

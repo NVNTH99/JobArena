@@ -4,6 +4,62 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 // import { response } from "express";
 
+function loadfunc(){
+  const candbtn = document.getElementById("candbtn");
+  const recbtn = document.getElementById("recbtn");
+  const form1 = document.getElementById("form1");
+  const form2 = document.getElementById("form2");
+  const dropdown = document.getElementById("dropdownOptions");
+  const otherInput = document.getElementById("otherInput");
+
+  if (candbtn) {
+    candbtn.click();
+    candbtn.addEventListener("click", function () {
+      form1.style.display = "block";
+      form2.style.display = "none";
+    });
+  }
+
+  if (recbtn) {
+    recbtn.addEventListener("click", function () {
+      form1.style.display = "none";
+      form2.style.display = "block";
+    });
+  }
+
+  if (dropdown && otherInput) {
+    dropdown.addEventListener("change", function () {
+      if (dropdown.value === "others") {
+        otherInput.style.display = "block";
+      } else {
+        otherInput.style.display = "none";
+      }
+    });
+  }
+//   window.onload = function () {
+//     Particles.init({
+//       selector: ".backgroundsign",
+//     });
+  
+    
+//   };
+  const particles = Particles.init({
+    selector: ".backgroundsign",
+    color: ["#03dac6", "#6058A3", "#ff0266"],
+    connectParticles: true,
+    responsive: [
+      {
+        breakpoint: 768,
+        options: {
+          color: ["#faebd7", "#03dac6", "#ff0266"],
+          maxParticles: 80,
+          connectParticles: false,
+        },
+      },
+    ],
+  });
+};
+
 function SignUp(){
     const navigate = useNavigate();
     const [type,settype] = useState('candidate')
@@ -176,6 +232,9 @@ function SignUp(){
         }
     },[user_id])
 
+    useEffect(() =>{
+        loadfunc();
+    },[]);
     return(
         <>
             <section className="bgsign">
@@ -355,7 +414,7 @@ function SignUp(){
 
 
                 </div>
-                <canvas className="background"></canvas>
+                <canvas className="backgroundsign"></canvas>
             </section>
         </>
     )

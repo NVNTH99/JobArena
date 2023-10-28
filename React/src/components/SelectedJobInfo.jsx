@@ -64,7 +64,7 @@ function AppliedButtons(props){
         </>
       }
       {
-        props.ActiveTab === "Rejected"? <button className="Rejected applied-jobs-button">Rejected</button>:null
+        props.ActiveTab === "Rejected"? <button className="Rejected applied-jobs-button" disabled>Rejected</button>:null
       }
 
       {props.ActiveTab != null ? null:<button className="apply-button" onClick={props.Apply}>Apply</button>} {/*onClick={Apply}*/}

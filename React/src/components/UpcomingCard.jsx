@@ -1,4 +1,5 @@
 import React from "react";
+import "./UpcomingCard.css";
 
 function Event(props){
     return(
@@ -17,50 +18,13 @@ function Event(props){
 function UpcomingCard(props){
     var events = props.event;
     return(
-        <>
-            <div className="upcoming">
-                <h2>Upcoming Events</h2>
+        <div className="upcoming">
+            <div className="upcoming_container">
+                <div className="upcoming_heading"><h2>Upcoming Events</h2></div>
                 {events.map((event,index)=> (<Event key = {index} event={event}/>))}
             </div>
-        </>
+        </div>
     );
 }
 
 export default UpcomingCard
-
-
-// .upcoming{
-//     margin : 5%;
-//     padding: 5%;
-//     background:rgb(242, 242, 242);
-//     border-radius: 1rem;
-//     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-//     height: 30rem;
-//     width: 18rem;
-//     font-family: "Myanmar Khyay-Regular", Helvetica;
-// }
-
-// .eventCard{
-//     margin-top:10pt;
-//     background: rgb(217,217,217);
-//     border-radius: 5pt;
-//     padding: 10pt;
-//     width:16.25rem;
-// }
-
-// .eventCard h4{
-//     margin:0;
-//     color: rgb(80,89,103);
-// }
-
-// .eventCard .line1,.line2{
-//     font-size: 10pt;
-// }
-
-// .eventCard .line1{
-//     color: rgb(80,89,103);
-// }
-
-// .upcoming h2{
-//     margin:0;
-// }
