@@ -5,6 +5,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import TimePicker from "react-time-picker";
 import 'react-time-picker/dist/TimePicker.css';
+// import '../Pages/RecruiterCandidateProfile.css'
 
 function InviteRejectButton(){
     const [isModalOpen, setModalOpen] = useState(false);
@@ -19,7 +20,8 @@ function InviteRejectButton(){
     return (
       <div>
         <button className="inviteButton" onClick={openModal}>Invite for interview</button>
-        <Model isOpen={isModalOpen} onRequestClose={closeModal} style={{
+        <Model isOpen={isModalOpen} onRequestClose={closeModal} 
+        style={{
           overlay:{
             background:"rgba(0,0,0,0.5)",
             display: "flex", // Set to flex
@@ -32,15 +34,16 @@ function InviteRejectButton(){
             right:"auto",
             bottom:"auto",
             width:"20%",
-            height:"50%",
+            height:"52%",
             borderRadius:"15px"
           }
-        }}>
-          <h2>Schedule interview</h2>
-          <form>
+        }}
+        >
+          <h2 className="interview_form_heading">Schedule interview</h2>
+          <form className="interview_form">
             <div className="interview_venue">
               Link/venue : 
-              <input type="text"/>
+              <input className="interview_form_input" type="text"/>
             </div>
             <div className="interview_date">
               Date :
@@ -50,7 +53,7 @@ function InviteRejectButton(){
               Time :
               <TimePicker className="custom-time-picker-input" onChange={onChange} value={value} disableClock={true}/>
             </div>
-            <input type="submit"/>
+            <input className="submit" type="submit"/>
           </form>
         </Model>
         <button className="rejectButton">Reject</button>
