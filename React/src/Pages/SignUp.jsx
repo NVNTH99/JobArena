@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import "./SignUp.css";
 
 function loadfunc(){
-    const candbtn = document.getElementById("candbtn");
+  const candbtn = document.getElementById("candbtn");
   const recbtn = document.getElementById("recbtn");
   const form1 = document.getElementById("form1");
   const form2 = document.getElementById("form2");
@@ -33,6 +33,28 @@ function loadfunc(){
       }
     });
   }
+//   window.onload = function () {
+//     Particles.init({
+//       selector: ".backgroundsign",
+//     });
+  
+    
+//   };
+  const particles = Particles.init({
+    selector: ".backgroundsign",
+    color: ["#03dac6", "#6058A3", "#ff0266"],
+    connectParticles: true,
+    responsive: [
+      {
+        breakpoint: 768,
+        options: {
+          color: ["#faebd7", "#03dac6", "#ff0266"],
+          maxParticles: 80,
+          connectParticles: false,
+        },
+      },
+    ],
+  });
 };
 
 function SignUp(){
@@ -154,9 +176,8 @@ function SignUp(){
 
 
                 </div>
-                <canvas className="background"></canvas>
+                <canvas className="backgroundsign"></canvas>
             </section>
-            {loadfunc()}
         </>
     )
 }

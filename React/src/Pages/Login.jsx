@@ -1,4 +1,4 @@
-import React,{ useState } from "react";
+import React,{ useEffect, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser} from '@fortawesome/free-solid-svg-icons'
 import { faLock } from "@fortawesome/free-solid-svg-icons";
@@ -9,6 +9,29 @@ import './Login.css'
 // import { response } from "express";
 import axios from 'axios'
 
+function LoginBackground(){
+    // window.onload = function () {
+    //     Particles.init({
+    //         selector: ".background",
+    //     });
+    // };
+    const particles = Particles.init({
+    selector: ".background",
+    color: ["#03dac6", "#6058A3", "#ff0266"],
+    connectParticles: true,
+    responsive: [
+        {
+        breakpoint: 768,
+        options: {
+            color: ["#faebd7", "#03dac6", "#ff0266"],
+            maxParticles: 2,
+            connectParticles: false,
+        },
+        },
+    ],
+    });
+}
+
 function Login(){
     const [credentials, setcred] = useState({
         username:'',
@@ -17,6 +40,10 @@ function Login(){
     // const history = useHistory();
     const [retrieved , setretrieval] = useState({})
     const [error, seterror] = useState('')
+
+    useEffect(()=>{
+        LoginBackground();
+    }, []);
 
     const loginfunc = (e) => {
         e.preventDefault();
