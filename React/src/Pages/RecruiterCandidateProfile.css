@@ -342,10 +342,22 @@ border-radius: 4px;
 }
 
 .interview_form{
-    font-family: "Myanmar  Khyay-Regular", Helvetica;
+    font-family: "Myanmar  Khyay-Regular", Helvetica ;
     display: flex;
     flex-direction: column;
     gap:10px;
+}
+
+.interview_radio{
+    display: flex;
+    /* padding: 0% 25% 0% 25%; */
+    gap: 5%;
+    /* justify-content: center; */
+}
+
+.interview_radio label{
+    display: flex;
+
 }
 
 .interview_venue{
@@ -353,6 +365,13 @@ border-radius: 4px;
 }
 
 .interview_form input{
+    width: 100%;
+    background: rgb(237, 237, 237);
+    color: rgb(31, 31, 31);
+    font-family: "Myanmar  Khyay-Regular", Helvetica ;
+}
+
+.interview_form input:focus{
     width: 100%;
     background: rgb(237, 237, 237);
     color: rgb(31, 31, 31);
@@ -366,5 +385,16 @@ border-radius: 4px;
     color: white;
     background: rgb(62, 127, 213);
     font-family: "Myanmar  Khyay-Regular", Helvetica;
+}
+
+.interview_form .submit:hover{
+    background: rgb(56, 115, 191) ;
+}
+
+.interview_form .submit:active {
+    color: white;
+    background-color: rgb(40, 82, 136);
+    box-shadow: 0 2px #cecece;
+    transform: translateY(0.5px);
 }
 
