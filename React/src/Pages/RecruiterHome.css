@@ -59,11 +59,15 @@
 
 .recruiter-home-bottom > div:nth-child(2){
     display: flex;
+    flex-direction: column;
+    gap: 4%;
     padding: 1%;
     justify-content: center;
+    margin-left: 110px;
 }
 
 .recruiter-home-bottom > div:nth-child(2) > div{
+    overflow-y: auto;
     margin: 0;
 }
 
