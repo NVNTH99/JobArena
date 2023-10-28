@@ -2,7 +2,7 @@ import React, { useState,useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Search from "../components/Search";
 import JobInfo from "../components/JobInfo";
-import UpcomingCard from "../components/UpcomingCard";
+import CandidateUpcomingCard from "../components/CandidateUpcomingCard";
 import RecommendedCard from "../components/recommendedCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -132,8 +132,7 @@ function RecommendedJobs(props){
                     <div>
                         <Viewmore/>
                     </div>
-                </div>
-                
+                </div>    
             </div>
             <hr></hr>
         </div>

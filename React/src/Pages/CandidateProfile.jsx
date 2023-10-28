@@ -1,5 +1,6 @@
 import React from "react";
 import Navbar from "../components/Navbar";
+import Heading from "../components/Heading"
 import "./CandidateProfile.css";
 import UpcomingCard from "../components/UpcomingCard";
 
@@ -12,22 +13,24 @@ var events = {"upcoming":upcoming};
 
 function CandidateProfle(){
     return(
-        <div className="candpro">
-            <Navbar/>
-            <h2>Candidate Details</h2>
-            <hr/>
-            <div className="left">
-                <div className="leftbox">
+        <>
+            <Navbar userType = "recruiter"/>
+            <Heading title = "Candidate Details"/>
+            <div className="candpro">
+                <div className="left">
+                    <div className="leftbox">
 
+                    </div>
+                    <div className="rightbox">
+
+                    </div>
                 </div>
-                <div className="rightbox">
-
+                <div className="right">
+                    <UpcomingCard event={events}/>
                 </div>
             </div>
-            <div className="right">
-                <UpcomingCard event={events}/>
-            </div>
-        </div>
+        </>
+
     )
 }
 

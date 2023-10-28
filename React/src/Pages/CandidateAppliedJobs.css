@@ -1,0 +1,175 @@
+@font-face {
+    font-family: "Urbanist-SemiBold";
+    src: url(/Urbanist-SemiBold.ttf);
+}
+  
+.applied-jobs-body{
+    font-family: "Myanmar Khyay-Regular", Helvetica;
+    font-style: normal;
+    line-height: normal;
+    display: flex;
+    box-sizing: border-box;
+    height: 74vh;
+}
+
+.applied-jobs-body h4,h5,h6{
+    margin: 0;
+}
+
+.applied-info{
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 74%;
+    padding: 1%;
+    box-sizing: border-box;
+}
+
+.applied-info > div{
+    display: flex;
+    box-sizing: border-box;
+}
+
+.applied-tabs{
+    display: flex;
+    flex-direction: column;
+    padding: 2%;
+    box-sizing: border-box;
+}
+
+.applied-tabs hr{
+    border-style: none;
+    border-top: 3px solid #777777;
+    height: 1px;
+    width: 100%;
+    margin: 0;
+}
+
+.candidate-tab-button{
+    font-family: "Myanmar Khyay-Regular", Helvetica;
+    font-style: normal;
+    line-height: normal;
+    font-size: medium;
+    text-align: left;
+    border-radius: 8px 8px 0 0;
+    border: none;
+    padding: 1% 0.5% 1% 1.75%;
+    width: 20%;
+    box-sizing: border-box;
+    cursor: pointer;
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.candidate-tab-button > div{
+    display: flex;
+    justify-content: space-between;
+}
+
+.candidate-tab-button > div > p:first-child{
+    flex: 0 0 80%;
+}
+
+.candidate-tab-button > div > p:nth-child(2){
+    padding-top: 1%;
+    /* justify-content: flex-end; */
+    text-align: center;
+    width: 30%;
+    border-radius: 100%
+}
+
+.candidate-tab-count{
+    text-align: end;
+}
+
+.Pending{
+    background-color: #989898;
+}
+
+.Shortlisted{
+    background-color: rgb(242, 242, 84);
+}
+
+.Offered{
+    background-color: #8DDF79;
+}
+
+.Rejected{
+    background-color: #E46B6B;
+}
+
+.applied-tab-info{
+    display: flex;
+}
+
+.applied-tab-list{
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 45%;
+}
+
+.selected-applied-job-info{
+    display: flex;
+    flex-direction: column;
+}
+
+.candidate-upcoming-section{
+    display: flex;
+    padding: 3%;
+}
+
+.candidate-upcoming-container{
+    background-color: #f2f2f2;
+    border-radius: 10px;
+    box-shadow: 0px 4px 4px #00000040;
+    padding: 8% 4% 8% 4%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    height: 25rem;
+}
+
+.candidate-upcoming-container > div{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    overflow: auto;
+    padding: 2%;
+    align-items: center;
+    box-sizing: border-box;
+    height: 75%;
+}
+
+.candidate-upcoming-container h2{
+    font-family: "Myanmar Khyay-Regular", Helvetica;
+    font-style: normal;
+    line-height: normal;
+    margin: 0;
+    margin-bottom: 5%;
+    text-align: center;
+}
+
+.candidate-event-card{
+    background-color: #d9d9d9;
+    border-radius: 10px;
+    font-family: "Urbanist-SemiBold", Helvetica;
+    font-weight: 600;
+    padding: 4%;
+    box-sizing: border-box;
+}
+
+.candidate-event-card > p:first-child{
+    font-size: 16px;
+}
+
+.candidate-event-card >p:nth-child(2){
+    font-size: 15px;
+}
+
+.candidate-event-card > p:nth-child(3){
+    font-size: 14px;
+}
+
+
+
+
+

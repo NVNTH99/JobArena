@@ -2,7 +2,7 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import Heading from "../components/Heading";
 import JobInfo from "../components/JobInfo";
-import UpcomingCard from "../components/UpcomingCard";
+import CandidateUpcomingCard from "../components/CandidateUpcomingCard";
 import "./CandidateRecommendedJobs.css";
 import { useLocation } from "react-router-dom";
 

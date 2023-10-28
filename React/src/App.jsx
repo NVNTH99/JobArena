@@ -11,6 +11,7 @@ import Cand_profile from './Pages/cand_profile';
 import CandidateRecommendedJobs from './Pages/CandidateRecommendedJobs';
 import RecruiterAddJob from './Pages/RecruiterAddJob';
 import CandidateAppliedJobs from './Pages/CandidateAppliedJobs';
+import SignUp from './Pages/SignUp';
 function App() {
   // const history = useHistory();
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route index element={<Login/>} />
         <Route path="/home" element={<Home/>}/>
         <Route path="/login" element={<Login/>}/>
+        <Route path="/signup" element={<SignUp/>}/>
         <Route path="/candidate/home" element={<CandidateHome/>}/>
         <Route path="/candidate/profile" element={<Cand_profile/>}/>
         <Route path="/candidate/recommended_jobs" element={<CandidateRecommendedJobs/>}/>
