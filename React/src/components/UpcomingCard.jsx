@@ -17,12 +17,12 @@ function Event(props){
 function UpcomingCard(props){
     var events = props.event;
     return(
-        <div>
+        <>
             <div className="upcoming">
                 <h2>Upcoming Events</h2>
                 {events.map((event,index)=> (<Event key = {index} event={event}/>))}
             </div>
-        </div>
+        </>
     );
 }
 

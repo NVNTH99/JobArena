@@ -12,8 +12,8 @@ description:"Short description of the job - Lorem ipsum is placeholder text comm
 var candidate_list = [
     {name:"Candidate Name", id:"#CandidateID", status:"pending", App_id:1234},
     {name:"Candidate Name", id:"#CandidateID", status:"pending", App_id:4354},
-    {name:"Candidate Name", id:"#CandidateID", status:"pending", App_id:5462},
-    {name:"Candidate Name", id:"#CandidateID", status:"pending", App_id:2367},
+    {name:"Candidate Name", id:"#CandidateID", status:"accepted", App_id:5462},
+    {name:"Candidate Name", id:"#CandidateID", status:"candidate_rejected", App_id:2367},
     {name:"Candidate Name", id:"#CandidateID", status:"pending", App_id:2346},
     {name:"Candidate Name", id:"#CandidateID", status:"rejected", App_id:2467},
     {name:"Candidate Name", id:"#CandidateID", status:"pending", App_id:3345},
@@ -21,6 +21,7 @@ var candidate_list = [
     {name:"Candidate Name", id:"#CandidateID", status:"rejected", App_id:2345},
     {name:"Candidate Name", id:"#CandidateID", status:"pending", App_id:3457},
     {name:"Candidate Name", id:"#CandidateID", status:"shortlisted", App_id:6969},
+    {name:"Candidate Name", id:"#CandidateID", status:"offered", App_id:6960},
 ]
 
 var upcoming = [
@@ -38,7 +39,7 @@ for(var i=0;i<candidate_list.length;i++){
         candidateList.Rejected.push(candidate_list[i]);
     else if (candidate_list[i].status==="shortlisted")
         candidateList.Shortlisted.push(candidate_list[i]);
-    else if (candidate_list[i].status==="offered")
+    else if (candidate_list[i].status==="offered" || candidate_list[i].status==="accepted" || candidate_list[i].status==="candidate_rejected")
         candidateList.Offered.push(candidate_list[i]);
 }
 
