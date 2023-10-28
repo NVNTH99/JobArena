@@ -50,7 +50,7 @@ function RecruiterHome(){
                     <div>
                         <Link className="add-job-button" to="/recruiter/add_job">
                             <p>Add Job</p>
-                            <FontAwesomeIcon size="md" icon={faPlus}/>
+                            <FontAwesomeIcon icon={faPlus}/>
                         </Link>
                     </div>    
                 </div>
@@ -63,7 +63,7 @@ function RecruiterHome(){
                             )
                         }
                     </div>
-                    <UpcomingCard event = {events}/>
+                    <UpcomingCard event = {events.upcoming}/>
                 </div>
             </div>
         </>

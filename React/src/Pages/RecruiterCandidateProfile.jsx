@@ -155,7 +155,7 @@ function CandidateProfle() {
                   <div className="cand_exp_box">
                     {
                       candidate.experience.map((exp, index)=>(
-                        <div className="cand_exp_element">
+                        <div key = {index} className="cand_exp_element">
                           <div className="cand_line1">
                             <div className="exp_title">{exp.title}</div>
                             <div className="exp_duration">{exp.start_year}-{exp.end_date}</div>
@@ -174,7 +174,7 @@ function CandidateProfle() {
                   <div className="cand_project_box">
                     {
                       candidate.project.map((project, index)=>(
-                        <div className="cand_exp_element">
+                        <div key = {index} className="cand_exp_element">
                           <div className="cand_line1">
                             <div className="exp_title">{project.title}</div>
                             <div className="exp_duration">{project.start_date}-{project.end_date}</div>
