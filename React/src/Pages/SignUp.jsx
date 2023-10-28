@@ -2,9 +2,11 @@ import React, {useState,useEffect} from "react";
 import "./SignUp.css";
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
+// import { response } from "express";
 
 function SignUp(){
-    const [type,settype] = useState('')
+    const navigate = useNavigate();
+    const [type,settype] = useState('candidate')
     const [credentials, setcred] = useState({
         firstname:'',
         lastname: '',
@@ -13,10 +15,11 @@ function SignUp(){
         repassword: '',
         organization: ''
     })
-    const [usernameerror, setusernameerror] = useState('')
-    const [passworderror, setpassworderror] = useState('')
-    const [organizationerror, setorganizationerror] = useState('')
+    const [usernameerror, setusernameerror] = useState()
+    const [passworderror, setpassworderror] = useState()
+    const [organizationerror, setorganizationerror] = useState()
     const [organizations,setorganizations] = useState([])
+    const [user_id,setuser] = useState()
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -26,7 +29,42 @@ function SignUp(){
         }));
     };
 
+    const loadfunc = () => {
+        const candbtn = document.getElementById("candbtn");
+        const recbtn = document.getElementById("recbtn");
+        const form1 = document.getElementById("form1");
+        const form2 = document.getElementById("form2");
+        const dropdown = document.getElementById("dropdownOptions");
+        const otherInput = document.getElementById("otherInput");
+
+        if (candbtn) {
+            candbtn.click();
+            candbtn.addEventListener("click", function () {
+            form1.style.display = "block";
+            form2.style.display = "none";
+            });
+        }
+
+        if (recbtn) {
+            recbtn.addEventListener("click", function () {
+            form1.style.display = "none";
+            form2.style.display = "block";
+            });
+        }
+
+        if (dropdown && otherInput) {
+            dropdown.addEventListener("change", function () {
+            if (dropdown.value === "others") {
+                otherInput.style.display = "block";
+            } else {
+                otherInput.style.display = "none";
+            }
+            });
+        }
+    }
+
     useEffect(()=>{
+        loadfunc()
         axios.get('http://localhost:3000/organizations')
         .then(response => {
             setorganizations(response.data)
@@ -48,7 +86,95 @@ function SignUp(){
     const signupfunc = (e) => {
         e.preventDefault()
         axios.post('http://localhost:3000/login',{username: credentials.username})
+        .then(response => {
+            if(typeof response.data === 'object'){
+                setusernameerror('Username taken');
+            }
+            else{
+                setusernameerror('');
+            }
+        })
+        .catch(error => {
+            console.log("Error Checking for existence of username")
+        })
+        // if (!credentials.organization && type === 'recruiter') {
+        //     setorganizationerror('Please enter an organization');
+        // }
+        // else{
+        //     setorganizationerror('');
+        // }
+        // if (credentials.password !== credentials.repassword) {
+        //     setpassworderror('Passwords do not match');
+        // }
+        // else{
+        //     setpassworderror('');
+        // }
+        // if(usernameerror && passworderror && organizationerror && usernameerror==='' && passworderror === '' && organizationerror === ''){
+        //     e.preventDefault()
+        //     axios.post('http://localhost:3000/signup', { credential: credentials, type: type })
+        //     .then(response => {
+        //         // console.log(response.data)
+        //         setuser(response.data)
+        //     })
+        //     .catch(error => {
+        //         console.log("Error Signing up")
+        //     })
+        // }
     }
+
+    useEffect(()=>{
+        console.log(usernameerror,passworderror,organizationerror,"1")
+        if(typeof usernameerror === 'string'){
+            if (!credentials.organization && type === 'recruiter') {
+                setorganizationerror('Please enter an organization');
+            }
+            else{
+                setorganizationerror('');
+            }
+        }
+    },[usernameerror])
+
+    useEffect(()=>{
+        console.log(usernameerror,passworderror,organizationerror,"2")
+        if(typeof organizationerror === 'string'){
+            if (credentials.password !== credentials.repassword) {
+                setpassworderror('Passwords do not match');
+            }
+            else{
+                setpassworderror('');
+            }
+        }
+    },[organizationerror])
+
+    useEffect(()=> {
+        console.log(usernameerror,passworderror,organizationerror,"3")
+        if(typeof passworderror === 'string'){
+            if(usernameerror==='' && passworderror === '' && organizationerror === ''){
+                axios.post('http://localhost:3000/signup', { credential: credentials, type: type })
+                .then(response => {
+                    // console.log(response.data)
+                    setuser(response.data)
+                })
+                .catch(error => {
+                    console.log("Error Signing up")
+                })
+            }
+        }
+    },[passworderror])
+
+    useEffect(() => {
+        // console.log(user_id)
+        if(user_id){
+            if(type === 'candidate'){
+                console.log("Went to candidate")
+                navigate('/candidate/home', { state: { user_id: user_id.user_id } })
+            }
+            else if(type === 'recruiter'){
+                console.log("Went to Recruiter")
+                navigate("/recruiter/home", { state: { user_id: user_id.user_id } })
+            }
+        }
+    },[user_id])
 
     return(
         <>
@@ -93,6 +219,7 @@ function SignUp(){
                                             type="text" 
                                             className="signup__input"
                                             value = {credentials.firstname}
+                                            onChange={handleChange}
                                             placeholder="First Name"></input>
                                         </div>
                                         <div className="signup__field">
@@ -101,6 +228,7 @@ function SignUp(){
                                             type="text" 
                                             className="signup__input"
                                             value = {credentials.lastname}
+                                            onChange={handleChange}
                                             placeholder="Last Name"></input>
                                         </div>
                                     </div>
@@ -111,6 +239,7 @@ function SignUp(){
                                             type="text" 
                                             className="signup__input" 
                                             value = {credentials.username}
+                                            onChange={handleChange}
                                             placeholder="Username"></input>
                                         </div>
                                     </div>
@@ -121,6 +250,7 @@ function SignUp(){
                                             type="password" 
                                             className="signup__input"
                                             value = {credentials.password}
+                                            onChange={handleChange}
                                             placeholder="Password"></input>
                                         </div>
                                         <div className="signup__field">
@@ -129,11 +259,12 @@ function SignUp(){
                                             type="password" 
                                             className="signup__input"
                                             value = {credentials.repassword}
+                                            onChange={handleChange}
                                             placeholder="Re-Confirm Password"></input>
                                         </div>
                                     </div>
                                     <div className="butttton">
-                                        <button className="bn31">Sign Up</button>
+                                        <button className="bn31"  onClick={signupfunc}>Sign Up</button>
                                     </div>
                                 </form>
                                 <form className="signup" id="form2">
@@ -144,6 +275,7 @@ function SignUp(){
                                             type="text" 
                                             className="signup__input"
                                             value = {credentials.firstname}
+                                            onChange={handleChange}
                                             placeholder="First Name"></input>
                                         </div>
                                         <div className="signup__field">
@@ -152,6 +284,7 @@ function SignUp(){
                                             type="text" 
                                             className="signup__input"
                                             value = {credentials.lastname}
+                                            onChange={handleChange}
                                             placeholder="Last Name"></input>
                                         </div>
 
@@ -163,11 +296,12 @@ function SignUp(){
                                             type="text" 
                                             className="signup__input"
                                             value = {credentials.username}
+                                            onChange={handleChange}
                                             placeholder="Username"></input>
                                         </div>
                                         <div className="signup__field">
                                             <select className="dropdownsign" id="dropdownOptions" name="organization"
-                                                placeholder="Organization"> {/*Make this retrieve from a list named organizations*/}
+                                                placeholder="Organization" onChange={handleChange}> {/*Make this retrieve from a list named organizations*/}
                                                 <option value="Oracle">Oracle</option>
                                                 <option value="Amazon">Amazon</option>
                                                 <option value="Google">Google</option>
@@ -182,6 +316,7 @@ function SignUp(){
                                         id="otherInput" 
                                         className="signup__input"
                                         value = {credentials.organization}
+                                        onChange={handleChange}
                                         placeholder="Please specify" />
                                     </div>
                                     <div className="petti">
@@ -191,6 +326,7 @@ function SignUp(){
                                             type="password" 
                                             className="signup__input"
                                             value = {credentials.password}
+                                            onChange={handleChange}
                                             placeholder="Password"></input>
                                         </div>
                                         <div className="signup__field">
@@ -199,6 +335,7 @@ function SignUp(){
                                             type="password" 
                                             className="signup__input"
                                             value = {credentials.repassword}
+                                            onChange={handleChange}
                                             placeholder="Re-Confirm Password"></input>
                                         </div>
                                     </div>

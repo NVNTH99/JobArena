@@ -3,7 +3,7 @@ import JobTitle from "./JobTitle";
 import SelectedJobInfo from "./SelectedJobInfo";
 
 const JobInfo = React.memo((props)=>{
-    const [currentJob, setJobDetails] = useState("");
+    const [currentJob, setJobDetails] = useState('');
     let user_id = null
     if(props.user_id){
       user_id = props.user_id
@@ -22,11 +22,11 @@ const JobInfo = React.memo((props)=>{
             <JobTitle
               job_id ={job.job_id}
               key = {index}
-              title = {job.title}
+              title = {job.Title}
               company = {job.company}
-              location = {job.location}
+              location = {job.Location}
               category = {job.category}
-              description = {job.description}
+              description = {job.Description}
               setprop = {setJobDetails}
             />)
           }

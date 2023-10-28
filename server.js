@@ -21,6 +21,102 @@ app.get('/',(req,res)=>{ //When the user visits localhost:3000 it redirects him 
     res.sendFile(path.join(__dirname,'React' , 'dist' ,'index.html'));
 })
 
+app.post('/login',(req,res)=>{ 
+    const username = req.body.username
+    let password = ''
+    let query;
+    if(req.body.password){
+        password = req.body.password
+        query = `SELECT* from login_details where username='${username}' and password='${password}';`
+    }
+    else{
+        query = `SELECT* from login_details where username='${username}';`
+    }
+    // const password = req.body.password
+    // console.log(username,password,dbPath)
+    // const query = `SELECT* from login_details where username='${username}' and password='${password}';`
+    // console.log(query)
+    requestQueue.push({query: query, params: []},(error,result)=>{
+        if(error){
+            res.status(500).send('Internal Server Error')
+        }
+        else{
+            // console.log(result)
+            if(result.length == 1){
+                user_id = result[0].id
+                res.send({
+                    user_id: result[0].id,
+                    type: result[0].type
+                })
+            }
+            else{
+                res.send(false)
+            }
+        }
+    })
+}) //Query Verified
+
+app.post('/signup',(req,res)=>{
+    const credentials = req.body.credential;
+    const type = req.body.type;
+    let organization = credentials.organization
+    if(type === 'recruiter' && typeof organization === 'string'){
+        const query0 = `Insert into Organizations (Organization_name) values (${organization})`
+        requestQueue.push({ query: query0, params: [] }, (error, result) => {
+            if (error) {
+                res.status(500).send('Internal Server Error');
+            } else {
+                const query = `Select id from Organizations where Organization_name='${organization}'`
+                requestQueue.push({ query: query, params: [] }, (error, result) => {
+                    if (error) {
+                        res.status(500).send('Internal Server Error');
+                    } else {
+                        organization = result[0].id
+                    }
+                });
+            }
+        });
+    }
+    const query1 = `INSERT INTO login_details (username,password,type) VALUES ('${credentials.username}', '${credentials.password}' , '${type}');`
+    requestQueue.push({ query: query1, params: [] }, (error, result) => {
+        if (error) {
+            console.log("Error1")
+            res.status(500).send('Internal Server Error');
+        } else {
+            const query2 = `Select id from login_details where username='${credentials.username}'`
+            // if(type === 'candidate'){
+            //     query2 = `INSERT INTO Candidate_details (First_Name,Last_Name,preference category) values ('${credentials.firstname}','${credentials.lastname}','');`
+            // }
+            // else if(type === 'recruiter'){
+            //     query2 = `INSERT INTO `
+            // }
+            requestQueue.push({ query: query2, params: [] }, (error, result) => {
+                if (error) {
+                    console.log("Error2")
+                    res.status(500).send('Internal Server Error');
+                } else {
+                    const user_id = result[0].id
+                    let query3
+                    if(type === 'candidate'){
+                        query3 = `INSERT INTO Candidate_details (cand_id,First_Name,Last_Name,preference_category) values (${user_id},'${credentials.firstname}','${credentials.lastname}','');`
+                    }
+                    else if(type === 'recruiter'){
+                        query3 = `INSERT INTO Recruiter_details (rec_id,First_Name,Last_Name,org_id) values (${user_id},'${credentials.firstname}','${credentials.lastname}',${organization})`
+                    }
+                    requestQueue.push({ query: query3, params: [] }, (error, result) => {
+                        if (error) {
+                            console.log("Error3")
+                            res.status(500).send('Internal Server Error');
+                        } else {
+                            res.send({user_id:user_id});
+                        }
+                    });
+                }
+            });
+        }
+    });
+})
+
 app.get('/organizations',(req,res)=>{
     const query = `Select* from Organizations`
     requestQueue.push({ query: query, params: [] }, (error, result) => {
@@ -32,18 +128,10 @@ app.get('/organizations',(req,res)=>{
     });
 })
 
-app.post('/signup/candidate',(req,res)=>{
-    
-})
-
-app.post('/signup/recruiter',(req,res)=>{
-
-})
-
 
 app.get('/jobs', (req, res) => {
     const searchQuery = req.query.searchQuery;
-    let query = `SELECT o.Organization_name,j.* from jobs j join Recruiter_details r on r.rec_id=j.rec_id join Organizations o on o.org_id=r.org_id WHERE j.Title LIKE '%${searchQuery}%' or j.category LIKE '%${searchQuery}%' or o.organization_name LIKE '%${searchQuery}%'`;
+    let query = `SELECT o.Organization_name as company,j.* from jobs j join Recruiter_details r on r.rec_id=j.rec_id join Organizations o on o.org_id=r.org_id WHERE j.Title LIKE '%${searchQuery}%' or j.category LIKE '%${searchQuery}%' or o.organization_name LIKE '%${searchQuery}%'`;
     if(req.query.user_id){
         query = query + ` AND NOT EXISTS ( SELECT 1 FROM Applications a WHERE a.cand_id = ${req.query.user_id} AND a.job_id = j.job_id)`
     }
@@ -130,7 +218,7 @@ app.get('/candidate/recommended',(req,res)=>{
             if(result.length == 1){
                 console.log(result)
                 const pref = result[0].preference_category.split(',').map(value=>"category like '%" + value + "%'")
-                const query2 = "Select o.Organization_name,j.* from jobs j join Recruiter_details r on r.rec_id=j.rec_id join Organizations o on o.org_id=r.org_id where " + pref.join(" or ") + limit
+                const query2 = "Select o.Organization_name as company,j.* from jobs j join Recruiter_details r on r.rec_id=j.rec_id join Organizations o on o.org_id=r.org_id where " + pref.join(" or ") + limit
                 requestQueue.push({ query: query2, params: [] }, (error, result) => {
                     if (error) {
                         res.status(500).send('Internal Server Error');
@@ -219,36 +307,6 @@ app.post('/candidate/appliedjobs/withdraw',(req,res)=>{
         }
     })
 })
-
-app.post('/login',(req,res)=>{ //The function is made such that it return true if the login details are correct and returns false if the login details are wrong
-    const username = req.body.username
-    let password = ''
-    if(req.body.password){
-        password = req.body.password
-    }
-    // const password = req.body.password
-    // console.log(username,password,dbPath)
-    const query = `SELECT* from login_details where username='${username}' and password='${password}';`
-    // console.log(query)
-    requestQueue.push({query: query, params: []},(error,result)=>{
-        if(error){
-            res.status(500).send('Internal Server Error')
-        }
-        else{
-            // console.log(result)
-            if(result.length == 1){
-                user_id = result[0].id
-                res.send({
-                    user_id: result[0].id,
-                    type: result[0].type
-                })
-            }
-            else{
-                res.send(false)
-            }
-        }
-    })
-}) //Query Verified
 
 app.get('/recruiter/jobs',(req,res)=>{ //Recruiter homepage
     const user_id = req.query.user_id

@@ -125,9 +125,9 @@ function RecommendedJobs(props){
                             <RecommendedCard
                                 job_id = {job.job_id}
                                 key = {index}
-                                title = {job.title}
+                                title = {job.Title}
                                 company = {job.company}
-                                location = {job.location}
+                                location = {job.Location}
                                 category = {job.category}
                                 setSelectedRecommendedJob = {props.setSelectedRecommendedJob}
                             />
