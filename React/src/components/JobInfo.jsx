@@ -4,6 +4,11 @@ import SelectedJobInfo from "./SelectedJobInfo";
 
 const JobInfo = React.memo((props)=>{
     const [currentJob, setJobDetails] = useState("");
+
+    useEffect(()=>{
+      if(props.selectedRecommendedJob)
+        setJobDetails(props.selectedRecommendedJob);
+    },[props.selectedRecommendedJob])
   
     return(
       <div className="job-info">
@@ -29,6 +34,7 @@ const JobInfo = React.memo((props)=>{
                     location = {currentJob.location}
                     category = {currentJob.category}
                     description = {currentJob.description}
+                    ActiveTab = {props.ActiveTab}
                 />
             }
         </div>

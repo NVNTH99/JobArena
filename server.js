@@ -20,7 +20,50 @@ app.use(bodyParser.json());
 app.get('/',(req,res)=>{ //When the user visits localhost:3000 it redirects him into our website's page
     res.sendFile(path.join(__dirname,'React' , 'dist' ,'index.html'));
 })
-
+app.get('/candidate_upcoming', (req, res) => {
+    const userId = req.params.userId;
+  
+    // Fetch the user's profile from the database
+    const query = `SELECT j.Title, i.DATE_TIME, c.First_Name || ' ' || c.Last_Name AS Candidate_Name FROM Candidate_details AS c JOIN Applications AS a ON c.cand_id = a.cand_id JOIN Interviews AS i ON a.App_id = i.App_id JOIN Jobs AS j ON a.job_id = j.job_id WHERE c.cand_id = ${userId};`;
+    requestQueue.push({query: query,params :[]},(err, user) => {
+      if (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Internal Server Error' });
+        return;
+      }
+  
+      if (!user) {
+        res.status(404).json({ error: 'User not found' });
+        return;
+      }
+  
+      const recommendations = []; // Add job recommendations here
+  
+      res.json(recommendations);
+    });
+  });
+app.get('/candidate_recommendations_job', (req, res) => {
+    const userId = req.params.userId;
+  
+    // Fetch the user's profile from the database
+    const query = `SELECT j.Title,o.Organization_name,j.Location,j.category,j.Description FROM Candidate_details AS c INNER JOIN Work_Exp AS w ON c.cand_id = w.cand_id INNER JOIN Jobs AS j ON w.job_Title = j.Title INNER JOIN Recruiter_details AS r ON j.rec_id = r.rec_id INNER JOIN Organizations AS o ON r.org_id = o.org_id WHERE c.cand_id = ${userId};`;
+    requestQueue.push({query: query,params :[]},(err, user) => {
+      if (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Internal Server Error' });
+        return;
+      }
+  
+      if (!user) {
+        res.status(404).json({ error: 'User not found' });
+        return;
+      }
+  
+      const recommendations = []; // Add job recommendations here
+  
+      res.json(recommendations);
+    });
+  });
 app.get('/jobs', (req, res) => {
     const searchQuery = req.query.searchQuery;
     const query = `SELECT * FROM jobs inner join Recruiter_details on Recruiter_details.rec_id=jobs.rec_id inner join Organizations on Organizations.org_id=Recruiter_details.org_id WHERE Title LIKE '%${searchQuery}%' or category LIKE '%${searchQuery}%' or Organizations.organization_name LIKE '%${searchQuery}%';`;
@@ -32,6 +75,61 @@ app.get('/jobs', (req, res) => {
         }
     });
 });
+
+
+
+app.get('/status', (req, res) => {
+    const { appid, job_id, cand_id, status, DATE_TIME, link, venue } = req.query;
+
+    // Prepare the SQL queries
+    const queries = [];
+
+    queries.push({
+        sql: 'UPDATE Applications SET status = ? WHERE App_id = ?;',
+        params: [status, appid]
+    });
+
+    if (status === 'shortlisted') {
+        queries.push({
+            sql: 'INSERT INTO Interviews (App_id, DATE_TIME, link, venue) VALUES (?, ?, ?, ?);',
+            params: [appid, DATE_TIME, link, venue]
+        });
+
+        queries.push({
+            sql: 'INSERT INTO Notifications (cand_id, message) VALUES (?, ?);',
+            params: [cand_id, `You have been shortlisted for the interview of ${job_id} on ${DATE_TIME} at ${venue}`]
+        });
+    } else if (status === 'rejected') {
+        queries.push({
+            sql: 'INSERT INTO Notifications (cand_id, message) VALUES (?, ?);',
+            params: [cand_id, `You have been rejected for the job of ${job_id}`]
+        });
+    } else if (status === 'offered') {
+        queries.push({
+            sql: 'INSERT INTO Notifications (cand_id, message) VALUES (?, ?);',
+            params: [cand_id, `You have been offered the job of ${job_id}`]
+        });
+    }
+
+    // Execute the SQL queries
+    conn.serialize(() => {
+        conn.run('BEGIN TRANSACTION');
+        queries.forEach(query => {
+            conn.run(query.sql, query.params, err => {
+                if (err) {
+                    console.error(err);
+                    conn.run('ROLLBACK');
+                    res.status(500).json({ error: 'Internal Server Error' });
+                    return;
+                }
+            });
+        });
+        conn.run('COMMIT', () => {
+            res.send('Queries executed successfully.');
+        });
+    });
+});
+
 
 app.post('/login',(req,res)=>{ //The function is made such that it return true if the login details are correct and returns false if the login details are wrong
     const username = req.body.username

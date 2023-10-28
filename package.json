@@ -1,4 +1,8 @@
 {
+  "scripts":{
+    "nava": "cd .\\React\\ && npm run build && cd .. && node server.js",
+    "amal": "cd .\\React\\ && npm run dev"
+  },
   "dependencies": {
     "express": "^4.18.2",
     "mysql": "^2.18.1",

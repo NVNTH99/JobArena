@@ -2,7 +2,7 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import Heading from "../components/Heading";
 import JobInfo from "../components/JobInfo";
-import UpcomingCard from "../components/UpcomingCard";
+import CandidateUpcomingCard from "../components/CandidateUpcomingCard";
 import "./CandidateRecommendedJobs.css";
 
 var jobs = [
@@ -30,11 +30,14 @@ var jobs = [
 ]
 
 var upcoming = [
-    {title:"Job Title", name:"Candidate Name", id:"#CandidateID" , date:"dd/mm/yyyy", time:"hh:mm"},
-    {title:"Job Title", name:"Candidate Name", id:"#CandidateID" , date:"dd/mm/yyyy", time:"hh:mm"},
-    {title:"Job Title", name:"Candidate Name", id:"#CandidateID" , date:"dd/mm/yyyy", time:"hh:mm"},
+    {company: "Company Name", location: "Location", title:"Job Title", name:"Candidate Name", id:"#CandidateID" , date:"dd/mm/yyyy", time:"hh:mm"},
+    {company: "Company Name", location: "Location", title:"Job Title", name:"Candidate Name", id:"#CandidateID" , date:"dd/mm/yyyy", time:"hh:mm"},
+    {company: "Company Name", location: "Location", title:"Job Title", name:"Candidate Name", id:"#CandidateID" , date:"dd/mm/yyyy", time:"hh:mm"},
+    {company: "Company Name", location: "Location", title:"Job Title", name:"Candidate Name", id:"#CandidateID" , date:"dd/mm/yyyy", time:"hh:mm"},
+    {company: "Company Name", location: "Location", title:"Job Title", name:"Candidate Name", id:"#CandidateID" , date:"dd/mm/yyyy", time:"hh:mm"},
+    {company: "Company Name", location: "Location", title:"Job Title", name:"Candidate Name", id:"#CandidateID" , date:"dd/mm/yyyy", time:"hh:mm"},
 ]
-var events = {"upcoming":upcoming};
+
 
 function CandidateRecommendedJobs(){
     return(
@@ -45,7 +48,7 @@ function CandidateRecommendedJobs(){
             <div className="candidate-bottom">
                 <JobInfo jobs = {jobs}/>
                 <div className="candidate-upcoming">
-                    <UpcomingCard event={events}/>
+                    <CandidateUpcomingCard upcoming = {upcoming}/>
                 </div>
             </div>
         </div>

@@ -3,7 +3,8 @@ import Navbar from "../components/Navbar";
 import UpcomingCard from "../components/UpcomingCard";
 import RecruitersJobCard from "../components/RecruitersJobCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons"
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 import "./RecruiterHome.css";
 
 var jobs = [
@@ -47,9 +48,10 @@ function RecruiterHome(){
                         <h1>Your Jobs</h1>
                     </div>
                     <div>
-                        <button className="add-job-button">
-                            <p>Add Job </p><FontAwesomeIcon size="lg" icon={faPlus}/>
-                        </button>
+                        <Link className="add-job-button" to="/recruiter/add_job">
+                            <p>Add Job</p>
+                            <FontAwesomeIcon size="md" icon={faPlus}/>
+                        </Link>
                     </div>    
                 </div>
                 <hr></hr>
