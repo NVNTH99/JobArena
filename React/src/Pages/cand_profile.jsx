@@ -17,7 +17,7 @@ function Cand_profile() {
     <>
     <Navbar userType = "candidate"/>
     <Heading title = "Candidate Profile"/>
-    <div>
+    <div className="candidate-profile-page">
         <div className="alllllcp">
             <section className="lhscp">
                 <form id="addcp">

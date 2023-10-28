@@ -75,7 +75,7 @@
 
 
 
-input {
+.add-job-body input[type="text"],input, input[type="text"]:focus {
     padding: 12px;
     border: none;
     border-radius: 5px;

@@ -257,13 +257,14 @@
     display:none;
 }
 
-input {
+.containersign input[type="text"],input, input[type="text"]:focus{
   padding: 12px;
   border: none;
   border-radius: 5px;
   font-size: 16px;
   color: #4c489d;
   background-color: #e0e0e0;
+  width: 100%;
 }
 
 .dropdownsign {

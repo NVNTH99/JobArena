@@ -1,7 +1,44 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./SignUp.css";
 
+function loadfunc(){
+    const candbtn = document.getElementById("candbtn");
+  const recbtn = document.getElementById("recbtn");
+  const form1 = document.getElementById("form1");
+  const form2 = document.getElementById("form2");
+  const dropdown = document.getElementById("dropdownOptions");
+  const otherInput = document.getElementById("otherInput");
+
+  if (candbtn) {
+    candbtn.click();
+    candbtn.addEventListener("click", function () {
+      form1.style.display = "block";
+      form2.style.display = "none";
+    });
+  }
+
+  if (recbtn) {
+    recbtn.addEventListener("click", function () {
+      form1.style.display = "none";
+      form2.style.display = "block";
+    });
+  }
+
+  if (dropdown && otherInput) {
+    dropdown.addEventListener("change", function () {
+      if (dropdown.value === "others") {
+        otherInput.style.display = "block";
+      } else {
+        otherInput.style.display = "none";
+      }
+    });
+  }
+};
+
 function SignUp(){
+    useEffect(() =>{
+        loadfunc();
+    },[]);
     return(
         <>
             <section className="bgsign">
@@ -119,6 +156,7 @@ function SignUp(){
                 </div>
                 <canvas className="background"></canvas>
             </section>
+            {loadfunc()}
         </>
     )
 }
