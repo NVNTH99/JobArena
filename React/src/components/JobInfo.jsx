@@ -4,6 +4,10 @@ import SelectedJobInfo from "./SelectedJobInfo";
 
 const JobInfo = React.memo((props)=>{
     const [currentJob, setJobDetails] = useState("");
+    let user_id = null
+    if(props.user_id){
+      user_id = props.user_id
+    }
   
     return(
       <div className="job-info">
@@ -25,7 +29,7 @@ const JobInfo = React.memo((props)=>{
         <div className="homejob-right">
             {currentJob === ""? null : 
                 <SelectedJobInfo
-                    user_id = {props.user_id}
+                    user_id = {user_id} //From home we arent passing anything so correct that
                     job_id = {currentJob.job_id}
                     title = {currentJob.title}
                     company = {currentJob.company}

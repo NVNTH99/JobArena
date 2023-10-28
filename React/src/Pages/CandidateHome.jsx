@@ -49,7 +49,7 @@ function CandidateHome(){
     // console.log(user_id)
     const [recJobs,setrecjobs] = useState([])
     const [jobs,setJobs] = useState([])
-    const [events, setevents] = useState({})
+    const [events, setevents] = useState({"upcoming":[]})
 
     useEffect(()=>{
         console.log(user_id)
@@ -104,7 +104,7 @@ function CandidateHome(){
             <div className="candidate-bottom">
                 {jobs && <JobInfo jobs = {jobs} user_id={user_id}/>} {/*user_id={user_id}*/}
                 <div className="candidate-upcoming">
-                    {events.upcoming && <UpcomingCard event={events}/>}
+                    {events.upcoming && <CandidateUpcomingCard upcoming={events.upcoming}/>}
                 </div>
             </div>
         </>

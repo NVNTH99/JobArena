@@ -80,7 +80,7 @@ function CandidateRecommendedJobs(){
                 {recJobs && <JobInfo jobs = {recJobs} user_id={user_id}/>}
                 <div className="candidate-upcoming">
                     {/* <UpcomingCard event={events}/> */}
-                    {events.upcoming && <UpcomingCard event={events}/>}
+                    {events.upcoming && <CandidateUpcomingCard upcoming={events.upcoming}/>}
                 </div>
             </div>
         </div>

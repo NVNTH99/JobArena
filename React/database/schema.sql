@@ -110,7 +110,7 @@ CREATE TABLE Applications(
     App_id integer,
     cand_id integer,
     job_id integer,
-    status varchar(20),
+    status varchar(30),
     PRIMARY KEY (App_id),
     FOREIGN KEY (cand_id) REFERENCES Candidate_details(cand_id),
     FOREIGN KEY (job_id) REFERENCES Jobs(job_id)

@@ -21,6 +21,17 @@ app.get('/',(req,res)=>{ //When the user visits localhost:3000 it redirects him 
     res.sendFile(path.join(__dirname,'React' , 'dist' ,'index.html'));
 })
 
+app.get('/organizations',(req,res)=>{
+    const query = `Select* from Organizations`
+    requestQueue.push({ query: query, params: [] }, (error, result) => {
+        if (error) {
+            res.status(500).send('Internal Server Error');
+        } else {
+            res.send(result);
+        }
+    });
+})
+
 app.post('/signup/candidate',(req,res)=>{
     
 })
@@ -28,6 +39,7 @@ app.post('/signup/candidate',(req,res)=>{
 app.post('/signup/recruiter',(req,res)=>{
 
 })
+
 
 app.get('/jobs', (req, res) => {
     const searchQuery = req.query.searchQuery;
@@ -43,6 +55,65 @@ app.get('/jobs', (req, res) => {
         }
     });
 });
+
+app.post('/application/statuschange',(req,res) => {
+    const { app_id, tostatus, date_time, venue, link } = req.body;
+    const updateApplicationStatusQuery = `UPDATE Applications SET status = '${tostatus}' WHERE App_id = ${app_id};`;
+    let insertIntoInterviewsQuery = '';
+    let addNotificationQuery = '';
+
+    switch (tostatus) {
+        case 'Shortlisted':
+            insertIntoInterviewsQuery = `INSERT INTO Interviews (App_id, DATE_TIME, link, venue) VALUES (${app_id}, '${date_time}', '${link}', '${venue}');`;
+            addNotificationQuery = `INSERT INTO Notifications (cand_id, message) SELECT cand_id, 
+                'You have been shortlisted for an interview with ' || o.Organization_name || ' for the position of ' || j.Title || '.' as message 
+                FROM Applications a
+                JOIN Jobs j ON a.job_id = j.job_id
+                JOIN Recruiter_details r ON j.rec_id = r.rec_id
+                JOIN Organizations o ON r.org_id = o.org_id
+                WHERE a.App_id = ${app_id};`;
+            break;
+        case 'Offered':
+            addNotificationQuery = `INSERT INTO Notifications (cand_id, message) SELECT cand_id, 
+                'Congratulations! You have been offered the position of ' || j.Title || ' with ' || o.Organization_name || '.' as message 
+                FROM Applications a
+                JOIN Jobs j ON a.job_id = j.job_id
+                JOIN Recruiter_details r ON j.rec_id = r.rec_id
+                JOIN Organizations o ON r.org_id = o.org_id
+                WHERE a.App_id = ${app_id};`;
+            break;
+        case 'Rejected':
+            addNotificationQuery = `INSERT INTO Notifications (cand_id, message) SELECT cand_id, 
+                'We regret to inform you that you have not been selected for the position of ' || j.Title || ' with ' || o.Organization_name || '.' as message 
+                FROM Applications a
+                JOIN Jobs j ON a.job_id = j.job_id
+                JOIN Recruiter_details r ON j.rec_id = r.rec_id
+                JOIN Organizations o ON r.org_id = o.org_id
+                WHERE a.App_id = ${app_id};`;
+            break;
+        default:
+            break;
+    }
+
+    const queries = [updateApplicationStatusQuery];
+    if (insertIntoInterviewsQuery) {
+        queries.push(insertIntoInterviewsQuery);
+    }
+    if (addNotificationQuery) {
+        queries.push(addNotificationQuery);
+    }
+
+    queries.forEach((query) => {
+        requestQueue.push({ query: query, params: [] }, (error, result) => {
+            if (error) {
+                console.error("Error: ", error);
+                res.status(500).send('Internal Server Error');
+            }
+        });
+    });
+
+    res.send('Update successful'); //Change This
+}) //Will have to change res.send
 
 app.get('/candidate/recommended',(req,res)=>{
     // console.log("recommended request was called")
@@ -151,7 +222,11 @@ app.post('/candidate/appliedjobs/withdraw',(req,res)=>{
 
 app.post('/login',(req,res)=>{ //The function is made such that it return true if the login details are correct and returns false if the login details are wrong
     const username = req.body.username
-    const password = req.body.password
+    let password = ''
+    if(req.body.password){
+        password = req.body.password
+    }
+    // const password = req.body.password
     // console.log(username,password,dbPath)
     const query = `SELECT* from login_details where username='${username}' and password='${password}';`
     // console.log(query)
@@ -173,11 +248,11 @@ app.post('/login',(req,res)=>{ //The function is made such that it return true i
             }
         }
     })
-})
+}) //Query Verified
 
 app.get('/recruiter/jobs',(req,res)=>{ //Recruiter homepage
     const user_id = req.query.user_id
-    const query = `Select Jobs.job_id,Title,Organizations.organization_name,Location,Category,Description,COUNT(App_id) as count from Jobs inner join Applications on Jobs.job_id=Applications.job_id inner join Recruiter_details on Recruiter_details.rec_id = Jobs.rec_id inner join Organizations on Organizations.org_id = Recruiter_details.org_id where Jobs.rec_id=${user_id} group by Jobs.job_id;`
+    const query = `Select Jobs.job_id,Title as title, Organizations.organization_name as company, Location as location, Category as category, Description as description, COUNT(App_id) as count from Jobs left join Applications on Jobs.job_id=Applications.job_id inner join Recruiter_details on Recruiter_details.rec_id = Jobs.rec_id inner join Organizations on Organizations.org_id = Recruiter_details.org_id where Jobs.rec_id=${user_id} group by Jobs.job_id;`
     requestQueue.push({query: query, params: []},(error,result)=>{
         if(error){
             res.status(500).send('Internal Server Error')
@@ -186,25 +261,70 @@ app.get('/recruiter/jobs',(req,res)=>{ //Recruiter homepage
             res.send(result)
         }
     })
-})
+}) //Query verified
 
-
-app.get('/recruiter/job',(req,res)=>{ //To get Job title and other details for the recruiter's job application page
+app.post('/recruiter/removeJob',(req,res)=>{
     const job_id = req.query.job_id
-    const query = `SELECT Title,Organization_name as companyName,Location,category,Description from Jobs inner join Recruiter_details on Jobs.rec_id=Recruiter_details.rec_id inner join Organizations on Recruiter_details.org_id=Organizations.org_id where job_id=${job_id};`
+    const user_id = req.query.job_id
+    const notificationQuery = `INSERT INTO Notifications (cand_id, message) SELECT cand_id, 
+        'You have been rejected for ' || Title || ' at ' || Organization_name as message 
+        FROM Applications 
+        INNER JOIN Jobs ON Applications.job_id = Jobs.job_id 
+        INNER JOIN Recruiter_details ON Jobs.rec_id = Recruiter_details.rec_id 
+        INNER JOIN Organizations ON Recruiter_details.org_id = Organizations.org_id 
+        WHERE Applications.job_id = ${job_id} AND (status = 'Pending' OR status = 'Shortlisted' OR status = 'Offered');`;
+    const deleteApplicationsQuery = `DELETE FROM Applications WHERE job_id = ${job_id};`;
+    const deleteInterviewsQuery = `DELETE FROM Interviews WHERE App_id IN (SELECT App_id FROM Applications WHERE job_id = ${job_id});`;
+    const deleteJobsQuery = `DELETE FROM Jobs WHERE job_id = ${job_id};`;
+    const deleteQueries = [notificationQuery, deleteInterviewsQuery, deleteApplicationsQuery, deleteJobsQuery];
+    deleteQueries.forEach((query) => {
+        requestQueue.push({ query: query, params: [] }, (error, result) => {
+            if (error) {
+                console.error("Error: ", error);
+                res.status(500).send('Internal Server Error');
+            }
+        });
+    });
+    // res.send(true);
+    const query = `Select Jobs.job_id,Title as title, Organizations.organization_name as company, Location as location, Category as category, Description as description, COUNT(App_id) as count from Jobs left join Applications on Jobs.job_id=Applications.job_id inner join Recruiter_details on Recruiter_details.rec_id = Jobs.rec_id inner join Organizations on Organizations.org_id = Recruiter_details.org_id where Jobs.rec_id=${user_id} group by Jobs.job_id;`
     requestQueue.push({query: query, params: []},(error,result)=>{
         if(error){
             res.status(500).send('Internal Server Error')
         }
         else{
             res.send(result)
+        }
+    })
+}) //Query Verified
+
+
+app.get('/recruiter/job',(req,res)=>{ //To get Job title and other details for the recruiter's job application page
+    const job_id = req.query.job_id
+    const query = `SELECT Title as title,Organization_name as companyName,Location as location,category,Description as description from Jobs inner join Recruiter_details on Jobs.rec_id=Recruiter_details.rec_id inner join Organizations on Recruiter_details.org_id=Organizations.org_id where job_id=${job_id};`
+    requestQueue.push({query: query, params: []},(error,result)=>{
+        if(error){
+            res.status(500).send('Internal Server Error')
+        }
+        else{
+            res.send(result[0])
         }
     })
 })
 
 app.get('/recruiter/job/candidates',(req,res)=>{ //To get the list of Candidates in the above application
     const job_id = req.query.job_id
-    const query = `Select Applications.App_id,(First_name||' '||Last_Name) as name,Applications.cand_id as id,status,DATE(DATE_TIME) as date,TIME(DATE_TIME) as time,link,venue from Applications inner join Candidate_details on Applications.cand_id=Candidate_details.cand_id left join Interviews on Applications.App_id=Interviews.App_id where job_id=${job_id};`
+    const query = `SELECT Applications.App_id,
+        (First_name || ' ' || Last_Name) as name,
+        Applications.cand_id as id,
+        status,
+        strftime('%Y-%m-%d', DATE_TIME) as date,
+        strftime('%H:%M:%S', DATE_TIME) as time,
+        link,
+        venue
+        FROM Applications
+        INNER JOIN Candidate_details ON Applications.cand_id = Candidate_details.cand_id
+        LEFT JOIN Interviews ON Applications.App_id = Interviews.App_id
+        WHERE job_id = ${job_id};`
     requestQueue.push({query: query, params: []},(error,result)=>{
         if(error){
             res.status(500).send('Internal Server Error')
@@ -213,11 +333,21 @@ app.get('/recruiter/job/candidates',(req,res)=>{ //To get the list of Candidates
             res.send(result)
         }
     })
-})
+}) //Query almost verified .... if error its retrieving date and time
 
-app.get('recruiter/upcoming',(req,res)=>{
+app.get('/recruiter/upcoming',(req,res)=>{
     const user_id = req.query.user_id
-    const query = `Select Title,(First_name||' '||Last_Name) as name,Applications.cand_id,DATE(DATE_TIME) as date,TIME(DATE_TIME) as time from Interviews inner join Applications on Interviews.App_id=Applications.App_id inner join Jobs on Applications.job_id=Jobs.job_id inner join Candidate_details on Applications.cand_id=Candidate_details.cand_id where Jobs.rec_id = ${user_id} order by date,time;`
+    const query = `SELECT Jobs.Title as title,
+        (Candidate_details.First_name || ' ' || Candidate_details.Last_Name) as name,
+        Applications.cand_id as id,
+        strftime('%Y-%m-%d', Interviews.DATE_TIME) as date,
+        strftime('%H:%M:%S', Interviews.DATE_TIME) as time
+        FROM Interviews
+        INNER JOIN Applications ON Interviews.App_id = Applications.App_id
+        INNER JOIN Jobs ON Applications.job_id = Jobs.job_id
+        INNER JOIN Candidate_details ON Applications.cand_id = Candidate_details.cand_id
+        WHERE Jobs.rec_id = ${user_id}
+        ORDER BY date, time;`
     requestQueue.push({query: query, params: []},(error,result)=>{
         if(error){
             res.status(500).send('Internal Server Error')
@@ -226,7 +356,7 @@ app.get('recruiter/upcoming',(req,res)=>{
             send(result)
         }
     })
-})
+}) //Query almost verified .... if error its retrieving date and time
 
 const runQuery = () => {
     const query = 'DELETE from Interviews where datetime(DATE_TIME) < datetime("now");';

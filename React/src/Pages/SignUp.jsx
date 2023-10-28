@@ -1,7 +1,55 @@
-import React from "react";
+import React, {useState,useEffect} from "react";
 import "./SignUp.css";
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
 
 function SignUp(){
+    const [type,settype] = useState('')
+    const [credentials, setcred] = useState({
+        firstname:'',
+        lastname: '',
+        username: '',
+        password: '',
+        repassword: '',
+        organization: ''
+    })
+    const [usernameerror, setusernameerror] = useState('')
+    const [passworderror, setpassworderror] = useState('')
+    const [organizationerror, setorganizationerror] = useState('')
+    const [organizations,setorganizations] = useState([])
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setcred((prevCredentials)=>({
+          ...prevCredentials,
+          [name]: value
+        }));
+    };
+
+    useEffect(()=>{
+        axios.get('http://localhost:3000/organizations')
+        .then(response => {
+            setorganizations(response.data)
+        })
+        .catch(error => {
+            console.log("Error fetching orgaizations")
+        })
+    },[])
+    
+
+    const handleCandidateClick = () => {
+        settype('candidate');
+    };
+
+    const handleRecruiterClick = () => {
+        settype('recruiter');
+    };
+
+    const signupfunc = (e) => {
+        e.preventDefault()
+        axios.post('http://localhost:3000/login',{username: credentials.username})
+    }
+
     return(
         <>
             <section className="bgsign">
@@ -34,30 +82,54 @@ function SignUp(){
                         <div className="screensign">
                             <div className="screen__contentsign">
                                 <div className="btn-group">
-                                    <button className="b11" id="candbtn">Candidate</button>
-                                    <button className="b11" id="recbtn">Recruiter</button>
+                                    <button className="b11" id="candbtn" onClick={handleCandidateClick}>Candidate</button>
+                                    <button className="b11" id="recbtn" onClick={handleRecruiterClick}>Recruiter</button>
                                 </div>
                                 <form className="signup" id="form1">
                                     <div className="petti">
                                         <div className="signup__field">
-                                            <input name="firstname" type="text" className="signup__input" placeholder="First Name"></input>
+                                            <input 
+                                            name="firstname" 
+                                            type="text" 
+                                            className="signup__input"
+                                            value = {credentials.firstname}
+                                            placeholder="First Name"></input>
                                         </div>
                                         <div className="signup__field">
-                                            <input name="lastname" type="text" className="signup__input" placeholder="Last Name"></input>
+                                            <input 
+                                            name="lastname" 
+                                            type="text" 
+                                            className="signup__input"
+                                            value = {credentials.lastname}
+                                            placeholder="Last Name"></input>
                                         </div>
                                     </div>
                                     <div className="petti1">
                                         <div className="signup__field">
-                                            <input name="username" type="text" className="signup__input" placeholder="Username"></input>
+                                            <input 
+                                            name="username" 
+                                            type="text" 
+                                            className="signup__input" 
+                                            value = {credentials.username}
+                                            placeholder="Username"></input>
                                         </div>
                                     </div>
                                     <div className="petti">
                                         <div className="signup__field">
-                                            <input name="password" type="password" className="signup__input" placeholder="Password"></input>
+                                            <input 
+                                            name="password" 
+                                            type="password" 
+                                            className="signup__input"
+                                            value = {credentials.password}
+                                            placeholder="Password"></input>
                                         </div>
                                         <div className="signup__field">
-                                            <input name="repassword" type="password" className="signup__input"
-                                                placeholder="Re-Confirm Password"></input>
+                                            <input 
+                                            name="repassword" 
+                                            type="password" 
+                                            className="signup__input"
+                                            value = {credentials.repassword}
+                                            placeholder="Re-Confirm Password"></input>
                                         </div>
                                     </div>
                                     <div className="butttton">
@@ -67,20 +139,35 @@ function SignUp(){
                                 <form className="signup" id="form2">
                                     <div className="petti">
                                         <div className="signup__field">
-                                            <input name="firstname" type="text" className="signup__input" placeholder="First Name"></input>
+                                            <input 
+                                            name="firstname" 
+                                            type="text" 
+                                            className="signup__input"
+                                            value = {credentials.firstname}
+                                            placeholder="First Name"></input>
                                         </div>
                                         <div className="signup__field">
-                                            <input name="lastname" type="text" className="signup__input" placeholder="Last Name"></input>
+                                            <input 
+                                            name="lastname" 
+                                            type="text" 
+                                            className="signup__input"
+                                            value = {credentials.lastname}
+                                            placeholder="Last Name"></input>
                                         </div>
 
                                     </div>
                                     <div className="petti">
                                         <div className="signup__field">
-                                            <input name="username" type="text" className="signup__input" placeholder="Username"></input>
+                                            <input 
+                                            name="username" 
+                                            type="text" 
+                                            className="signup__input"
+                                            value = {credentials.username}
+                                            placeholder="Username"></input>
                                         </div>
                                         <div className="signup__field">
                                             <select className="dropdownsign" id="dropdownOptions" name="organization"
-                                                placeholder="Organization">
+                                                placeholder="Organization"> {/*Make this retrieve from a list named organizations*/}
                                                 <option value="Oracle">Oracle</option>
                                                 <option value="Amazon">Amazon</option>
                                                 <option value="Google">Google</option>
@@ -89,20 +176,34 @@ function SignUp(){
                                         </div>
                                     </div>
                                     <div className="petti2">
-                                        <input type="text" name="organization" id="otherInput" className="signup__input"
-                                            placeholder="Please specify" />
+                                        <input 
+                                        type="text" 
+                                        name="organization" 
+                                        id="otherInput" 
+                                        className="signup__input"
+                                        value = {credentials.organization}
+                                        placeholder="Please specify" />
                                     </div>
                                     <div className="petti">
                                         <div className="signup__field">
-                                            <input name="password" type="password" className="signup__input" placeholder="Password"></input>
+                                            <input 
+                                            name="password" 
+                                            type="password" 
+                                            className="signup__input"
+                                            value = {credentials.password}
+                                            placeholder="Password"></input>
                                         </div>
                                         <div className="signup__field">
-                                            <input name="repassword" type="password" className="signup__input"
-                                                placeholder="Re-Confirm Password"></input>
+                                            <input 
+                                            name="repassword" 
+                                            type="password" 
+                                            className="signup__input"
+                                            value = {credentials.repassword}
+                                            placeholder="Re-Confirm Password"></input>
                                         </div>
                                     </div>
                                     <div className="butttton">
-                                        <button className="bn31">Sign Up</button>
+                                        <button className="bn31" onClick={signupfunc}>Sign Up</button>
                                     </div>
                                 </form>
                             </div>
