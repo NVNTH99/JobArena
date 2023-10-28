@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Heading from "../components/Heading";
 import UpcomingCard from "../components/UpcomingCard";
@@ -11,7 +11,47 @@ var upcoming = [
 ]
 var events = {"upcoming":upcoming};
 
+function RecruiterLoad(){
+    const domain_inputField = document.getElementById("domainfieldaj");
+    const domain_addButton = document.getElementById("domainplusaj");
+    const domain_itemList = document.getElementById("domain-listaj");
+
+    domain_addButton.addEventListener("click", function () {
+    const domain_inputValue = domain_inputField.value.trim();
+
+    if (domain_inputValue !== "") {
+        const domain_newItem = document.createElement("div");
+        domain_newItem.classList.add("itemaj");
+        domain_newItem.innerHTML = `
+                        ${domain_inputValue}
+                        <button type="button" class="delbtncp">X</button>
+                    `;
+        domain_itemList.appendChild(domain_newItem);
+        domain_inputField.value = "";
+    }
+    });
+
+    domain_itemList.addEventListener("click", function (event) {
+    if (event.target.classList.contains("delbtncp")) {
+        event.target.parentNode.remove();
+    }
+    });
+
+    const buttons = document.querySelectorAll(".buttongaj");
+
+    buttons.forEach((button) => {
+    button.addEventListener("click", function () {
+        buttons.forEach((b) => b.classList.remove("activeaj"));
+        button.classList.add("activeaj");
+    });
+    });
+
+}
+
 function RecruiterAddJob(){ 
+    useEffect(() => {
+        RecruiterLoad();
+    },[]);
     return(
         <>
             <Navbar userType = "recruiter"/>
