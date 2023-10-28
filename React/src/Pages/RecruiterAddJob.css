@@ -4,7 +4,12 @@
 }
 
 .add-job-body{
-    display: flex;
+  display: flex;
+  flex-direction: row;
+}
+
+.add-job-right{
+  padding: 4% 4% 0 2%;
 }
 
 #yourjobs{

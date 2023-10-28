@@ -16,8 +16,8 @@ function RecruiterAddJob(){
         <>
             <Navbar userType = "recruiter"/>
             <Heading title = "Add Job"/>
-            <div classNameName="add-job-body">
-                <div classNameName="add-job-aditya">
+            <div className="add-job-body">
+                <div className="add-job-aditya">
                     <div className="alllll">
                         <section className="lhs">
                             <form id="addjf">
@@ -113,7 +113,9 @@ function RecruiterAddJob(){
                         </section>
                     </div>
                 </div>
-                {/* <UpcomingCard event = {events.upcoming}/> */}
+                <div className="add-job-right">
+                    <UpcomingCard event = {events.upcoming}/>
+                </div>
             </div>
         </>
     )
