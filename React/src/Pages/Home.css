@@ -74,6 +74,7 @@ nav ul {
 .notification_button{
   background: #1e1f26;
   border: 0;
+  cursor: pointer;
 }
 
 .notification_button > img{
@@ -135,6 +136,7 @@ nav ul {
 
 .profile_button{
   border-radius: 50%;
+  cursor: pointer;
 }
 
 .profile_box{
