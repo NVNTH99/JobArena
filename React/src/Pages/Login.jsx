@@ -42,9 +42,9 @@ function Login(){
     const [retrieved , setretrieval] = useState({})
     const [error, seterror] = useState('')
 
-    useEffect(()=>{
-        LoginBackground();
-    }, []);
+    // useEffect(()=>{
+    //     LoginBackground();
+    // }, []);
 
     const loginfunc = (e) => {
         e.preventDefault();

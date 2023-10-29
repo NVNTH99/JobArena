@@ -7,6 +7,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import "./RecruiterHome.css";
 import { useLocation } from "react-router-dom";
+import axios from "axios";
 
 // var jobs = [
 //     {
@@ -76,7 +77,7 @@ function RecruiterHome(){
 
     return (
         <>
-            <Navbar userType="recruiter"/>
+            <Navbar userType="recruiter" user_id = {user_id}/>
             <div className="recruiter-home-body">
                 <div>
                     <div>

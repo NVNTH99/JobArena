@@ -3,6 +3,7 @@ const sqlite3 = require('sqlite3').verbose()
 const path = require('path')
 const bodyParser = require('body-parser');
 const async = require('async')
+const cors = require('cors')
 
 const app = new express()
 const dbPath = path.join(__dirname,'jobarena.db')
@@ -14,6 +15,7 @@ const requestQueue = async.queue((task, callback) => {
     });
 }, 1);
 
+app.use(cors())
 app.use(express.static(path.join(__dirname, 'React' ,'dist')));
 app.use(bodyParser.json());
 
@@ -145,7 +147,12 @@ app.get('/jobs', (req, res) => {
 });
 
 app.post('/application/statuschange',(req,res) => {
-    const { app_id, tostatus, date_time, venue, link } = req.body;
+    // const { app_id, tostatus, date_time, venue, link } = req.body;
+    const app_id = req.body.app_id
+    const tostatus = req.body.tostatus
+    const date_time = req.body.date_time
+    const venue = req.body.venue
+    const link = req.body.link
     const updateApplicationStatusQuery = `UPDATE Applications SET status = '${tostatus}' WHERE App_id = ${app_id};`;
     let insertIntoInterviewsQuery = '';
     let addNotificationQuery = '';
@@ -236,7 +243,7 @@ app.get('/candidate/recommended',(req,res)=>{
 
 app.get('/candidate/upcoming',(req,res)=>{
     const user_id = req.query.user_id
-    const query = `SELECT Organization_name, Title, Location, date(DATE_TIME) AS Date, time(DATE_TIME) AS Time FROM Organizations o JOIN Recruiter_details r ON o.org_id = r.org_id JOIN Jobs j ON r.rec_id = j.rec_id JOIN Applications a ON j.job_id = a.job_id JOIN Interviews i ON a.App_id = i.App_id WHERE cand_id = ${user_id};`
+    const query = `SELECT Organization_name as company, Title, Location, date(DATE_TIME) AS Date, time(DATE_TIME) AS Time FROM Organizations o JOIN Recruiter_details r ON o.org_id = r.org_id JOIN Jobs j ON r.rec_id = j.rec_id JOIN Applications a ON j.job_id = a.job_id JOIN Interviews i ON a.App_id = i.App_id WHERE cand_id = ${user_id};`
     requestQueue.push({query: query, params: []},(error,result)=>{
         if(error){
             res.status(500).send('Internal Server Error')
@@ -411,7 +418,7 @@ app.get('/recruiter/upcoming',(req,res)=>{
             res.status(500).send('Internal Server Error')
         }
         else{
-            send(result)
+            res.send(result)
         }
     })
 }) //Query almost verified .... if error its retrieving date and time

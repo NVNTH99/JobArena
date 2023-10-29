@@ -101,7 +101,7 @@ function CandidateHome(){
     
     return(
         <>
-            <Navbar userType = {"candidate"}/>
+            <Navbar userType = {"candidate"} user_id = {user_id}/>
             {recJobs && <RecommendedJobs recJobs = {recJobs} setSelectedRecommendedJob = {setSelectedRecommendedJob}/>} {/* change to recJobs */}
             <Search setData={setJobs}/>
             <div className="candidate-bottom">

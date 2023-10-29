@@ -257,7 +257,7 @@ INSERT INTO Applications (App_id, cand_id, job_id, status) VALUES
 (6, 11, 1, 'Pending');
 
 INSERT INTO Interviews (App_id, DATE_TIME, link, venue) VALUES 
-(2, '2021-05-30 00:00:00', 'meet.google.com/abc', 'Bangalore');
+(2, '2023-10-30 00:00:00', 'meet.google.com/abc', 'Bangalore');
 
 
 INSERT INTO Notifications (cand_id, message) VALUES 

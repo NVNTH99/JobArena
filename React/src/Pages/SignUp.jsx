@@ -215,6 +215,11 @@ function SignUp(){
                     console.log("Error Signing up")
                 })
             }
+            else{
+                setusernameerror()
+                setorganizationerror()
+                setpassworderror()
+            }
         }
     },[passworderror])
 
@@ -232,9 +237,9 @@ function SignUp(){
         }
     },[user_id])
 
-    useEffect(() =>{
-        loadfunc();
-    },[]);
+    // useEffect(() =>{
+    //     loadfunc();
+    // },[]);
     return(
         <>
             <section className="bgsign">
