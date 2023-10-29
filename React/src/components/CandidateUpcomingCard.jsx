@@ -21,9 +21,9 @@ function EventCard(props){
     return(
         <>
             <div className="candidate-event-card">
-                <p style={{color: "#505967"}}>{props.event.company} - {props.event.title}</p>
-                <p style={{color: "#505967"}}>{props.event.location}</p>
-                <p>Interview on {props.event.date}, {props.event.time}</p>
+                <p style={{color: "#505967"}}>{props.event.company} - {props.event.Title}</p>
+                <p style={{color: "#505967"}}>{props.event.Location}</p>
+                <p>Interview on {props.event.Date}, {props.event.Time}</p>
             </div>
         </>
     )

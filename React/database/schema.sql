@@ -44,7 +44,7 @@ CREATE TABLE Jobs(
     Deadline TIMESTAMP,
     Location varchar(50),
     salary integer,
-    work_dayy integer,
+    work_days integer,
     work_hours varchar(15),
     job_type varchar(15),
     category text,
@@ -76,22 +76,22 @@ CREATE TABLE Candidate_details(
 CREATE TABLE Work_Exp(
     cand_id integer,
     job_Title varchar(50),
-    org_id integer,
+    org_name varchar(100),
     start_year YEAR,
     end_year YEAR,
-    FOREIGN KEY (cand_id) REFERENCES Candidate_details(cand_id),
-    FOREIGN KEY (org_id) REFERENCES Organizations(org_id)
+    FOREIGN KEY (cand_id) REFERENCES Candidate_details(cand_id)
+    -- FOREIGN KEY (org_id) REFERENCES Organizations(org_id)
 );
 
 CREATE TABLE Projects(
     cand_id integer,
-    org_id integer,
+    org_name varchar(100),
     Project_Title varchar(50),
     Project_Desc text,
     start_date DATE,
     end_date DATE,
-    FOREIGN KEY (cand_id) REFERENCES Candidate_details(cand_id),
-    FOREIGN KEY (org_id) REFERENCES Organizations(org_id)
+    FOREIGN KEY (cand_id) REFERENCES Candidate_details(cand_id)
+    -- FOREIGN KEY (org_id) REFERENCES Organizations(org_id)
 );
 
 CREATE TABLE Education(
@@ -110,7 +110,7 @@ CREATE TABLE Applications(
     App_id integer,
     cand_id integer,
     job_id integer,
-    status varchar(20),
+    status varchar(30),
     PRIMARY KEY (App_id),
     FOREIGN KEY (cand_id) REFERENCES Candidate_details(cand_id),
     FOREIGN KEY (job_id) REFERENCES Jobs(job_id)
@@ -206,7 +206,7 @@ INSERT INTO Recruiter_details(rec_id,First_name,Last_name,org_id) VALUES
 (8,'Christo','S',4),
 (10,'Sreeraj','S',5);
 
-INSERT INTO Jobs (job_id, Title, Description, Responsibility, Requirements, Deadline, Location, salary, work_dayy, work_hours, job_type, category, rec_id) VALUES 
+INSERT INTO Jobs (job_id, Title, Description, Responsibility, Requirements, Deadline, Location, salary, work_days, work_hours, job_type, category, rec_id) VALUES 
 (1, 'Software Engineer', 'Developing software', 'Developing software', 'B.Tech in Computer Science', '2021-05-30 00:00:00', 'Kochi', 50000, 5, '9:00-5:00', 'Full Time', 'Software', 2),
 (2, 'Data Analyst', 'Analysing data', 'Analysing data', 'B.Tech in Computer Science', '2021-05-30 00:00:00', 'Bangalore', 90000, 5, '9:00-5:00', 'Full Time', 'Software', 4),
 (3, 'Full Stack Developer', 'Developing and maintaining websites', 'Developing and maintaining websites', 'B.Tech in Computer Science', '2021-05-30 00:00:00', 'Chennai', 30000, 5, '9:00-5:00', 'Full Time', 'Software', 7),
@@ -224,21 +224,21 @@ VALUES
 (11, 'Vimal', 'Vijay', 'Male', 'None', '1983-12-30', 'linkedin.com/vimal', '1122233344', 'English', '303 Cedar St, City, Country', 'India', 'Project Management, Leadership', 'Management');
 
 
-INSERT INTO Work_Exp (cand_id, job_Title, org_id, start_year, end_year) VALUES 
-(1, 'Software Engineer', 1, 2015, 2020),
-(3, 'Data Analyst', 2, 2015, 2020),
-(5, 'Full Stack Developer', 3, 2015, 2020),
-(6, 'Software Development Engineer', 4, 2015, 2020),
-(9, 'Software Engineer', 5, 2015, 2020),
-(11, 'Software Engineer', 1, 2015, 2020);
+INSERT INTO Work_Exp (cand_id, job_Title, org_name, start_year, end_year) VALUES 
+(1, 'Software Engineer', 'TCS', 2015, 2020),
+(3, 'Data Analyst', 'Infosys', 2015, 2020),
+(5, 'Full Stack Developer', 'Wipro', 2015, 2020),
+(6, 'Software Development Engineer', 'Accenture', 2015, 2020),
+(9, 'Software Engineer', 'Cognizant', 2015, 2020),
+(11, 'Software Engineer', 'TCS', 2015, 2020);
 
-INSERT INTO Projects (cand_id, org_id, Project_Title, Project_Desc, start_date, end_date) VALUES 
-(1, 1, 'Project 1', 'Project 1 Description', '2015-01-01', '2015-01-01'),
-(3, 2, 'Project 2', 'Project 2 Description', '2015-01-01', '2015-01-01'),
-(5, 3, 'Project 3', 'Project 3 Description', '2015-01-01', '2015-01-01'),
-(6, 4, 'Project 4', 'Project 4 Description', '2015-01-01', '2015-01-01'),
-(9, 5, 'Project 5', 'Project 5 Description', '2015-01-01', '2015-01-01'),
-(11, 1, 'Project 6', 'Project 6 Description', '2015-01-01', '2015-01-01'); 
+INSERT INTO Projects (cand_id, org_name, Project_Title, Project_Desc, start_date, end_date) VALUES 
+(1, 'TCS', 'Project 1', 'Project 1 Description', '2015-01-01', '2015-01-01'),
+(3, 'Infosys', 'Project 2', 'Project 2 Description', '2015-01-01', '2015-01-01'),
+(5, 'Wipro', 'Project 3', 'Project 3 Description', '2015-01-01', '2015-01-01'),
+(6, 'Accenture', 'Project 4', 'Project 4 Description', '2015-01-01', '2015-01-01'),
+(9, 'Cognizant', 'Project 5', 'Project 5 Description', '2015-01-01', '2015-01-01'),
+(11, 'TCS', 'Project 6', 'Project 6 Description', '2015-01-01', '2015-01-01'); 
 
 INSERT INTO Education (cand_id, Degree, Major, Institution, start_year, end_year, score, max_score) VALUES 
 (1, 'B.Tech', 'Computer Science', 'IIT Madras', 2011, 2015, 9.1, 10),
@@ -257,7 +257,7 @@ INSERT INTO Applications (App_id, cand_id, job_id, status) VALUES
 (6, 11, 1, 'Pending');
 
 INSERT INTO Interviews (App_id, DATE_TIME, link, venue) VALUES 
-(2, '2021-05-30 00:00:00', 'meet.google.com/abc', 'Bangalore');
+(2, '2023-10-30 00:00:00', 'meet.google.com/abc', 'Bangalore');
 
 
 INSERT INTO Notifications (cand_id, message) VALUES 

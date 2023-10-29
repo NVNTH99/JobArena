@@ -19,7 +19,7 @@ const Search = React.memo(( {setData} ) => {
             },
           });
 
-           
+          console.log(response.data)
           setData(response.data);
         } catch (error) {
           console.error('Error fetching data', error);
@@ -29,9 +29,6 @@ const Search = React.memo(( {setData} ) => {
     useEffect(() => {
      fetchData();
   }, [searchQuery]);
-
-
-   
 
     return(
         <section className="search-container">
