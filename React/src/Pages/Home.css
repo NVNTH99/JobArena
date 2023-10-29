@@ -133,15 +133,30 @@ nav ul {
   left: 40%;
 }
 
+.profile_button{
+  border-radius: 50%;
+}
+
+.profile_box{
+  z-index: 1;
+  display: none;
+  background: white;
+  height: 15rem;
+  width: 10rem;
+  border-radius: 3%;
+  position: absolute;
+  top: 7.5%;
+  right: 5%;
+  padding: 1%;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+  font-family: "Myanmar Khyay-Regular", Helvetica;
+}
+
 .ellipse{
-  /* position: absolute; */
   background-color: #e8e8e8;
-  /* background-size: cover; */
   border-radius: 33.5px;
-  /* height: 67px; */
   left: 46.5%;
   top: 12px;
-  /* width: 67px; */
   height: 40pt;
   width: 40pt;
   align-items: center;

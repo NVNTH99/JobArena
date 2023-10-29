@@ -111,11 +111,35 @@ function NavLink(props){
 }
 
 function Profile(){
-    return(
-        <div className="profile-icon">
-            <div className="ellipse"><img src="/User_circle.png"></img></div>
-            {/* <img src="/User_circle.png"></img> */}
+  function handleClick(){
+    setToggleNotification(!toggleNotification);
+  }
+
+  const [toggleNotification, setToggleNotification] = useState(false);
+  useEffect(() =>{
+    var box = document.getElementById('profile_box');
+    if(!toggleNotification)
+      box.style.display = "none";
+    else{
+      box.style.display = "block";
+    }
+  },[toggleNotification]);
+
+  return(
+      <div className="profile-icon">
+          
+          {/* <img src="/User_circle.png"></img> */}
+          <button className="profile_button" onClick={handleClick}><div className="ellipse"><img src="/User_circle.png"></img></div></button>
+        <div id="profile_box" className="profile_box">
+          <div><h3>Hi User,</h3></div>
+          <hr/>
+          <div className="profile_container">
+            <div>Profile</div>
+            <div>Change Password</div>
+            <div>Log out</div>
+          </div>
         </div>
+      </div>
     )
 }
 
