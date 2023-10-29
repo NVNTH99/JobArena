@@ -228,11 +228,11 @@ function SignUp(){
         if(user_id){
             if(type === 'candidate'){
                 console.log("Went to candidate")
-                navigate('/candidate/home', { state: { user_id: user_id.user_id } })
+                navigate('/candidate/home', { state: user_id.user_id  })
             }
             else if(type === 'recruiter'){
                 console.log("Went to Recruiter")
-                navigate("/recruiter/home", { state: { user_id: user_id.user_id } })
+                navigate("/recruiter/home", { state:  user_id.user_id })
             }
         }
     },[user_id])

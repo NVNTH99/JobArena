@@ -291,7 +291,13 @@ app.post('/candidate/profilesave',(req,res)=>{
 
 app.get('/candidate/appliedjobs',(req,res)=>{
     const user_id = req.query.user_id
-    const query = `SELECT a.App_id, a.status, j.* FROM Applications a JOIN Jobs j ON a.job_id = j.job_id WHERE a.cand_id = ${user_id};`
+    const query = `SELECT a.App_id, a.status, j.*, o.Organization_name as company
+    FROM Applications a 
+    JOIN Jobs j ON a.job_id = j.job_id 
+    JOIN Recruiter_details r ON j.rec_id = r.rec_id 
+    JOIN Organizations o ON r.org_id = o.org_id 
+    WHERE a.cand_id = ${user_id};
+    `
     requestQueue.push({query: query, params: []},(error,result)=>{
         if(error){
             res.status(500).send('Internal Server Error')

@@ -73,10 +73,10 @@ function Login(){
     useEffect(()=>{
         if(retrieved.type === 'candidate'){
             // console.log(2)
-            navigate('/candidate/home', { state: { user_id: retrieved.user_id } })
+            navigate('/candidate/home', { state: retrieved.user_id  })
         }
         else if(retrieved.type === 'recruiter'){
-            navigate("/recruiter/home", { state: { user_id: retrieved.user_id } })
+            navigate("/recruiter/home", { state: retrieved.user_id  })
         }
     },[retrieved])
 

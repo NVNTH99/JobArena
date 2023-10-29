@@ -39,7 +39,7 @@ import { useLocation } from "react-router-dom";
 
 function CandidateRecommendedJobs(){
     const location = useLocation()
-    const {user_id} = location.state
+    const user_id = location.state
     const [recJobs,setrecjobs] = useState([])
     const [events, setevents] = useState({})
 

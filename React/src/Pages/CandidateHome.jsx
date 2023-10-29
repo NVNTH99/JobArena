@@ -46,7 +46,7 @@ import axios from 'axios'
 
 function CandidateHome(){
     const location = useLocation()
-    const {user_id} = location.state
+    const user_id = location.state
     // console.log(user_id)
     const [recJobs,setrecjobs] = useState([])
     const [jobs,setJobs] = useState([])
@@ -123,12 +123,13 @@ function RecommendedJobs(props){
                     <div>
                         {props.recJobs.map((job, index) =>
                             <RecommendedCard
-                                job_id = {job.job_id}
                                 key = {index}
-                                title = {job.Title}
-                                company = {job.company}
-                                location = {job.Location}
-                                category = {job.category}
+                                // job_id = {job.job_id}
+                                // title = {job.Title}
+                                // company = {job.company}
+                                // location = {job.Location}
+                                // category = {job.category}
+                                job = {job}
                                 setSelectedRecommendedJob = {props.setSelectedRecommendedJob}
                             />
                         )}
