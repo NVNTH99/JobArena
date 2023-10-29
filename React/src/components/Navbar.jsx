@@ -73,11 +73,12 @@ function NavLink(props){
   const [toggleNotification, setToggleNotification] = useState(false);
   useEffect(() =>{
     var box = document.getElementById('box');
-    if(!toggleNotification)
-      box.style.display = "none";
-    else{
-      box.style.display = "block";
-    }
+    if(box)
+      if(!toggleNotification)
+        box.style.display = "none";
+      else{
+        box.style.display = "block";
+      }
   },[toggleNotification]);
 
   if(props.navTitle === "notification")
@@ -118,6 +119,7 @@ function Profile(){
   const [toggleNotification, setToggleNotification] = useState(false);
   useEffect(() =>{
     var box = document.getElementById('profile_box');
+    if(box)
     if(!toggleNotification)
       box.style.display = "none";
     else{
