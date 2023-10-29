@@ -10,6 +10,10 @@ const JobInfo = React.memo((props)=>{
     }
 
     useEffect(()=>{
+      setJobDetails('')
+    },[props.ActiveTab])
+
+    useEffect(()=>{
       if(props.selectedRecommendedJob)
         setJobDetails(props.selectedRecommendedJob);
     },[props.selectedRecommendedJob])
