@@ -126,7 +126,7 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    height: 25rem;
+    height: 50vh;
 }
 
 .candidate-upcoming-container > div{
