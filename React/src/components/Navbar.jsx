@@ -136,9 +136,9 @@ function Profile(){
           <div><h3>Hi User,</h3></div>
           <hr/>
           <div className="profile_container">
-            <div>Profile</div>
-            <div>Change Password</div>
-            <div>Log out</div>
+            <div className="profile_element">Profile</div>
+            <div className="profile_element">Change Password</div>
+            <div className="profile_element">Log out</div>
           </div>
         </div>
       </div>
