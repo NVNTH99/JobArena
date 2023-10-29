@@ -20,7 +20,7 @@ function SelectedJobInfo(props){
               }
             })
             .then(response => {
-              //Try to update the jobs list in the candidate home page
+              props.fetchTemp()
             })
             .catch(error => {
               console.log("Internal Server Error applying for job")

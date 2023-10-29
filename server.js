@@ -217,7 +217,8 @@ app.get('/candidate/recommended',(req,res)=>{
     if(req.query.limit){
         limit = " LIMIT " + req.query.limit
     }
-    const query1 = `SELECT preference_category FROM Candidate_details where cand_id=${user_id}`
+    let query1 = `SELECT preference_category FROM Candidate_details where cand_id=${user_id}`
+    query1 = query1 + ` AND NOT EXISTS ( SELECT 1 FROM Applications a WHERE a.cand_id = ${req.query.user_id} AND a.job_id = j.job_id)`
     requestQueue.push({ query: query1, params: [] }, (error, result) => {
         if (error) {
             res.status(500).send('Internal Server Error');
@@ -258,9 +259,9 @@ app.post('/candidate/jobapply',(req,res)=>{
     const user_id = req.query.user_id
     const job_id = req.query.job_id
     // query below shd check whether any null values are there in candidat_details
-    // SELECT * FROM Candidate_details 
-    // WHERE cand_id = 5 
-    // AND (Gender IS NULL OR Disability IS NULL OR Date_of_Birth IS NULL);
+    // const query1 =  `SELECT * FROM Candidate_details 
+    // WHERE cand_id = ${user_id} 
+    // AND (Gender IS NULL OR Disability IS NULL OR Date_of_Birth IS NULL);`
     const query1 = `INSERT INTO Applications (cand_id,job_id,status) values (${user_id},${job_id},'Pending')`
     requestQueue.push({query: query1, params: []},(error,result)=>{
         if(error){
