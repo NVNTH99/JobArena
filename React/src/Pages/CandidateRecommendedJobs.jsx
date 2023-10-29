@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState,useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Heading from "../components/Heading";
 import JobInfo from "../components/JobInfo";
 import CandidateUpcomingCard from "../components/CandidateUpcomingCard";
 import "./CandidateRecommendedJobs.css";
 import { useLocation } from "react-router-dom";
+import axios from "axios";
 
 // var jobs = [
 //     {
@@ -41,14 +42,13 @@ function CandidateRecommendedJobs(){
     const location = useLocation()
     const user_id = location.state
     const [recJobs,setrecjobs] = useState([])
-    const [events, setevents] = useState({})
+    const [events, setevents] = useState([])
 
-    useEffect(()=>{
-        console.log(user_id)
+    const fetchRec = () => {
         axios.get('http://localhost:3000/candidate/recommended', {
             params: {
-                user_id : user_id
-                // limit : 3
+                user_id : user_id,
+                limit : 3
             }
         })
         .then(response => {
@@ -57,18 +57,25 @@ function CandidateRecommendedJobs(){
         .catch(error => {
             console.error('Error fetching records', error);
         })
+    }
+
+    useEffect(()=>{
+        fetchRec()
+    },[])
+
+    useEffect(()=>{
         axios.get('http://localhost:3000/candidate/upcoming', {
             params: {
                 user_id : user_id,
             }
         })
         .then(response => {
-            setevents({"upcoming":response.data})
+            setevents(response.data)
         })
         .catch(error => {
             console.error('Error fetching records', error);
         })
-    },[])
+    },[recJobs])
 
     return(
         <>
@@ -77,10 +84,10 @@ function CandidateRecommendedJobs(){
         <div className="recommended-jobs-body">
             <div className="candidate-bottom">
                 {/* <JobInfo jobs = {recJobs}/> */}
-                {recJobs && <JobInfo jobs = {recJobs} user_id={user_id}/>}
+                {recJobs && <JobInfo jobs = {recJobs} user_id={user_id} fetchTemp={fetchRec}/>}
                 <div className="candidate-upcoming">
                     {/* <UpcomingCard event={events}/> */}
-                    {events.upcoming && <CandidateUpcomingCard upcoming={events.upcoming}/>}
+                    {events && <CandidateUpcomingCard upcoming={events}/>}
                 </div>
             </div>
         </div>
