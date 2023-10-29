@@ -142,14 +142,45 @@ nav ul {
   display: none;
   background: white;
   height: 15rem;
-  width: 10rem;
+  width: 15rem;
   border-radius: 3%;
   position: absolute;
-  top: 7.5%;
-  right: 5%;
-  padding: 1%;
+  top: 65px;
+  right: 25px;
+  padding: 15%;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
   font-family: "Myanmar Khyay-Regular", Helvetica;
+}
+
+.profile_box > hr{
+  margin: 0.5rem 0rem 0.75rem 0rem;
+  color: black;
+}
+
+.profile_container{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+}
+
+
+.profile_element{
+  border: 1px solid;
+  border-radius: 5px;
+  padding: 3%;
+}
+
+.profile_element:hover{
+  background: rgb(56, 56, 56) ;
+  color: white;
+}
+
+.profile_element:active {
+  background-color: #242424;
+  box-shadow: 0 2px #cecece;
+  transform: translateY(0.5px);
+  color: white;
 }
 
 .ellipse{
