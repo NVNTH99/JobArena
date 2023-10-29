@@ -8,9 +8,9 @@ function SelectedJobInfo(props){
           <div className="selected-job-top">
             <div>
               <div>
-                <h1>{props.title}</h1>
-                <h3>{props.company}, {props.location}</h3>
-                <h3>{props.category}</h3>
+                <h1>{props.job.title}</h1>
+                <h3>{props.job.company}, {props.job.location}</h3>
+                <h3>{props.job.category}</h3>
               </div>
               <div className="apply-container">
                 <AppliedButtons ActiveTab = {props.ActiveTab}/>

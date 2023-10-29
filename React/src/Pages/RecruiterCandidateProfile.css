@@ -374,7 +374,7 @@ border-radius: 4px;
 .interview_form input:focus{
     width: 100%;
     background: rgb(237, 237, 237);
-    color: rgb(31, 31, 31);
+    /* color: rgb(31, 31, 31); */
 }
 
 .react-time-picker__inputGroup input{

@@ -17,11 +17,12 @@ const JobInfo = React.memo((props)=>{
             props.jobs.map((job, index) => 
             <JobTitle
               key = {index}
-              title = {job.title}
-              company = {job.company}
-              location = {job.location}
-              category = {job.category}
-              description = {job.description}
+              job = {job}
+              // title = {job.title}
+              // company = {job.company}
+              // location = {job.location}
+              // category = {job.category}
+              // description = {job.description}
               setprop = {setJobDetails}
             />)
           }
@@ -29,11 +30,12 @@ const JobInfo = React.memo((props)=>{
         <div className="homejob-right">
             {currentJob === ""? null : 
                 <SelectedJobInfo
-                    title = {currentJob.title}
-                    company = {currentJob.company}
-                    location = {currentJob.location}
-                    category = {currentJob.category}
-                    description = {currentJob.description}
+                    job = {currentJob}
+                    // title = {currentJob.title}
+                    // company = {currentJob.company}
+                    // location = {currentJob.location}
+                    // category = {currentJob.category}
+                    // description = {currentJob.description}
                     ActiveTab = {props.ActiveTab}
                 />
             }

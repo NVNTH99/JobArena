@@ -11,7 +11,8 @@ body{
 #Navbar{
   background-color: #1e1f26;
   max-width: 100%;
-  height: 12vh;
+  /* height: 12vh; */
+  height: 4.25rem;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: row;
@@ -51,11 +52,13 @@ nav ul {
   margin: 0;
   padding: 0;
   display: flex;
-  gap: 37px;
+  gap: 25px;
 }
 
 .nav-link {
   margin-left: auto;
+  align-items: center;
+  display: flex;
 }
 
 .nav-link a {
@@ -65,12 +68,58 @@ nav ul {
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  font-size: 23px;
+  font-size: 20px;
+}
+
+.notification_button{
+  background: #1e1f26;
+  border: 0;
+}
+
+.notification_button > img{
+  height: 55pt;
+  width: 55pt;
+}
+
+.notification_box{
+  z-index: 1;
+  display: none;
+  background: white;
+  height: 25rem;
+  width: 20rem;
+  border-radius: 3%;
+  position: absolute;
+  top: 7.5%;
+  right: 5%;
+  padding: 1%;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+  font-family: "Myanmar Khyay-Regular", Helvetica;
+}
+
+.notification_box > hr{
+  margin: 0.5rem 0rem 0.75rem 0rem;
+  color: black;
+}
+
+.notification_container{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+}
+
+.notification_element{
+  border: 1px solid;
+  border-radius: 5px;
+  padding: 3%;
 }
 
 .profile-icon{
   position: relative;
   flex: 0 1 auto;
+  height: 4.25rem;
+  flex: 0 0 5%;
+  padding: 0.5%;
 }
 
 .profile-container{
@@ -85,14 +134,24 @@ nav ul {
 }
 
 .ellipse{
-  position: absolute;
+  /* position: absolute; */
   background-color: #e8e8e8;
-  background-size: cover;
+  /* background-size: cover; */
   border-radius: 33.5px;
-  height: 67px;
+  /* height: 67px; */
   left: 46.5%;
   top: 12px;
-  width: 67px;
+  /* width: 67px; */
+  height: 40pt;
+  width: 40pt;
+  align-items: center;
+  justify-content: center;
+}
+
+.ellipse > img{
+  height: 40pt;
+  width: 40pt;
+  border-radius: 50%;
 }
 
 .search-container{
