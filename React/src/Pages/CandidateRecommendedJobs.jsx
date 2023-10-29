@@ -1,10 +1,11 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import Navbar from "../components/Navbar";
 import Heading from "../components/Heading";
 import JobInfo from "../components/JobInfo";
 import CandidateUpcomingCard from "../components/CandidateUpcomingCard";
 import "./CandidateRecommendedJobs.css";
 import { useLocation } from "react-router-dom";
+import axios from "axios";
 
 // var jobs = [
 //     {

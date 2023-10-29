@@ -102,7 +102,7 @@ function CandidateHome(){
     return(
         <>
             <Navbar userType = {"candidate"} user_id = {user_id}/>
-            {recJobs && <RecommendedJobs recJobs = {recJobs} setSelectedRecommendedJob = {setSelectedRecommendedJob}/>} {/* change to recJobs */}
+            {recJobs && <RecommendedJobs user_id = {user_id} recJobs = {recJobs} setSelectedRecommendedJob = {setSelectedRecommendedJob}/>} {/* change to recJobs */}
             <Search setData={setJobs}/>
             <div className="candidate-bottom">
                 {jobs && <JobInfo jobs = {jobs} user_id={user_id} selectedRecommendedJob = {selectedRecommendedJob} />} {/*user_id={user_id}*/}
@@ -135,7 +135,7 @@ function RecommendedJobs(props){
                         )}
                     </div>
                     <div>
-                        <Viewmore/>
+                        <Viewmore user_id = {props.user_id}/>
                     </div>
                 </div>    
             </div>
@@ -144,9 +144,9 @@ function RecommendedJobs(props){
     )
 }
 
-function Viewmore(){
+function Viewmore(props){
     return(
-        <Link className="view-more" to="/candidate/recommended_jobs">
+        <Link className="view-more" to="/candidate/recommended_jobs" state={props.user_id}> 
             <h4>View more</h4>
             <FontAwesomeIcon size="lg" icon={faPlus} />
         </Link>
