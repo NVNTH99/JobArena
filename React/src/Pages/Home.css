@@ -355,10 +355,11 @@ nav ul {
   display: flex;
   align-items: flex-start;
   margin-bottom: 6px;
+  gap: 2px;
+  flex-wrap: wrap;
 }
 
 .propjob{
-  margin-left: 3px;
   font-size: 1.1rem;
 }
 
