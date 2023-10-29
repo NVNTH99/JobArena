@@ -320,7 +320,7 @@ nav ul {
 
 .jobpetti{
   display: flex;
-  align-items: flex-end;
+  align-items: flex-start;
   margin-bottom: 6px;
 }
 
