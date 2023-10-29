@@ -19,10 +19,10 @@ function JobTitle(props){
         <div className="job-title-card" onClick={handleClick}>
                 <h4>{props.job.Title}</h4>
                 <h4>{props.job.company}, {props.job.Location}</h4>
-                <h4>{props.category}</h4>
+                <h4>{props.job.category}</h4>
 
                 <p>
-                    {props.Description}
+                    {props.job.Description}
                 </p>
         </div>
     )

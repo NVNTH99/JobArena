@@ -20,7 +20,7 @@ function SelectedJobInfo(props){
               }
             })
             .then(response => {
-              //Try to update the jobs list in the candidate home page
+              props.fetchTemp()
             })
             .catch(error => {
               console.log("Internal Server Error applying for job")
@@ -36,7 +36,7 @@ function SelectedJobInfo(props){
               <div>
                 <h1>{props.job.Title}</h1>
                 <h3>{props.job.company}, {props.job.Location}</h3>
-                <h3>{props.category}</h3>
+                <h3>{props.job.category}</h3>
               </div>
               <div className="apply-container"> 
                 <AppliedButtons app_id = {props.job.App_id} ActiveTab = {props.ActiveTab} Apply={Apply} fetchTemp={props.fetchTemp}/>
