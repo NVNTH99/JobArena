@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBell } from "@fortawesome/free-solid-svg-icons"
@@ -63,11 +63,37 @@ function NavItems(props) {
     );
   }
 
+
 function NavLink(props){
+  
+  function handleClick(){
+    setToggleNotification(!toggleNotification);
+  }
+
+  const [toggleNotification, setToggleNotification] = useState(false);
+  useEffect(() =>{
+    var box = document.getElementById('box');
+    if(box)
+      if(!toggleNotification)
+        box.style.display = "none";
+      else{
+        box.style.display = "block";
+      }
+  },[toggleNotification]);
+
   if(props.navTitle === "notification")
     return(
       <li className="nav-link">
-        <FontAwesomeIcon icon={faBell} size = "xl" style={{color: "#ffffff",}} />
+        <button className="notification_button" onClick={handleClick}><FontAwesomeIcon icon={faBell} size = "xl" style={{color: "#ffffff",}} /></button>
+        <div id="box" className="notification_box">
+          <div><h3>Notifications <span>{notification.length}</span></h3></div>
+          <hr/>
+          <div className="notification_container">
+            {notification.map((message, index)=>
+              <div key={index} className="notification_element">{message}</div>
+            )}
+          </div>
+        </div>
       </li>
     )
   console.log("NavLink",props.user_id)
@@ -86,12 +112,39 @@ function NavLink(props){
 }
 
 function Profile(){
-    return(
-        <div className="profile-icon">
-            <div className="ellipse"></div>
-            <img src="/User_circle.png"></img>
+  function handleClick(){
+    setToggleNotification(!toggleNotification);
+  }
+
+  const [toggleNotification, setToggleNotification] = useState(false);
+  useEffect(() =>{
+    var box = document.getElementById('profile_box');
+    if(box)
+    if(!toggleNotification)
+      box.style.display = "none";
+    else{
+      box.style.display = "block";
+    }
+  },[toggleNotification]);
+
+  return(
+      <div className="profile-icon">
+          
+          {/* <img src="/User_circle.png"></img> */}
+          <button className="profile_button" onClick={handleClick}><div className="ellipse"><img src="/User_circle.png"></img></div></button>
+        <div id="profile_box" className="profile_box">
+          <div><h3>Hi User,</h3></div>
+          <hr/>
+          <div className="profile_container">
+            <div>Profile</div>
+            <div>Change Password</div>
+            <div>Log out</div>
+          </div>
         </div>
+      </div>
     )
 }
 
 export default Navbar;
+
+let notification = ["You got placed bitch.", "Your application got rejected.","You are invited for an interview",]

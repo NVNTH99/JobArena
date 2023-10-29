@@ -25,14 +25,12 @@ const JobInfo = React.memo((props)=>{
             props.jobs.map((job, index) => 
             <JobTitle
               key = {index}
-              // job_id ={job.job_id}
-              // title = {job.Title}
-              // company = {job.company}
-              // location = {job.Location}
-              // category = {job.category}
-              // description = {job.Description}
-              // app_id = {job.App_id}
               job = {job}
+              // title = {job.title}
+              // company = {job.company}
+              // location = {job.location}
+              // category = {job.category}
+              // description = {job.description}
               setprop = {setJobDetails}
             />)
           }
