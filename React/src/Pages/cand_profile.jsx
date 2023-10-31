@@ -1,7 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Heading from "../components/Heading";
 import CandidateUpcomingCard from "../components/CandidateUpcomingCard";
+import AdityaLoad from "./AdityaLoad";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import "./cand_profile.css"
 // import 'bootstrap/dist/css/bootstrap.min.css'
 
@@ -12,104 +15,13 @@ var upcoming = [
 ]
 var events = {"upcoming":upcoming};
 
-function AdityaLoad(){
-    const lang_inputField = document.getElementById("langfieldcp");
-    const lang_addButton = document.getElementById("langpluscp");
-    const lang_itemList = document.getElementById("lang-listcp");
-    
-    lang_addButton.addEventListener("click", function () {
-      const lang_inputValue = lang_inputField.value.trim();
-    
-      if (lang_inputValue !== "") {
-        const lang_newItem = document.createElement("div");
-        lang_newItem.classList.add("itemcp");
-        lang_newItem.innerHTML = `
-                        ${lang_inputValue}
-                        <button type="button" class="delbtncp">X</button>
-                    `;
-        lang_itemList.appendChild(lang_newItem);
-        lang_inputField.value = "";
-      }
-    });
-    
-    lang_itemList.addEventListener("click", function (event) {
-      if (event.target.classList.contains("delbtncp")) {
-        event.target.parentNode.remove();
-      }
-    });
-    
-    const domain_inputField = document.getElementById("domainfieldcp");
-    const domain_addButton = document.getElementById("domainpluscp");
-    const domain_itemList = document.getElementById("domain-listcp");
-    
-    domain_addButton.addEventListener("click", function () {
-      const domain_inputValue = domain_inputField.value.trim();
-    
-      if (domain_inputValue !== "") {
-        const domain_newItem = document.createElement("div");
-        domain_newItem.classList.add("itemcp");
-        domain_newItem.innerHTML = `
-                          ${domain_inputValue}
-                          <button type="button" class="delbtncp">X</button>
-                      `;
-        domain_itemList.appendChild(domain_newItem);
-        domain_inputField.value = "";
-      }
-    });
-    
-    domain_itemList.addEventListener("click", function (event) {
-      if (event.target.classList.contains("delbtncp")) {
-        event.target.parentNode.remove();
-      }
-    });
-    
-    const formContainer = document.querySelector(".xtra-formcp");
-    const addMoreButton = document.getElementById("addMoreButton");
-    const add = document.getElementById("xxx3");
-    
-    addMoreButton.addEventListener("click", function () {
-      const formSection = document
-        .querySelector(".xtra-form-container")
-        .cloneNode(true);
-    
-      const inputFields = formSection.querySelectorAll("input");
-      inputFields.forEach((input) => {
-        input.value = ""; // Clear the value of each input field
-      });
-    
-      formContainer.insertBefore(formSection, add);
-    });
-    
-    formContainer.addEventListener("click", function (event) {
-      if (event.target.classList.contains("delwkcp")) {
-        event.target.parentNode.parentNode.remove();
-      }
-    });
-    
-    const formContainer2 = document.querySelector(".xtra-formcp2");
-    const addMoreButton2 = document.getElementById("addMoreButton2");
-    const add2 = document.getElementById("xxx32");
-    
-    addMoreButton2.addEventListener("click", function () {
-      const formSection2 = document
-        .querySelector(".xtra-form-container2")
-        .cloneNode(true);
-    
-      formContainer2.insertBefore(formSection2, add2);
-    });
-    
-    formContainer2.addEventListener("click", function (event) {
-      if (event.target.classList.contains("delwkcp")) {
-        event.target.parentNode.parentNode.remove();
-      }
-    });
-    
-}
-
 function Cand_profile() {
-    useEffect(()=>{
-        AdityaLoad();
-    },[])
+  // const [candidateDetails, setCandidateDetails] = useState({
+
+  // })
+  useEffect(()=>{
+      AdityaLoad();
+  },[])
   return (
     <>
     <Navbar userType = "candidate"/>
@@ -185,7 +97,7 @@ function Cand_profile() {
                         <label htmlFor="languages" className="lblcp">Languages</label>
                         <div className="catgrpcp">
                         <input type="text" id="langfieldcp" className="cp__input" aria-describedby="languages" />
-                        <button type="button" id="langpluscp">ADD <i className="fa fa-plus"></i></button>
+                        <button type="button" id="langpluscp">ADD <FontAwesomeIcon icon = {faPlus}/></button>
                         </div>
                         <div id="lang-listcp"></div>
                     </div>
@@ -193,7 +105,7 @@ function Cand_profile() {
                         <label htmlFor="domain" className="lblcp">Interested Domain</label>
                         <div className="catgrpcp">
                         <input type="text" id="domainfieldcp" className="cp__input" aria-describedby="domain" />
-                        <button type="button" id="domainpluscp">ADD <i className="fa fa-plus"></i></button>
+                        <button type="button" id="domainpluscp">ADD <FontAwesomeIcon icon = {faPlus}/></button>
                         </div>
                         <div id="domain-listcp"></div>
                     </div>

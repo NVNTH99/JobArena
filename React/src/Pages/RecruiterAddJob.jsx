@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Heading from "../components/Heading";
 import UpcomingCard from "../components/UpcomingCard";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import "./RecruiterAddJob.css";
 
 var upcoming = [
@@ -82,7 +84,7 @@ function RecruiterAddJob(){
                                             <div className="catgrpaj">
                                                 <input type="text" id="domainfieldaj" className="aj__input" 
                                                     aria-describedby="domain"></input>
-                                                <button type="button" id="domainplusaj">ADD&nbsp;<i className="fa fa-plus"></i></button>
+                                                <button type="button" id="domainplusaj">ADD&nbsp;<FontAwesomeIcon icon = {faPlus}/></button>
                                             </div>
                                             <div id="domain-listaj"></div>
                                         </div>
