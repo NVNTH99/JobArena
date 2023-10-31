@@ -57,7 +57,7 @@ var tabs = [
 function CandidateAppliedJobs(){
     const location = useLocation()
     const user_id = location.state
-    console.log("This",user_id)
+    // console.log("This",user_id)
     const [temp,setTemp] = useState([])
     const [Jobs,setJobs] = useState({"Pending": [], "Shortlisted": [], "Offered": [], "Rejected": []})
     const[upcoming,setupcoming] = useState([])

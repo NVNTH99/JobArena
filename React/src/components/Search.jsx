@@ -5,22 +5,23 @@ import PropTypes from 'prop-types';
 
 
 
-const Search = React.memo(( {setData} ) => {
+const Search = React.memo(( props ) => {
 
     const [searchQuery, setSearchQuery] = useState('');
     // const [data, setData] = useState([]);
 
     const fetchData = async () => {
         try {
-            
+        //   console.log("Here",props.user_id)      
           const response = await axios.get('http://localhost:3000/jobs', {
             params: {
-              searchQuery: searchQuery
+              searchQuery: searchQuery,
+              user_id: props.user_id
             },
           });
 
           console.log(response.data)
-          setData(response.data);
+          props.setData(response.data);
         } catch (error) {
           console.error('Error fetching data', error);
         }

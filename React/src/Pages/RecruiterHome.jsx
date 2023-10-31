@@ -42,7 +42,7 @@ import axios from "axios";
 
 function RecruiterHome(){
     const location = useLocation() //Added by Nava
-    const {user_id} = location.state //Added by Nava
+    const user_id = location.state //Added by Nava
     const [jobs,setJobs] = useState([]) //Added by Nava
     const [events,setevents] = useState({"upcoming":[]}) //Added by Nava
     // const [deleted,setDeleted] = useState(0)

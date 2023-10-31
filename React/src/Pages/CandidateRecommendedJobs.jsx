@@ -48,7 +48,7 @@ function CandidateRecommendedJobs(){
         axios.get('http://localhost:3000/candidate/recommended', {
             params: {
                 user_id : user_id,
-                limit : 3
+                // limit : 3
             }
         })
         .then(response => {
@@ -79,7 +79,7 @@ function CandidateRecommendedJobs(){
 
     return(
         <>
-        <Navbar userType = {"candidate"}/>
+        <Navbar userType = {"candidate"} user_id={user_id}/>
         <Heading title = "Recommended jobs for you" />
         <div className="recommended-jobs-body">
             <div className="candidate-bottom">

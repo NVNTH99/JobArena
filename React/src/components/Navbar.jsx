@@ -96,7 +96,7 @@ function NavLink(props){
         </div>
       </li>
     )
-  console.log("NavLink",props.user_id)
+  // console.log("NavLink",props.user_id)
   return(
     <li className="nav-link">
       {/* <Link to = {{

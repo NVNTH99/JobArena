@@ -111,7 +111,7 @@ function CandidateHome(){
         <>
             <Navbar userType = {"candidate"} user_id = {user_id}/>
             {recJobs && <RecommendedJobs recJobs = {recJobs} user_id={user_id} setSelectedRecommendedJob = {setSelectedRecommendedJob}/>} {/* change to recJobs */}
-            <Search setData={setJobs} recJobs={recJobs}/>
+            <Search setData={setJobs} recJobs={recJobs} user_id={user_id}/>
             <div className="candidate-bottom">
                 {jobs && <JobInfo jobs = {jobs} user_id={user_id} selectedRecommendedJob = {selectedRecommendedJob} fetchTemp={fetchRec}/>} {/*user_id={user_id}*/}
                 <div className="candidate-upcoming">

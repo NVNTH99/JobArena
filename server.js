@@ -133,10 +133,12 @@ app.get('/organizations',(req,res)=>{
 
 app.get('/jobs', (req, res) => {
     const searchQuery = req.query.searchQuery;
-    let query = `SELECT o.Organization_name as company,j.* from jobs j join Recruiter_details r on r.rec_id=j.rec_id join Organizations o on o.org_id=r.org_id WHERE j.Title LIKE '%${searchQuery}%' or j.category LIKE '%${searchQuery}%' or o.organization_name LIKE '%${searchQuery}%'`;
+    // console.log(req.query.user_id)
+    let query = `SELECT o.Organization_name as company,j.* from jobs j join Recruiter_details r on r.rec_id=j.rec_id join Organizations o on o.org_id=r.org_id WHERE (j.Title LIKE '%${searchQuery}%' or j.category LIKE '%${searchQuery}%' or o.organization_name LIKE '%${searchQuery}%')`;
     if(req.query.user_id){
         query = query + ` AND NOT EXISTS ( SELECT 1 FROM Applications a WHERE a.cand_id = ${req.query.user_id} AND a.job_id = j.job_id)`
     }
+    // console.log(query)
     requestQueue.push({ query: query, params: [] }, (error, result) => {
         if (error) {
             res.status(500).send('Internal Server Error');
@@ -217,16 +219,16 @@ app.get('/candidate/recommended',(req,res)=>{
     if(req.query.limit){
         limit = " LIMIT " + req.query.limit
     }
-    let query1 = `SELECT preference_category FROM Candidate_details where cand_id=${user_id}`
-    query1 = query1 + ` AND NOT EXISTS ( SELECT 1 FROM Applications a WHERE a.cand_id = ${req.query.user_id} AND a.job_id = j.job_id)`
+    const query1 = `SELECT preference_category FROM Candidate_details where cand_id=${user_id}`
+    // query1 = query1 + ` AND NOT EXISTS ( SELECT 1 FROM Applications a WHERE a.cand_id = ${req.query.user_id} AND a.job_id = j.job_id)`
     requestQueue.push({ query: query1, params: [] }, (error, result) => {
         if (error) {
             res.status(500).send('Internal Server Error');
         } else {
             if(result.length == 1){
-                console.log(result)
+                // console.log(result)
                 const pref = result[0].preference_category.split(',').map(value=>"category like '%" + value + "%'")
-                const query2 = "Select o.Organization_name as company,j.* from jobs j join Recruiter_details r on r.rec_id=j.rec_id join Organizations o on o.org_id=r.org_id where " + pref.join(" or ") + limit
+                const query2 = "Select o.Organization_name as company,j.* from jobs j join Recruiter_details r on r.rec_id=j.rec_id join Organizations o on o.org_id=r.org_id where " + pref.join(" or ") +` AND NOT EXISTS ( SELECT 1 FROM Applications a WHERE a.cand_id = ${req.query.user_id} AND a.job_id = j.job_id)` + limit
                 requestQueue.push({ query: query2, params: [] }, (error, result) => {
                     if (error) {
                         res.status(500).send('Internal Server Error');
@@ -256,13 +258,13 @@ app.get('/candidate/upcoming',(req,res)=>{
 })
 
 app.post('/candidate/jobapply',(req,res)=>{
-    const user_id = req.query.user_id
-    const job_id = req.query.job_id
+    const user_id = req.body.user_id
+    const job_id = req.body.job_id
     // query below shd check whether any null values are there in candidat_details
-    // const query1 =  `SELECT * FROM Candidate_details 
-    // WHERE cand_id = ${user_id} 
-    // AND (Gender IS NULL OR Disability IS NULL OR Date_of_Birth IS NULL);`
-    const query1 = `INSERT INTO Applications (cand_id,job_id,status) values (${user_id},${job_id},'Pending')`
+    const query1 =  `SELECT * FROM Candidate_details 
+    WHERE cand_id = ${user_id} 
+    AND (Gender IS NULL OR Disability IS NULL OR Date_of_Birth IS NULL OR Resume IS NULL OR Languages IS NULL);`
+    // const query1 = `INSERT INTO Applications (cand_id,job_id,status) values (${user_id},${job_id},'Pending')`
     requestQueue.push({query: query1, params: []},(error,result)=>{
         if(error){
             res.status(500).send('Internal Server Error')
@@ -309,15 +311,26 @@ app.get('/candidate/appliedjobs',(req,res)=>{
     })
 })
 
-app.post('/candidate/appliedjobs/withdraw',(req,res)=>{
-    const app_id = req.query.app_id
-    const query = `DELETE from Applications where App_id = ${app_id};`
-    requestQueue.push({query: query, params: []},(error,result)=>{
+app.post('/candidate/appliedjobs/withdraw',(req,res)=>{ //consider for shortlisted with interviews as well
+    const app_id = req.body.app_id
+    // console.log(app_id)
+    const query1 = `DELETE from Interviews where App_id = ${app_id};`
+    requestQueue.push({query: query1, params: []},(error,result)=>{
         if(error){
+            console.log(error)
             res.status(500).send('Internal Server Error')
         }
         else{
-            res.send(true)
+            const query = `DELETE from Applications where App_id = ${app_id};`
+            requestQueue.push({query: query, params: []},(error,result)=>{
+                if(error){
+                    console.log(error)
+                    res.status(500).send('Internal Server Error')
+                }
+                else{
+                    res.send(true)
+                }
+            })
         }
     })
 })
