@@ -16,11 +16,11 @@ const requestQueue = async.queue((task, callback) => {
 }, 1);
 
 app.use(cors())
-app.use(express.static(path.join(__dirname, 'React' ,'dist')));
+app.use(express.static(path.join(__dirname, 'React')));
 app.use(bodyParser.json());
 
 app.get('/',(req,res)=>{ //When the user visits localhost:3000 it redirects him into our website's page
-    res.sendFile(path.join(__dirname,'React' , 'dist' ,'index.html'));
+    res.sendFile(path.join(__dirname,'React', 'index.html'));
 })
 
 app.post('/login',(req,res)=>{ 

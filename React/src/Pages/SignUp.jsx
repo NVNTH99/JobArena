@@ -2,6 +2,7 @@ import React, {useState,useEffect} from "react";
 import "./SignUp.css";
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
+import { Link } from "react-router-dom";
 // import { response } from "express";
 
 function loadfunc(){
@@ -407,6 +408,9 @@ function SignUp(){
                                         <button className="bn31" onClick={signupfunc}>Sign Up</button>
                                     </div>
                                 </form>
+                                <div className="guestbtnsign extra-link">
+                                    <div className="guest_textsign">Already have an account? <Link className="upsign" to="/login">Login</Link></div>
+                                </div>
                             </div>
                             <div className="screen__backgroundsign">
                                 <span className="screen__background__shapesign screen__background__shape4sign"></span>

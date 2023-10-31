@@ -65,10 +65,12 @@ function InviteRejectButton(){
             <div className="interview_date">
               Date
               <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
+              {/* <input className="interview_form_input" type="date"/> */}
             </div>
             <div className="interview_time">
               Time
               <TimePicker className="custom-time-picker-input" onChange={onChange} value={value} disableClock={true}/>
+              {/* <input className="interview_form_input" type="time"/> */}
             </div>
             <input className="submit" type="submit"/>
           </form>

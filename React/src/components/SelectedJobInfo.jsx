@@ -54,7 +54,36 @@ function SelectedJobInfo(props){
           </div>
 
           <div className="selected-job-bottom">
-            <h2>Job Description:</h2>
+            <div className="jobpetti">
+            <h3>Job Description:</h3><p className="propjob">Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae inventore voluptatum mollitia, culpa a numquam animi nemo minima debitis voluptates dolorum est cumque laudantium quisquam aut aperiam cum iste nam!{props.job.Description}</p>
+            </div>
+            <div className="jobpetti">
+            <h3>Responsibility:</h3><p className="propjob">{props.job.Responsibility}</p>
+            </div>
+            <div className="jobpetti">
+            <h3>Requirements:</h3><p className="propjob">{props.job.Requirements}</p>
+            </div>
+            <div className="jobpetti">
+            <h3>Location:</h3><p className="propjob">{props.job.Location}</p>
+            </div>
+            <div className="jobpetti">
+            <h3>Salary:</h3><p className="propjob">{props.job.salary}</p>
+            </div>
+            <div className="jobpetti">
+            <h3>Work Days:</h3><p className="propjob">{props.job.work_days} days a week</p>
+            </div>
+            <div className="jobpetti">
+            <h3>Work Hours:</h3><p className="propjob">{props.job.work_hours}</p>
+            </div>
+            <div className="jobpetti">
+            <h3>Job Type:</h3><p className="propjob">{props.job.job_type}</p>
+            </div>
+            <div className="jobpetti">
+            <h3>Category:</h3><p className="propjob">{props.job.category}</p>
+            </div>
+            <div className="jobpetti">
+            <h3>Deadline:</h3><p className="propjob">{props.job.Deadline}</p>
+            </div>
           </div>
         </div>
     )
