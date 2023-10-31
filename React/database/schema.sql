@@ -207,11 +207,11 @@ INSERT INTO Recruiter_details(rec_id,First_name,Last_name,org_id) VALUES
 (10,'Sreeraj','S',5);
 
 INSERT INTO Jobs (job_id, Title, Description, Responsibility, Requirements, Deadline, Location, salary, work_days, work_hours, job_type, category, rec_id) VALUES 
-(1, 'Software Engineer', 'Developing software', 'Developing software', 'B.Tech in Computer Science', '2021-05-30 00:00:00', 'Kochi', 50000, 5, '9:00-5:00', 'Full Time', 'Software', 2),
-(2, 'Data Analyst', 'Analysing data', 'Analysing data', 'B.Tech in Computer Science', '2021-05-30 00:00:00', 'Bangalore', 90000, 5, '9:00-5:00', 'Full Time', 'Software', 4),
-(3, 'Full Stack Developer', 'Developing and maintaining websites', 'Developing and maintaining websites', 'B.Tech in Computer Science', '2021-05-30 00:00:00', 'Chennai', 30000, 5, '9:00-5:00', 'Full Time', 'Software', 7),
-(4, 'Software Development Engineer', 'Developing software', 'Developing software', 'B.Tech in Computer Science', '2021-05-30 00:00:00', 'Kochi', 50000, 5, '9:00-5:00', 'Full Time', 'Software', 8),
-(5, 'Software Engineer', 'Developing software', 'Developing software', 'B.Tech in Computer Science', '2021-05-30 00:00:00', 'Kochi', 50000, 5, '9:00-5:00', 'Full Time', 'Software', 10);
+(1, 'Software Engineer', 'Developing software', 'Developing software', 'B.Tech in Computer Science', '2021-05-30 00:00:00', 'Kochi', 50000, 5, '9:00-5:00', 'Full Time', 'Software Development', 2),
+(2, 'Data Analyst', 'Analysing data', 'Analysing data', 'B.Tech in Computer Science', '2021-05-30 00:00:00', 'Bangalore', 90000, 5, '9:00-5:00', 'Full Time', 'Software Development', 4),
+(3, 'Full Stack Developer', 'Developing and maintaining websites', 'Developing and maintaining websites', 'B.Tech in Computer Science', '2021-05-30 00:00:00', 'Chennai', 30000, 5, '9:00-5:00', 'Full Time', 'Software Development', 7),
+(4, 'Software Development Engineer', 'Developing software', 'Developing software', 'B.Tech in Computer Science', '2021-05-30 00:00:00', 'Kochi', 50000, 5, '9:00-5:00', 'Full Time', 'Software Development', 8),
+(5, 'Software Engineer', 'Developing software', 'Developing software', 'B.Tech in Computer Science', '2021-05-30 00:00:00', 'Kochi', 50000, 5, '9:00-5:00', 'Full Time', 'Software Development', 10);
 
 
 INSERT INTO Candidate_details (cand_id, First_name, Last_name, Gender, Disability, Date_of_Birth, Linkedin, Phone, Languages, Address, Nationality, Skills, preference_category)

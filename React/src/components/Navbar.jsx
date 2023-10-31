@@ -70,7 +70,7 @@ function NavLink(props){
         <FontAwesomeIcon icon={faBell} size = "xl" style={{color: "#ffffff",}} />
       </li>
     )
-  console.log("NavLink",props.user_id)
+  // console.log("NavLink",props.user_id)
   return(
     <li className="nav-link">
       {/* <Link to = {{

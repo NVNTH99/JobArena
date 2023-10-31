@@ -25,12 +25,6 @@ const JobInfo = React.memo((props)=>{
             props.jobs.map((job, index) => 
             <JobTitle
               key = {index}
-              // job_id ={job.job_id}
-              // title = {job.Title}
-              // company = {job.company}
-              // location = {job.Location}
-              // category = {job.category}
-              // description = {job.Description}
               // app_id = {job.App_id}
               job = {job}
               setprop = {setJobDetails}
@@ -42,15 +36,10 @@ const JobInfo = React.memo((props)=>{
                 <SelectedJobInfo
                     user_id = {user_id} //From home we arent passing anything so correct that
                     // app_id = {currentJob.app_id}
-                    // job_id = {currentJob.job_id}
-                    // title = {currentJob.title}
-                    // company = {currentJob.company}
-                    // location = {currentJob.location}
-                    // category = {currentJob.category}
-                    // description = {currentJob.description}
                     job = {currentJob}
                     ActiveTab = {props.ActiveTab}
                     fetchTemp = {props.fetchTemp}
+                    setJobDetails = {setJobDetails}
                 />
             }
         </div>

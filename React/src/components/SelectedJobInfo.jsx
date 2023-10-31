@@ -2,11 +2,13 @@ import axios from "axios";
 // import { response } from "express";
 // import { response } from "express";
 import React from "react";
+import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 
 
 function SelectedJobInfo(props){
     const navigate = useNavigate();
+    const [error, seterror] = useState('')
 
     const Apply = () => {
         if(props.user_id === null){
@@ -14,13 +16,19 @@ function SelectedJobInfo(props){
         }
         else{
             axios.post('http://localhost:3000/candidate/jobapply',{
-              params: {
-                user_id : props.user_id,
-                job_id : props.job.job_id
-              }
+              user_id : props.user_id,
+              job_id : props.job.job_id
             })
             .then(response => {
-              props.fetchTemp()
+              if(response.data){
+                props.setJobDetails('')
+                props.fetchTemp()
+              }
+              else{
+                seterror('Please complete your profile')
+                console.log(error)
+              }
+
             })
             .catch(error => {
               console.log("Internal Server Error applying for job")
@@ -39,7 +47,7 @@ function SelectedJobInfo(props){
                 <h3>{props.job.category}</h3>
               </div>
               <div className="apply-container"> 
-                <AppliedButtons app_id = {props.job.App_id} ActiveTab = {props.ActiveTab} Apply={Apply} fetchTemp={props.fetchTemp}/>
+                <AppliedButtons app_id = {props.job.App_id} ActiveTab = {props.ActiveTab} Apply={Apply} fetchTemp={props.fetchTemp} setJobDetails = {props.setJobDetails}/>
               </div>
             </div>
             <hr></hr>
@@ -56,14 +64,14 @@ function AppliedButtons(props){
 
   const Withdraw = () => {
     axios.post('http://localhost:3000/candidate/appliedjobs/withdraw',{
-      params: {
-        app_id : props.app_id
-      }
+      app_id : props.app_id
     })
     .then(response => {
+      props.setJobDetails('')
       props.fetchTemp()
     })
     .catch(error => {
+      console.log(error)
       console.log("Error while Withdrawing application")
     })
   }
@@ -74,9 +82,11 @@ function AppliedButtons(props){
       tostatus: 'Accepted'
     })
     .then(response => {
+      props.setJobDetails('')
       props.fetchTemp()
     })
     .catch(error => {
+      // console.log(error)
       console.log("Error while accepting application")
     })
   }
@@ -87,6 +97,7 @@ function AppliedButtons(props){
       tostatus: 'Candidate_Rejected'
     })
     .then(response => {
+      props.setJobDetails('')
       props.fetchTemp()
     })
     .catch(error => {
