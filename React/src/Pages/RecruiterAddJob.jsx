@@ -7,57 +7,57 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import "./RecruiterAddJob.css";
 
 var upcoming = [
-    {title:"Job Title", name:"Candidate Name", id:"#CandidateID" , date:"dd/mm/yyyy", time:"hh:mm"},
-    {title:"Job Title", name:"Candidate Name", id:"#CandidateID" , date:"dd/mm/yyyy", time:"hh:mm"},
-    {title:"Job Title", name:"Candidate Name", id:"#CandidateID" , date:"dd/mm/yyyy", time:"hh:mm"},
+    { title: "Job Title", name: "Candidate Name", id: "#CandidateID", date: "dd/mm/yyyy", time: "hh:mm" },
+    { title: "Job Title", name: "Candidate Name", id: "#CandidateID", date: "dd/mm/yyyy", time: "hh:mm" },
+    { title: "Job Title", name: "Candidate Name", id: "#CandidateID", date: "dd/mm/yyyy", time: "hh:mm" },
 ]
-var events = {"upcoming":upcoming};
+var events = { "upcoming": upcoming };
 
-function RecruiterLoad(){
+function RecruiterLoad() {
     const domain_inputField = document.getElementById("domainfieldaj");
     const domain_addButton = document.getElementById("domainplusaj");
     const domain_itemList = document.getElementById("domain-listaj");
 
     domain_addButton.addEventListener("click", function () {
-    const domain_inputValue = domain_inputField.value.trim();
+        const domain_inputValue = domain_inputField.value.trim();
 
-    if (domain_inputValue !== "") {
-        const domain_newItem = document.createElement("div");
-        domain_newItem.classList.add("itemaj");
-        domain_newItem.innerHTML = `
+        if (domain_inputValue !== "") {
+            const domain_newItem = document.createElement("div");
+            domain_newItem.classList.add("itemaj");
+            domain_newItem.innerHTML = `
                         ${domain_inputValue}
                         <button type="button" class="delbtncp">X</button>
                     `;
-        domain_itemList.appendChild(domain_newItem);
-        domain_inputField.value = "";
-    }
+            domain_itemList.appendChild(domain_newItem);
+            domain_inputField.value = "";
+        }
     });
 
     domain_itemList.addEventListener("click", function (event) {
-    if (event.target.classList.contains("delbtncp")) {
-        event.target.parentNode.remove();
-    }
+        if (event.target.classList.contains("delbtncp")) {
+            event.target.parentNode.remove();
+        }
     });
 
     const buttons = document.querySelectorAll(".buttongaj");
 
     buttons.forEach((button) => {
-    button.addEventListener("click", function () {
-        buttons.forEach((b) => b.classList.remove("activeaj"));
-        button.classList.add("activeaj");
-    });
+        button.addEventListener("click", function () {
+            buttons.forEach((b) => b.classList.remove("activeaj"));
+            button.classList.add("activeaj");
+        });
     });
 
 }
 
-function RecruiterAddJob(){ 
+function RecruiterAddJob() {
     useEffect(() => {
         RecruiterLoad();
-    },[]);
-    return(
+    }, []);
+    return (
         <>
-            <Navbar userType = "recruiter"/>
-            <Heading title = "Add Job"/>
+            <Navbar userType="recruiter" />
+            <Heading title="Add Job" />
             <div className="add-job-body">
                 <div className="add-job-aditya">
                     <div className="alllll">
@@ -82,9 +82,9 @@ function RecruiterAddJob(){
                                         <div className="aj__field">
                                             <label htmlFor="domain" className="lbl">Required Domain</label>
                                             <div className="catgrpaj">
-                                                <input type="text" id="domainfieldaj" className="aj__input" 
+                                                <input type="text" id="domainfieldaj" className="aj__input"
                                                     aria-describedby="domain"></input>
-                                                <button type="button" id="domainplusaj">ADD&nbsp;<FontAwesomeIcon icon = {faPlus}/></button>
+                                                <button type="button" id="domainplusaj">ADD&nbsp;<FontAwesomeIcon icon={faPlus} /></button>
                                             </div>
                                             <div id="domain-listaj"></div>
                                         </div>
@@ -146,20 +146,26 @@ function RecruiterAddJob(){
                                 </div>
 
                             </form>
-                            <div className="screen__backgroundaj">
-                                <span className="screen__background__shapeaj screen__background__shape4aj"></span>
-                                <span className="screen__background__shapeaj screen__background__shape3aj"></span>
-                                <span className="screen__background__shapeaj screen__background__shape2aj"></span>
-                                <span className="screen__background__shapeaj screen__background__shape1aj"></span>
-                            </div>
+                            <ScreenBackground/>
                         </section>
                     </div>
                 </div>
                 <div className="add-job-right">
-                    <UpcomingCard event = {events.upcoming}/>
+                    <UpcomingCard event={events.upcoming} />
                 </div>
             </div>
         </>
+    )
+}   
+
+function ScreenBackground() {
+    return (
+        <div className="screen__backgroundaj">
+            <span className="screen__background__shapeaj screen__background__shape4aj"></span>
+            <span className="screen__background__shapeaj screen__background__shape3aj"></span>
+            <span className="screen__background__shapeaj screen__background__shape2aj"></span>
+            <span className="screen__background__shapeaj screen__background__shape1aj"></span>
+        </div>
     )
 }
 
