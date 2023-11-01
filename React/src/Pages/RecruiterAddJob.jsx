@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useReducer } from "react";
 import Navbar from "../components/Navbar";
 import Heading from "../components/Heading";
 import UpcomingCard from "../components/UpcomingCard";
@@ -50,10 +50,43 @@ function RecruiterLoad() {
 
 }
 
+const initialJobForm = {
+    title: "",
+    Description: "",
+    org_name: "",
+    Responsibility: "",
+    Requirements: "",
+    Deadline: "",
+    Location: "",
+    salary: "",
+    work_days: "",
+    work_hours: "",
+    job_type: "",
+    "category": ""
+}
+
+function recruiterFormReducer(jobDetails, action) {
+    switch (action.type) {
+        case 'InputChange':
+            return {
+                ...candidateDetails,
+                [action.fieldName]: action.value
+            };
+        case 'CommaInput':
+            return {
+                ...candidateDetails,
+                [action.fieldName]: action.value.split(",")
+            }
+    }
+}
+
 function RecruiterAddJob() {
-    useEffect(() => {
-        RecruiterLoad();
-    }, []);
+    // useEffect(() => {
+    //     RecruiterLoad();
+    // }, []);
+
+    const [jobDetails, dispatch] = useReducer(recruiterFormReducer, initialJobForm);
+
     return (
         <>
             <Navbar userType="recruiter" />
@@ -146,7 +179,7 @@ function RecruiterAddJob() {
                                 </div>
 
                             </form>
-                            <ScreenBackground/>
+                            <ScreenBackground />
                         </section>
                     </div>
                 </div>
@@ -156,7 +189,7 @@ function RecruiterAddJob() {
             </div>
         </>
     )
-}   
+}
 
 function ScreenBackground() {
     return (

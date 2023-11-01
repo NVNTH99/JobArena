@@ -131,16 +131,6 @@ function Cand_profile() {
         }
     }
     
-
-    const formFields = [
-        { labelName: 'First Name', label: 'firstname', type: 'text' },
-        { labelName: 'Last Name', label: 'lastname', type: 'text' },
-        { labelName: 'LinkedIn Profile', label: 'linkedin', type: 'text' },
-        { labelName: 'Date of Birth', label: 'dob', type: 'date' },
-        { labelName: 'Phone Number', label: 'phonenumber', type: 'number' },
-        { labelName: 'Nationality', label: 'nationality', type: 'text' },
-    ];
-
     useEffect(() => {
         console.log('Form Data: ', candidateDetails);
     }, [candidateDetails])
