@@ -133,9 +133,9 @@ function JobApplication(){
             <div className="box">
                 <div className="left">
                     <div className="margin">
-                        <h2 className="job_application">{job.title}</h2>
-                        <h2 className="job_application">{job.companyName + ", " + job.location}</h2>
-                        <h2 className="job_application">{job.category}</h2>
+                        <h3 className="job_application heading_size">{job.title}</h3>
+                        <h3 className="job_application heading_size">{job.companyName + ", " + job.location}</h3>
+                        <h3 className="job_application heading_size">{job.category}</h3>
                         <br/>
                         <p className="job_application desc">{job.description}</p>
                         

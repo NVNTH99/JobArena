@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import CandidateListCard from './CandidateListCard';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faClock } from "@fortawesome/free-solid-svg-icons";
+import { faListCheck } from "@fortawesome/free-solid-svg-icons";
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 const Tab = styled.button`
   border-radius: 10pt 10pt 0pt 0pt;
   font-size: 17px;
-  padding: 0.75% 5%;
+  padding: 0.75% 4%;
   cursor: pointer;
   opacity: 0.9;
   background: green;
@@ -29,9 +34,19 @@ const colors = {
     "Offered":"rgb(141,223,121)",
 }
 
+const icon = {
+  "Pending":faClock,
+  "Rejected":faXmark,
+  "Shortlisted":faListCheck,
+  "Offered":faCheck,
+}
+
 function customStyle(type){
     var color = colors[type];
-    return {background : color}
+    return {background : color,
+      fontFamily: "Myanmar Khyay-Regular",
+      // fontWeight:"bold"
+  }
 }
 
 const TabGroup = React.memo((props) => {
@@ -48,6 +63,7 @@ const TabGroup = React.memo((props) => {
             onClick={() => setActive(type)}
             style = {customStyle(type)}
           >
+            <span style={{paddingRight:"10px"}}><FontAwesomeIcon icon={icon[type]} /></span>
             {type} <span className="circle">{candidateList[type].length}</span>
           </Tab>
         ))}

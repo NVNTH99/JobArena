@@ -390,7 +390,7 @@ INSERT INTO Education (cand_id, Degree, Major, Institution, start_year, end_year
 
 INSERT INTO Applications (App_id, cand_id, job_id, status) VALUES 
 (1, 1, 1, 'Pending'),
-(2, 3, 2, 'Shortlisted'),
+(2, 3, 2, 'Pending'),
 (3, 5, 3, 'Offered'),
 (4, 6, 4, 'Accepted'),
 (5, 9, 5, 'Rejected'),
@@ -401,7 +401,6 @@ INSERT INTO Applications (App_id, cand_id, job_id, status) VALUES
 (10, 19, 5, 'Rejected');
 
 INSERT INTO Interviews (App_id, DATE_TIME, link, venue) VALUES 
-(2, '2023-11-30 00:00:00', 'meet.google.com/abc', 'Bangalore'),
 (7, '2023-10-15 00:00:00', 'meet.google.com/def', 'Pune');
 
 
