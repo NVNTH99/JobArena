@@ -60,7 +60,7 @@ function Button(status,App_id,date,time,fetchCand){
           </>
         ) : (
           <>
-            <span style={{color:"rgb(114, 210, 90)"}}>
+            <span className="pulse" style={{color:"#404040"}}>
               Interview scheduled on {date} at {time}
             </span>
           </>
