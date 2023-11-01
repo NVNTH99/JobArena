@@ -176,7 +176,7 @@ function Profile(props){
           <div className="profile_container">
             {
               profitems.map((profitem,index) => (
-                <div className="profile_element" onClick={() => Redir(profitem.link)}>{profitem.profTitle}</div>
+                <div key = {index} className="profile_element" onClick={() => Redir(profitem.link)}>{profitem.profTitle}</div>
               ))
             }
             {/* <div className="profile_element">Profile</div>
