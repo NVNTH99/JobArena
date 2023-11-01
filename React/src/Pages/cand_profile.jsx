@@ -22,8 +22,8 @@ const initialForm = {
     resume: null,
     "languages": [],
     "domain": [],
-    "workExperience": [],
-    "projects": [],
+    "workExperience": [{ job_Title: "", org_name: "", start_year: "", end_year: "" }],
+    "projects": [{Project_Title: "", Project_Desc: "", start_date: "", end_year: ""}],
 };
 
 
@@ -40,7 +40,7 @@ function formReducer(candidateDetails, action) {
                 [languages]: action.value.split(",")
             }
         case 'FileInput':
-            return{
+            return {
                 ...candidateDetails,
                 [resume]: action.file
             }
@@ -60,12 +60,40 @@ function formReducer(candidateDetails, action) {
                 ],
             }
         case 'deleted_arrayField':
+            if(candidateDetails[action.arrayName].length === 1)
+                return{
+                    ...candidateDetails
+            }
             return {
                 ...candidateDetails,
                 [action.arrayName]: candidateDetails[action.arrayName].filter(
                     (item, i) => i !== action.index
                 ),
             };
+        case 'edit_arrayItem':
+            let updatedArray = candidateDetails[action.arrayName].map((item, index) => {
+                if (index === action.index) {
+                    return {
+                        ...item,
+                        ...action.currentArray
+                    };
+                } else {
+                    return item;
+                }
+            });
+
+            return {
+                ...candidateDetails,
+                [action.arrayName]: updatedArray,
+            };
+        case 'added_array':
+            return {
+                ...candidateDetails,
+                [action.arrayName]: [
+                    ...candidateDetails[action.arrayName],
+                    action.addedArray
+                ]
+            }
         default: return candidateDetails;
     }
 }
@@ -84,11 +112,6 @@ function Cand_profile() {
             fieldName: name,
             value
         })
-    }
-
-    function handleWorkExperience(e) {
-        const { name, value } = e.target;
-
     }
 
     const formFields = [
@@ -118,11 +141,11 @@ function Cand_profile() {
                                 />
                                 <PettiCp
                                     left={<CpField labelName="LinkedIn Profile" label="linkedin" onChange={handleInputChange} type="text" />}
-                                    right={<CpField labelName="dob" label="lastname" onChange={handleInputChange} type="date" />}
+                                    right={<CpField labelName="dob" label="dob" onChange={handleInputChange} type="date" />}
                                 />
                                 <PettiCp
                                     left={<CpField labelName="Phone Number" label="phonenumber" onChange={handleInputChange} type="number" />}
-                                    right={<CpField labelName="nationality" label="lastname" onChange={handleInputChange} type="text" />}
+                                    right={<CpField labelName="nationality" label="nationality" onChange={handleInputChange} type="text" />}
                                 />
                                 <div className="petticp">
                                     <div className="cp__field">
@@ -140,7 +163,7 @@ function Cand_profile() {
                                     right={<CpField labelName="Skills" label="skills" onChange={handleInputChange} type="text" />}
                                 />
                                 <PettiCp
-                                    left={<CpField labelName="Resume" label="resume" onChange={handleInputChange} type="resume" />}
+                                    left={<CpField labelName="Resume" label="resume" onChange={handleInputChange} type="file" />}
                                     right={<div className="cp__field"></div>}
                                 />
                                 <div className="petticp">
@@ -173,7 +196,7 @@ function Cand_profile() {
                                                 dispatch({ type: 'changed_arrayField', arrayName: "domain", nextDraft: e.target.value })
                                             }} />
                                             <button type="button" id="domainpluscp" onClick={e => {
-                                                dispatch({ type: 'added_arrayItem', arrayName: "domain  " });
+                                                dispatch({ type: 'added_arrayItem', arrayName: "domain" });
                                             }}>ADD <FontAwesomeIcon icon={faPlus} /></button>
                                         </div>
                                         <div id="domain-listcp">
@@ -189,10 +212,26 @@ function Cand_profile() {
                                         </div>
                                     </div>
                                 </div>
-                                <WorkExperienceForm />
-                                <Projects/>
+                                {
+                                    candidateDetails["workExperience"].map((we, index) => (
+                                        <WorkExperienceForm
+                                            key={index}
+                                            index={index}
+                                            dispatch={dispatch}
+                                        />
+                                    ))
+                                }
+                                {
+                                    candidateDetails["projects"].map((p, index) => (
+                                        <Projects
+                                            key={index}
+                                            index={index}
+                                            dispatch={dispatch}
+                                        />
+                                    ))
+                                }
                                 <div id="formsavebtncp">
-                                    <button type="submit" className="savebtncp" >
+                                    <button type="submit" onSubmit={handleSaveButton} className="savebtncp" >
                                         <p>Save</p>
                                     </button>
                                 </div>
@@ -206,12 +245,14 @@ function Cand_profile() {
         </>
     );
 }
- 
+
 function WorkExperienceForm(props) {
-    let currentWorkExperience = {jobtitle: "", org_name: "",  startyear: "", endyear: ""};
-    function handleInputChange(e){
-        const {name, value} = e.target;
-        currentWorkExperience = {...currentWorkExperience, [name]:value};
+    let initialWorkExperience = { job_Title: "", org_name: "", start_year: "", end_year: "" };
+    let currentWorkExperience = { job_Title: "", org_name: "", start_year: "", end_year: "" };
+    function handleInputChange(e) {
+        const { name, value } = e.target;
+        currentWorkExperience = { ...props.currentWorkExperience, [name]: value };
+        props.dispatch({ type: "edit_arrayItem", arrayName: "workExperience", index: props.index, currentArray: currentWorkExperience })
     }
     return (
         <div className="xtra-formcp">
@@ -220,37 +261,47 @@ function WorkExperienceForm(props) {
             <div className="xtra-form-container">
                 <div className="petticp">
                     <div className="cp__field">
-                        <label htmlFor="jobtitle" className="lblcp">Job Title</label>
-                        <input name="jobtitle" onChange={handleInputChange} type="text" className="cp__input" id="jobtitle" />
+                        <label className="lblcp">Job Title</label>
+                        <input name="job_Title" onChange={handleInputChange} type="text" className="cp__input" />
                     </div>
                     <div className="cp__field">
-                        <label htmlFor="org_name" className="lblcp">Organisation Name</label>
-                        <input name="org_name" onChange={handleInputChange} type="text" className="cp__input" id="org_name" />
+                        <label className="lblcp">Organisation Name</label>
+                        <input name="org_name" onChange={handleInputChange} type="text" className="cp__input"  />
                     </div>
                 </div>
                 <div className="petticp">
                     <div className="cp__field">
-                        <label htmlFor="startyear" className="lblcp">Start Year</label>
-                        <input name="workstartyear" onChange={handleInputChange} type="number" className="cp__input" id="startyear" />
+                        <label className="lblcp">Start Year</label>
+                        <input name="start_year" onChange={handleInputChange} type="number" className="cp__input"/>
                     </div>
                     <div className="cp__field">
-                        <label htmlFor="endyear" className="lblcp">End Year</label>
-                        <input name="workendyear" onChange={handleInputChange} type="text" className="cp__input" id="endyear" />
+                        <label className="lblcp">End Year</label>
+                        <input name="end_year" onChange={handleInputChange} type="text" className="cp__input"  />
                     </div>
                 </div>
                 <div className="petticp-btn">
-                    <button type="button" className="delwkcp" id="deleteButton1" value="Delete">Delete</button>
+                    <button type="button" className="delwkcp" value="Delete" onClick={() =>
+                        props.dispatch({ type: 'deleted_arrayField', arrayName: "workExperience", index: props.index })}>Delete</button>
                 </div>
                 <hr className="smhrr" />
             </div>
             <div className="petticp-btn" id="xxx3">
-                <button type="button" className="addwkcp" id="addMoreButton" value="addmore">Add More</button>
+                <button type="button" className="addwkcp" value="addmore" onClick={e => {
+                    props.dispatch({ type: "added_array", arrayName: "workExperience", addedArray: initialWorkExperience})
+                }}>Add More</button>
             </div>
         </div>
     )
 }
 
 function Projects(props) {
+    let initialProject = {Project_Title: "", Project_Desc: "", start_date: "", end_year: ""};
+    let currentProject = {Project_Title: "", Project_Desc: "", start_date: "", end_year: ""};
+    function handleInputChange(e) {
+        const { name, value } = e.target;
+        currentProject = { ...props.currentProject, [name]: value };
+        props.dispatch({ type: "edit_arrayItem", arrayName: "projects", index: props.index, currentArray: currentProject })
+    }
     return (
         <div className="xtra-formcp2">
             <h2 className="xtra-headingcp">Projects</h2>
@@ -259,18 +310,18 @@ function Projects(props) {
                 <div className="petticp">
                     <div className="cp__field">
                         <label htmlFor="projecttitle" className="lblcp">Project Title</label>
-                        <input name="projecttitle" onChange={props.onChange} type="text" className="cp__input i1" id="projecttitle" />
+                        <input name="Project_Title" onChange={handleInputChange} type="text" className="cp__input i1" id="projecttitle" />
                     </div>
                     <div className="cp__field"></div>
                 </div>
                 <div className="petticp">
                     <div className="cp__field">
                         <label htmlFor="startyear2" className="lblcp">Start Year</label>
-                        <input name="projectstartyear" onChange={props.onChange} type="number" className="cp__input i1" id="startyear2" />
+                        <input name="start_year" onChange={handleInputChange} type="number" className="cp__input i1" id="startyear2" />
                     </div>
                     <div className="cp__field">
                         <label htmlFor="endyear2" className="lblcp">End Year</label>
-                        <input name="projectendyear" onChange={props.onChange} type="text" className="cp__input i1" id="endyear2" />
+                        <input name="end_year" onChange={handleInputChange} type="text" className="cp__input i1" id="endyear2" />
                     </div>
                 </div>
                 <div className="petticp-btn">
@@ -279,7 +330,9 @@ function Projects(props) {
                 <hr className="smhrr" />
             </div>
             <div className="petticp-btn" id="xxx32">
-                <button type="button" className="addwkcp" id="addMoreButton2" value="addmore">Add More</button>
+                <button type="button" className="addwkcp" id="addMoreButton2" value="addmore"onClick={e => {
+                    props.dispatch({ type: "added_array", arrayName: "projects", addedArray: initialProject})
+                }}>Add More</button>
             </div>
         </div>
     )
