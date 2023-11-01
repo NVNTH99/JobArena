@@ -300,7 +300,8 @@ app.post('/candidate/jobapply',(req,res)=>{
 })
 
 app.post('/candidate/profile',(req,res)=>{
-
+    console.log(req.body.candidateDetails); 
+    console.log(1);
 })
 
 app.get('/candidate/appliedjobs',(req,res)=>{

@@ -328,6 +328,7 @@ function SignUp(){
                                             placeholder="Re-Confirm Password"></input>
                                         </div>
                                     </div>
+                                    {/* <div>{passworderror}</div> */}
                                     <div className="butttton">
                                         <button className="bn31"  onClick={signupfunc}>Sign Up</button>
                                     </div>

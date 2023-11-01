@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import "./cand_profile.css"
 import { useLocation } from "react-router-dom";
+import axios from "axios";
 // import 'bootstrap/dist/css/bootstrap.min.css'
 
 const initialForm = {
@@ -100,10 +101,25 @@ function formReducer(candidateDetails, action) {
 }
 
 function Cand_profile() {
+    const location = useLocation()
+    const user_id = location.state
     const [candidateDetails, dispatch] = useReducer(formReducer, initialForm);
 
     function handleSaveButton(e) {
         e.preventDefault();
+        axios.post('http://localhost:3000/candidate/profile',candidateDetails)
+        .then(response => {
+            if(typeof response.data === 'object'){
+                // console.log(0)
+            }
+            else{
+                seterror('Invalid login credentials');
+            }
+        })
+        .catch(error => {
+            console.log("Error while saving candidate profile details");
+            seterror('An error occurred saving candidate profile details');
+        })
     }
 
     function handleInputChange(e) {
@@ -131,12 +147,12 @@ function Cand_profile() {
         }
     }
     
-    useEffect(() => {
-        console.log('Form Data: ', candidateDetails);
-    }, [candidateDetails])
+    // useEffect(() => {
+    //     console.log('Form Data: ', candidateDetails);
+    // }, [candidateDetails])
     return (
         <>
-            <Navbar userType="candidate" />
+            <Navbar userType="candidate" user_id = {user_id}/>
             <Heading title="Candidate Profile" />
             <div className="candidate-profile-page">
                 <div className="alllllcp">
@@ -181,7 +197,7 @@ function Cand_profile() {
                                             <input name="languages" className="cp__input" onChange={e => {
                                                 dispatch({ type: 'changed_arrayField', arrayName: "languages", nextDraft: e.target.value })
                                             }} type="text" id="languages" />
-                                            <button type="button" onClick={e => {
+                                            <button className="add_button" type="button" onClick={e => {
                                                 dispatch({ type: 'added_arrayItem', arrayName: "languages" });
                                             }} id="langpluscp">ADD <FontAwesomeIcon icon={faPlus} /></button>
                                         </div>
@@ -203,7 +219,7 @@ function Cand_profile() {
                                             <input name="domain" type="text" id="domain" className="cp__input" onChange={(e) => {
                                                 dispatch({ type: 'changed_arrayField', arrayName: "domain", nextDraft: e.target.value })
                                             }} />
-                                            <button type="button" id="domainpluscp" onClick={e => {
+                                            <button className="add_button" type="button" id="domainpluscp" onClick={e => {
                                                 dispatch({ type: 'added_arrayItem', arrayName: "domain" });
                                             }}>ADD <FontAwesomeIcon icon={faPlus} /></button>
                                         </div>
@@ -239,7 +255,7 @@ function Cand_profile() {
                                     ))
                                 }
                                 <div id="formsavebtncp">
-                                    <button type="submit" onSubmit={handleSaveButton} className="savebtncp" >
+                                    <button type="submit" onSubmit={handleSaveButton} className="savebtn" >
                                         <p>Save</p>
                                     </button>
                                 </div>

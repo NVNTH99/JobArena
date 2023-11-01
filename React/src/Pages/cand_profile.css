@@ -230,6 +230,16 @@ display: flex;
     border-radius: 20px ;
     cursor: pointer;
     background-color: #8ddf79;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+}
+
+.addwkcp:hover{
+    background-color: #6db15c;
+}
+
+.addwkcp:active{
+    background-color: #4d7a42;
+    transform: translateY(0.5px);
 }
 
 .delwkcp{
@@ -239,7 +249,34 @@ display: flex;
     border-radius: 20px ;
     cursor: pointer;
     background-color: #e36b6b;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
 }
+
+.delwkcp:hover{
+    background-color: #c65a5a;
+}
+
+.delwkcp:active{
+    background-color: #964747;
+    transform: translateY(0.5px);
+}
+
+.add_button{
+    background-color: rgb(50, 167, 221);
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+    border-radius: 10px;
+}
+
+.add_button:hover{
+    background-color: rgb(47, 149, 197);
+}
+
+.add_button:active{
+    background-color: rgb(31, 119, 160);
+    transform: translateY(0.5px);
+}
+
+
 
 .smhrr{
     margin: 0 auto 1rem;
