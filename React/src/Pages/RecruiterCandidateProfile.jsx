@@ -129,7 +129,7 @@ function CandidateProfle() {
                     src="https://i.redd.it/spe9d5vah8h81.jpg"
                   />
                 </div>
-                <div className="cand_name">{candidate[0][0].First_Name} {candidate[0][0].Last_Name}</div>               
+                <div className="cand_name">{candidate[0][0].First_name} {candidate[0][0].Last_name}</div>               
                 <div className="cand_element_box">
                   <div className="cand_element_box_left">
                     <div className="cand_line_left">

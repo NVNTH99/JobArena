@@ -104,7 +104,7 @@ function NavLink(props){ //contains props.user_id
       <li className="nav-link">
         <button className="notification_button" onClick={handleClick}><FontAwesomeIcon icon={faBell} size = "xl" style={{color: "#ffffff",}} /></button>
         <div id="box" className="notification_box">
-          <div><h3>Notifications <span>{notification.length}</span></h3></div>
+          <div><h3>Notifications <span className="notification_count">{notification.length}</span></h3></div>
           <hr/>
           <div className="notification_container">
             {notification.slice().reverse().map((message, index)=>

@@ -10,8 +10,6 @@ function invite(App_id){
 }
 
 function reject(App_id,fetchCand){
-  alert("you clicked reject");
-  alert("you clicked accept");
   axios.post('http://localhost:3000/application/statuschange',{
     app_id: App_id,
     tostatus: 'Rejected'
