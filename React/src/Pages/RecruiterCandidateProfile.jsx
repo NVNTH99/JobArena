@@ -41,7 +41,7 @@ function Button(props) {
   if (props.application.status === "Pending") { 
     return(
       <div className="cand_pro_buttons">
-        <InviteRejectButton fetchCand={props.fetchApp}/>
+        <InviteRejectButton fetchCand={props.fetchApp} app_id={props.app_id}/>
       </div>
     )
   } else if (props.application.status === "Shortlisted" && props.application.link === null) {

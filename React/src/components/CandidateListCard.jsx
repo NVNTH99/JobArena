@@ -40,7 +40,7 @@ function Button(status,App_id,date,time,fetchCand){
   if (status==="Pending"){
     return(
       <>
-        <InviteRejectButton fetchCand={fetchCand}/>
+        <InviteRejectButton fetchCand={fetchCand} app_id={App_id}/>
       </>
     )
   }
