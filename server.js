@@ -27,18 +27,20 @@ app.post('/login',(req,res)=>{
     const username = req.body.username
     let password = ''
     let query;
+    parameters = [username]
     if(req.body.password){
         password = req.body.password
-        query = `SELECT* from login_details where username='${username}' and password='${password}';`
+        query = `SELECT* from login_details where username=? and password=?;`
+        parameters.push(password)
     }
     else{
-        query = `SELECT* from login_details where username='${username}';`
+        query = `SELECT* from login_details where username=?;`
     }
     // const password = req.body.password
     // console.log(username,password,dbPath)
     // const query = `SELECT* from login_details where username='${username}' and password='${password}';`
     // console.log(query)
-    requestQueue.push({query: query, params: []},(error,result)=>{
+    requestQueue.push({query: query, params: parameters},(error,result)=>{
         if(error){
             res.status(500).send('Internal Server Error')
         }
@@ -132,14 +134,18 @@ app.get('/organizations',(req,res)=>{
 
 
 app.get('/jobs', (req, res) => {
-    const searchQuery = req.query.searchQuery;
+    const searchQuery = "%"+req.query.searchQuery+"%";
     // console.log(req.query.user_id)
-    let query = `SELECT o.Organization_name as company,j.* from jobs j join Recruiter_details r on r.rec_id=j.rec_id join Organizations o on o.org_id=r.org_id WHERE (j.Title LIKE '%${searchQuery}%' or j.category LIKE '%${searchQuery}%' or o.organization_name LIKE '%${searchQuery}%')`;
+    // let query = `SELECT o.Organization_name as company,j.* from jobs j join Recruiter_details r on r.rec_id=j.rec_id join Organizations o on o.org_id=r.org_id WHERE (j.Title LIKE '%${searchQuery}%' or j.category LIKE '%${searchQuery}%' or o.organization_name LIKE '%${searchQuery}%')`;
+    let query = `SELECT o.Organization_name as company,j.* from jobs j join Recruiter_details r on r.rec_id=j.rec_id join Organizations o on o.org_id=r.org_id WHERE (j.Title LIKE ? or j.category LIKE ? or o.organization_name LIKE ?) AND j.Deadline > datetime('now')`;
+    const parameters = [searchQuery,searchQuery,searchQuery]
     if(req.query.user_id){
-        query = query + ` AND NOT EXISTS ( SELECT 1 FROM Applications a WHERE a.cand_id = ${req.query.user_id} AND a.job_id = j.job_id)`
+        // query = query + ` AND NOT EXISTS ( SELECT 1 FROM Applications a WHERE a.cand_id = ${req.query.user_id} AND a.job_id = j.job_id)`
+        query = query + ` AND NOT EXISTS ( SELECT 1 FROM Applications a WHERE a.cand_id = ? AND a.job_id = j.job_id)`
+        parameters.push(req.query.user_id)
     }
     // console.log(query)
-    requestQueue.push({ query: query, params: [] }, (error, result) => {
+    requestQueue.push({ query: query, params: parameters }, (error, result) => {
         if (error) {
             res.status(500).send('Internal Server Error');
         } else {
@@ -228,7 +234,7 @@ app.get('/candidate/recommended',(req,res)=>{
             if(result.length == 1){
                 // console.log(result)
                 const pref = result[0].preference_category.split(',').map(value=>"category like '%" + value + "%'")
-                const query2 = "Select o.Organization_name as company,j.* from jobs j join Recruiter_details r on r.rec_id=j.rec_id join Organizations o on o.org_id=r.org_id where " + pref.join(" or ") +` AND NOT EXISTS ( SELECT 1 FROM Applications a WHERE a.cand_id = ${req.query.user_id} AND a.job_id = j.job_id)` + limit
+                const query2 = "Select o.Organization_name as company,j.* from jobs j join Recruiter_details r on r.rec_id=j.rec_id join Organizations o on o.org_id=r.org_id where " + pref.join(" or ") +` AND NOT EXISTS ( SELECT 1 FROM Applications a WHERE a.cand_id = ${req.query.user_id} AND a.job_id = j.job_id)  AND j.Deadline > datetime('now')` + limit
                 requestQueue.push({ query: query2, params: [] }, (error, result) => {
                     if (error) {
                         res.status(500).send('Internal Server Error');
@@ -246,7 +252,7 @@ app.get('/candidate/recommended',(req,res)=>{
 
 app.get('/candidate/upcoming',(req,res)=>{
     const user_id = req.query.user_id
-    const query = `SELECT Organization_name as company, Title, Location, date(DATE_TIME) AS Date, time(DATE_TIME) AS Time FROM Organizations o JOIN Recruiter_details r ON o.org_id = r.org_id JOIN Jobs j ON r.rec_id = j.rec_id JOIN Applications a ON j.job_id = a.job_id JOIN Interviews i ON a.App_id = i.App_id WHERE cand_id = ${user_id};`
+    const query = `SELECT Organization_name as company, Title, Location, date(DATE_TIME) AS Date, time(DATE_TIME) AS Time,link,venue FROM Organizations o JOIN Recruiter_details r ON o.org_id = r.org_id JOIN Jobs j ON r.rec_id = j.rec_id JOIN Applications a ON j.job_id = a.job_id JOIN Interviews i ON a.App_id = i.App_id WHERE cand_id = ${user_id};`
     requestQueue.push({query: query, params: []},(error,result)=>{
         if(error){
             res.status(500).send('Internal Server Error')
@@ -442,6 +448,54 @@ app.get('/recruiter/upcoming',(req,res)=>{
         }
     })
 }) //Query almost verified .... if error its retrieving date and time
+
+app.get('/recruiter/candidateprofile', (req, res) => {
+    const cand_id = req.query.cand_id;
+    const query1 = `Select * from Candidate_details where cand_id=?;`;
+    const query2 = `Select * from Education where cand_id=?;`;
+    const query3 = `Select * from Work_Exp where cand_id=?;`;
+    const query4 = `Select * from Projects where cand_id=?;`;
+    const queries = [query1, query2, query3, query4];
+    const promises = [];
+
+    queries.forEach((query) => {
+        promises.push(
+            new Promise((resolve, reject) => {
+                requestQueue.push({ query: query, params: [cand_id] }, (error, result) => {
+                    if (error) {
+                        console.error("Error: ", error);
+                        reject(error);
+                    } else {
+                        console.log(result);
+                        resolve(result);
+                    }
+                });
+            })
+        );
+    });
+
+    Promise.all(promises)
+        .then((results) => {
+            res.send(results);
+        })
+        .catch((error) => {
+            console.error("Error: ", error);
+            res.status(500).send('Internal Server Error');
+        });
+});
+
+app.get('/application',(req,res)=>{ //To get Job title and other details for the recruiter's job application page
+    const app_id = req.query.app_id
+    const query = `Select status,link from Applications a left join Interviews i on a.App_id=i.App_id where a.App_id=?`
+    requestQueue.push({query: query, params: [app_id]},(error,result)=>{
+        if(error){
+            res.status(500).send('Internal Server Error')
+        }
+        else{
+            res.send(result[0])
+        }
+    })
+})
 
 const runQuery = () => {
     const query = 'DELETE from Interviews where datetime(DATE_TIME) < datetime("now");';

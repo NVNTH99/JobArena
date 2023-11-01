@@ -55,7 +55,7 @@ function SelectedJobInfo(props){
 
           <div className="selected-job-bottom">
             <div className="jobpetti">
-            <h3>Job Description:</h3><p className="propjob">Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae inventore voluptatum mollitia, culpa a numquam animi nemo minima debitis voluptates dolorum est cumque laudantium quisquam aut aperiam cum iste nam!{props.job.Description}</p>
+            <h3>Job Description:</h3><p className="propjob">{props.job.Description}</p>
             </div>
             <div className="jobpetti">
             <h3>Responsibility:</h3><p className="propjob">{props.job.Responsibility}</p>

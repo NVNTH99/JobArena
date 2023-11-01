@@ -24,6 +24,8 @@ function EventCard(props){
                 <p style={{color: "#505967"}}>{props.event.company} - {props.event.Title}</p>
                 <p style={{color: "#505967"}}>{props.event.Location}</p>
                 <p>Interview on {props.event.Date}, {props.event.Time}</p>
+                <a href={props.event.link}>{props.event.link}</a>
+                {/* <p>Venue: {props.event.venue}</p> */}
             </div>
         </>
     )

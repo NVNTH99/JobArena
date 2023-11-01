@@ -109,7 +109,7 @@
 .recruiters-job-card-buttons{
     display: flex;
     flex-direction: column;
-    gap: 9%;
+    gap: 7px;
     align-items: flex-end;
 }
 
@@ -131,6 +131,10 @@
 
 .grey{
     background-color: #989898;
+}
+
+.blue{
+    background-color: #59a0d3;
 }
 
 .red{

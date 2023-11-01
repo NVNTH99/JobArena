@@ -12,6 +12,8 @@ import CandidateRecommendedJobs from './Pages/CandidateRecommendedJobs';
 import RecruiterAddJob from './Pages/RecruiterAddJob';
 import CandidateAppliedJobs from './Pages/CandidateAppliedJobs';
 import SignUp from './Pages/SignUp';
+
+
 function App() {
   // const history = useHistory();
   return (
