@@ -4,6 +4,7 @@ import TabGroup from "../components/TabGroup";
 import "./JobApplication.css";
 import UpcomingCard from "../components/UpcomingCard";
 import { useLocation } from "react-router-dom"; //Added by Nava
+import axios from "axios"; //Added by Nava
 // import { response } from "express";
 
 // var job = {title:"Job Title", companyName:"Company name", location:"Location", category:"Category",
@@ -43,13 +44,15 @@ import { useLocation } from "react-router-dom"; //Added by Nava
 //         candidateList.Offered.push(candidate_list[i]);
 // }
 
+let length = 0
+
 function JobApplication(){
     const location = useLocation() //Added by Nava
-    const {user_id,job_id} = location.state //Added by Nava
+    const {job_id,user_id} = location.state //Added by Nava
+    console.log(job_id,user_id)
     const [job,setJob] = useState({}) //Added by Nava
     const [events,setevents] = useState({"upcoming":[]}) //Added by Nava
     const [candidateList,setcandidateList] = useState({"Pending":[],"Rejected":[],"Shortlisted":[],"Offered":[]}) //Added by Nava
-    let length
     
     useEffect(()=> {
         axios.get('http://localhost:3000/recruiter/job',{
@@ -77,10 +80,10 @@ function JobApplication(){
         .catch(error => {
             console.log("Error fetching upcoming events")
         })
-    },[]) //Added by Nava
+    },[candidateList]) //Added by Nava
 
-    useEffect(()=> {
-        axios.get('http://localhost:3000/job/candidates',{
+    const fetchCand = () => {
+        axios.get('http://localhost:3000/recruiter/job/candidates',{
             params : {
                 job_id : job_id
             }
@@ -90,13 +93,13 @@ function JobApplication(){
             length = candidate_list.length // Getting length to pass in h2
             let candidateList = {"Pending":[],"Rejected":[],"Shortlisted":[],"Offered":[]};
             for(let i=0;i<candidate_list.length;i++){
-                if (candidate_list[i].status==="pending")
+                if (candidate_list[i].status==="Pending")
                     candidateList.Pending.push(candidate_list[i]);
-                else if (candidate_list[i].status==="rejected")
+                else if (candidate_list[i].status==="Rejected")
                     candidateList.Rejected.push(candidate_list[i]);
-                else if (candidate_list[i].status==="shortlisted")
+                else if (candidate_list[i].status==="Shortlisted")
                     candidateList.Shortlisted.push(candidate_list[i]);
-                else if (candidate_list[i].status==="offered")
+                else if (candidate_list[i].status==="Offered"||candidate_list[i].status==="Accepted"||candidate_list[i].status==="Candidate_Rejected")
                     candidateList.Offered.push(candidate_list[i]);
             }
             setcandidateList(candidateList)
@@ -104,11 +107,15 @@ function JobApplication(){
         .catch(error => {
             console.log("Error fetching candidates")
         })
+    }
+
+    useEffect(()=> {
+        fetchCand()
     },[]) //Added by Nava
 
     return(
         <div className="job-app">
-            <Navbar userType="recruiter"/>
+            <Navbar userType="recruiter" user_id = {user_id}/>
             <div className="box">
                 <div className="left">
                     <div className="margin">
@@ -121,7 +128,7 @@ function JobApplication(){
                     </div>
                     <hr/>
                     <h2 className="job_application heading2">{length} Application(s) recieved</h2>
-                    {candidateList.Pending && candidateList.Rejected && candidateList.Shortlisted && candidateList.Offered && <TabGroup candidateList={candidateList}/>} {/*In case of error check here*/}
+                    {candidateList.Pending && candidateList.Rejected && candidateList.Shortlisted && candidateList.Offered && <TabGroup candidateList={candidateList} fetchCand={fetchCand} user_id={user_id} />} {/*In case of error check here*/}
                 </div>
                 <div className="right">
                     {events.upcoming && <UpcomingCard event={events.upcoming}/>} {/*In case of error check here*/}

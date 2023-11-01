@@ -4,8 +4,10 @@ import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 // import { response } from "express";
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 function RecruitersJobCard(props){
+    const navigate = useNavigate();
 
     const deleteJob = (e) => {
         e.preventDefault(); // This idk might cause error, unnecessary so removable
@@ -23,6 +25,10 @@ function RecruitersJobCard(props){
         })
     }
 
+    const viewApplication = () => {
+        navigate('/recruiter/job_application', { state: { job_id: props.job.job_id, user_id: props.user_id } })
+    }
+
     return(
         <div className="recruiters-job-card">
             <div className="recruiters-job-card-content">
@@ -33,8 +39,8 @@ function RecruitersJobCard(props){
                 <p>{props.job.description}</p>
             </div>
             <div className="recruiters-job-card-buttons">
-                <button className="rec-job-card-button grey">
-                    <p>Edit <FontAwesomeIcon icon={faPenToSquare}/></p>
+                <button className="rec-job-card-button grey" onClick={viewApplication}>
+                    <p>View Application <FontAwesomeIcon icon={faPenToSquare}/></p>
                 </button>
                 <button className="rec-job-card-button red" onClick={deleteJob}>
                     <p>Delete <FontAwesomeIcon icon={faTrashCan}/></p>

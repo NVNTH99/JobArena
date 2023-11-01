@@ -6,7 +6,7 @@ function Event(props){
         <div className="eventCard">
             <h4>{props.event.title}</h4>
             <div className="line1">
-                {props.event.name}, {props.event.id}
+                {props.event.name}, #{props.event.id}
             </div>
             <div className="line2">
                 Interview on {props.event.date}, {props.event.time}

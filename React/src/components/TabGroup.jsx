@@ -34,8 +34,7 @@ function customStyle(type){
     return {background : color}
 }
 
-function TabGroup(props) {
-  console.log("Navaneeth is a bitch"+props.candidateList);
+const TabGroup = React.memo((props) => {
   const [active, setActive] = useState(types[0]);
   var candidateList = props.candidateList;
   const currentCandidateList = candidateList[active];
@@ -45,7 +44,7 @@ function TabGroup(props) {
         {types.map(type => (
           <Tab
             key={type}
-            active={active === type}
+            active={(active === type)}
             onClick={() => setActive(type)}
             style = {customStyle(type)}
           >
@@ -57,13 +56,13 @@ function TabGroup(props) {
       <div className="scroll">
         
             {currentCandidateList.map((candidate, index) => (
-                <CandidateListCard  key = {index} candidate={candidate}/>
+                <CandidateListCard  key = {index} candidate={candidate} fetchCand = {props.fetchCand} user_id={props.user_id}/>
             ))}
         
       </div>
       
     </>
   );
-}
+})
 
 export default TabGroup

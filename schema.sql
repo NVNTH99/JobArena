@@ -69,6 +69,7 @@ CREATE TABLE Candidate_details(
     Resume BLOB,
     Skills text,
     preference_category text,
+    email varchar(100),
     PRIMARY KEY (cand_id),
     FOREIGN KEY (cand_id) REFERENCES Login_details(id)
 );
@@ -79,8 +80,8 @@ CREATE TABLE Work_Exp(
     org_name varchar(100),
     start_year YEAR,
     end_year YEAR,
-    FOREIGN KEY (cand_id) REFERENCES Candidate_details(cand_id),
-    FOREIGN KEY (org_id) REFERENCES Organizations(org_id)
+    FOREIGN KEY (cand_id) REFERENCES Candidate_details(cand_id)
+    -- FOREIGN KEY (org_id) REFERENCES Organizations(org_id)
 );
 
 CREATE TABLE Projects(
@@ -90,8 +91,8 @@ CREATE TABLE Projects(
     Project_Desc text,
     start_date DATE,
     end_date DATE,
-    FOREIGN KEY (cand_id) REFERENCES Candidate_details(cand_id),
-    FOREIGN KEY (org_id) REFERENCES Organizations(org_id)
+    FOREIGN KEY (cand_id) REFERENCES Candidate_details(cand_id)
+    -- FOREIGN KEY (org_id) REFERENCES Organizations(org_id)
 );
 
 CREATE TABLE Education(
@@ -324,30 +325,30 @@ INSERT INTO Recruiter_details(rec_id,First_name,Last_name,org_id) VALUES
 
 
 INSERT INTO Jobs (job_id, Title, Description, Responsibility, Requirements, Deadline, Location, salary, work_days, work_hours, job_type, category, rec_id) VALUES 
-(1, 'Software Engineer', 'Developing software', 'Developing software', 'B.Tech in Computer Science', '2021-05-30 00:00:00', 'Kochi', 50000, 5, '9:00-5:00', 'Full Time', 'Software Development', 2),
-(2, 'Data Analyst', 'Analysing data', 'Analysing data', 'B.Tech in Computer Science', '2021-05-30 00:00:00', 'Bangalore', 90000, 5, '9:00-5:00', 'Full Time', 'Software Development', 4),
-(3, 'Full Stack Developer', 'Developing and maintaining websites', 'Developing and maintaining websites', 'B.Tech in Computer Science', '2021-05-30 00:00:00', 'Chennai', 30000, 5, '9:00-5:00', 'Full Time', 'Software Development', 7),
-(4, 'Software Development Engineer', 'Developing software', 'Developing software', 'B.Tech in Computer Science', '2021-05-30 00:00:00', 'Kochi', 50000, 5, '9:00-5:00', 'Full Time', 'Software Development', 8),
-(5, 'Software Engineer', 'Developing software', 'Developing software', 'B.Tech in Computer Science', '2021-05-30 00:00:00', 'Kochi', 50000, 5, '9:00-5:00', 'Full Time', 'Software Development', 10),
-(6, 'Data Scientist', 'Analyzing and interpreting complex data', 'Analyzing and interpreting complex data', 'M.Sc in Data Science', '2021-06-15 00:00:00', 'Mumbai', 70000, 5, '9:00-5:00', 'Full Time', 'Data Science', 12),
-(7, 'UI/UX Designer', 'Designing user interfaces and experiences', 'Designing user interfaces and experiences', 'B.Design in Graphic Design', '2021-06-15 00:00:00', 'Pune', 55000, 5, '9:00-5:00', 'Full Time', 'Design', 15),
-(8, 'Network Engineer', 'Managing and maintaining computer networks', 'Managing and maintaining computer networks', 'B.Tech in Computer Science', '2021-06-15 00:00:00', 'Delhi', 48000, 5, '9:00-5:00', 'Full Time', 'Networking', 18),
-(9, 'Machine Learning Engineer', 'Developing machine learning algorithms', 'Developing machine learning algorithms', 'M.Tech in Artificial Intelligence', '2021-06-15 00:00:00', 'Hyderabad', 75000, 5, '9:00-5:00', 'Full Time', 'Machine Learning', 20),
-(10, 'Web Developer', 'Creating and maintaining websites', 'Creating and maintaining websites', 'B.Tech in Computer Science', '2021-06-15 00:00:00', 'Chennai', 45000, 5, '9:00-5:00', 'Full Time', 'Web Development', 22);
+(1, 'Software Engineer', 'Developing software', 'Developing software', 'B.Tech in Computer Science', '2024-05-30 00:00:00', 'Kochi', 50000, 5, '9:00-5:00', 'Full Time', 'Software Development', 2),
+(2, 'Data Analyst', 'Analysing data', 'Analysing data', 'B.Tech in Computer Science', '2024-05-30 00:00:00', 'Bangalore', 90000, 5, '9:00-5:00', 'Full Time', 'Software Development', 4),
+(3, 'Full Stack Developer', 'Developing and maintaining websites', 'Developing and maintaining websites', 'B.Tech in Computer Science', '2024-05-30 00:00:00', 'Chennai', 30000, 5, '9:00-5:00', 'Full Time', 'Software Development', 7),
+(4, 'Software Development Engineer', 'Developing software', 'Developing software', 'B.Tech in Computer Science', '2024-05-30 00:00:00', 'Kochi', 50000, 5, '9:00-5:00', 'Full Time', 'Software Development', 8),
+(5, 'Software Engineer', 'Developing software', 'Developing software', 'B.Tech in Computer Science', '2024-05-30 00:00:00', 'Kochi', 50000, 5, '9:00-5:00', 'Full Time', 'Software Development', 10),
+(6, 'Data Scientist', 'Analyzing and interpreting complex data', 'Analyzing and interpreting complex data', 'M.Sc in Data Science', '2024-06-15 00:00:00', 'Mumbai', 70000, 5, '9:00-5:00', 'Full Time', 'Data Science', 12),
+(7, 'UI/UX Designer', 'Designing user interfaces and experiences', 'Designing user interfaces and experiences', 'B.Design in Graphic Design', '2024-06-15 00:00:00', 'Pune', 55000, 5, '9:00-5:00', 'Full Time', 'Design', 15),
+(8, 'Network Engineer', 'Managing and maintaining computer networks', 'Managing and maintaining computer networks', 'B.Tech in Computer Science', '2024-06-15 00:00:00', 'Delhi', 48000, 5, '9:00-5:00', 'Full Time', 'Networking', 18),
+(9, 'Machine Learning Engineer', 'Developing machine learning algorithms', 'Developing machine learning algorithms', 'M.Tech in Artificial Intelligence', '2024-06-15 00:00:00', 'Hyderabad', 75000, 5, '9:00-5:00', 'Full Time', 'Machine Learning', 20),
+(10, 'Web Developer', 'Creating and maintaining websites', 'Creating and maintaining websites', 'B.Tech in Computer Science', '2024-06-15 00:00:00', 'Chennai', 45000, 5, '9:00-5:00', 'Full Time', 'Web Development', 22);
 
 
-INSERT INTO Candidate_details (cand_id, First_name, Last_name, Gender, Disability, Date_of_Birth, Linkedin, Phone, Languages, Address, Nationality, Skills, preference_category)
+INSERT INTO Candidate_details (cand_id, First_name, Last_name, Gender, Disability, Date_of_Birth, Linkedin, Phone, Languages, Address, Nationality, Skills, preference_category,email)
 VALUES
-(1, 'Amal', 'Mani', 'Male', 'None', '1990-01-01', 'linkedin.com/amal', '1234567890', 'English', '123 Main St, City, Country', 'US', 'Programming, Data Analysis', 'Software Development'),
-(3, 'Gigil', 'James', 'Male', 'None', '1985-05-05', 'linkedin.com/gigil', '9876543210', 'English', '456 Elm St, City, Country', 'Canada', 'Data Science, Machine Learning', 'Data Science'),
-(5, 'Navaneeth', 'Shanavasan', 'Male', 'None', '1992-10-15', 'linkedin.com/navaneeth', '1112233445', 'English', '789 Oak St, City, Country', 'UK', 'Web Development, Frontend Development', 'Web Development'),
-(6, 'Sreerag', 'unnithan', 'Male', 'None', '1988-07-20', 'linkedin.com/sreerag', '9988776655', 'English', '101 Pine St, City, Country', 'Australia', 'Database Management, SQL', 'Database Management'),
-(9, 'Abhiram', 'J', 'Male', 'None', '1995-03-12', 'linkedin.com/abhiram', '1122334455', 'English', '202 Maple St, City, Country', 'India', 'Networking, Security', 'Networking'),
-(11, 'Vimal', 'Vijay', 'Male', 'None', '1983-12-30', 'linkedin.com/vimal', '1122233344', 'English', '303 Cedar St, City, Country', 'India', 'Project Management, Leadership', 'Management'),
-(13, 'Samantha', 'Johnson', 'Female', 'None', '1991-08-25', 'linkedin.com/samantha', '9988776655', 'English', '404 Oak St, City, Country', 'US', 'UI/UX Design, Graphic Design', 'Design'),
-(15, 'Priya', 'Kumar', 'Female', 'None', '1993-07-18', 'linkedin.com/priya', '1122334455', 'English', '505 Pine St, City, Country', 'India', 'Mobile App Development, Android, iOS', 'Mobile Development'),
-(17, 'Anjali', 'Ahmed', 'Female', 'None', '1994-04-05', 'linkedin.com/anjali', '9988776655', 'English', '606 Elm St, City, Country', 'UK', 'Digital Marketing, SEO, SEM', 'Marketing'),
-(19, 'Aisha', 'Smith', 'Female', 'None', '1987-11-11', 'linkedin.com/aisha', '1122233344', 'English', '707 Maple St, City, Country', 'Canada', 'Database Management, SQL, NoSQL', 'Database Management');
+(1, 'Amal', 'Mani', 'Male', 'None', '1990-01-01', 'linkedin.com/amal', '1234567890', 'English', '123 Main St, City, Country', 'US', 'Programming, Data Analysis', 'Software Development','amal@gmail.com'),
+(3, 'Gigil', 'James', 'Male', 'None', '1985-05-05', 'linkedin.com/gigil', '9876543210', 'English', '456 Elm St, City, Country', 'Canada', 'Data Science, Machine Learning', 'Data Science','gigil@gmail.com'),
+(5, 'Navaneeth', 'Shanavasan', 'Male', 'None', '1992-10-15', 'linkedin.com/navaneeth', '1112233445', 'English', '789 Oak St, City, Country', 'UK', 'Web Development, Frontend Development', 'Web Development','navaneeth@gmail.com'),
+(6, 'Sreerag', 'unnithan', 'Male', 'None', '1988-07-20', 'linkedin.com/sreerag', '9988776655', 'English', '101 Pine St, City, Country', 'Australia', 'Database Management, SQL', 'Database Management','sreerag@gmail.com'),
+(9, 'Abhiram', 'J', 'Male', 'None', '1995-03-12', 'linkedin.com/abhiram', '1122334455', 'English', '202 Maple St, City, Country', 'India', 'Networking, Security', 'Networking','abhiram@gmail.com'),
+(11, 'Vimal', 'Vijay', 'Male', 'None', '1983-12-30', 'linkedin.com/vimal', '1122233344', 'English', '303 Cedar St, City, Country', 'India', 'Project Management, Leadership', 'Management','vimal@gmail.com'),
+(13, 'Samantha', 'Johnson', 'Female', 'None', '1991-08-25', 'linkedin.com/samantha', '9988776655', 'English', '404 Oak St, City, Country', 'US', 'UI/UX Design, Graphic Design', 'Design','samantha@gmail.com'),
+(15, 'Priya', 'Kumar', 'Female', 'None', '1993-07-18', 'linkedin.com/priya', '1122334455', 'English', '505 Pine St, City, Country', 'India', 'Mobile App Development, Android, iOS', 'Mobile Development','priya@gmail.com'),
+(17, 'Anjali', 'Ahmed', 'Female', 'None', '1994-04-05', 'linkedin.com/anjali', '9988776655', 'English', '606 Elm St, City, Country', 'UK', 'Digital Marketing, SEO, SEM', 'Marketing','anjali@gmail.com'),
+(19, 'Aisha', 'Smith', 'Female', 'None', '1987-11-11', 'linkedin.com/aisha', '1122233344', 'English', '707 Maple St, City, Country', 'Canada', 'Database Management, SQL, NoSQL', 'Database Management','aisha@gmail.com');
 
 
 
@@ -401,7 +402,7 @@ INSERT INTO Applications (App_id, cand_id, job_id, status) VALUES
 
 INSERT INTO Interviews (App_id, DATE_TIME, link, venue) VALUES 
 (2, '2023-11-30 00:00:00', 'meet.google.com/abc', 'Bangalore'),
-(7, '2023-11-15 00:00:00', 'meet.google.com/def', 'Pune');
+(7, '2023-10-15 00:00:00', 'meet.google.com/def', 'Pune');
 
 
 

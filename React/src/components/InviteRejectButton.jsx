@@ -11,7 +11,7 @@ function InterviewSubmit(){
 
 }
 
-function InviteRejectButton(){
+function InviteRejectButton({fetchCand}){
     const [isModalOpen, setModalOpen] = useState(false);
     const [startDate, setStartDate] = useState(new Date());
     const [value, onChange] = useState('10:00');
