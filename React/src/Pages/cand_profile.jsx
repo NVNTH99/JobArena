@@ -61,7 +61,7 @@ function formReducer(candidateDetails, action) {
                 ],
             }
         case 'deleted_arrayField':
-            if(candidateDetails[action.arrayName].length === 1)
+            if(candidateDetails[action.arrayName].length === 1 && action.arrayName != "languages" && action.arrayName != "domain")
                 return{
                     ...candidateDetails
             }

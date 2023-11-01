@@ -14,33 +14,7 @@ var upcoming = [
 var events = { "upcoming": upcoming };
 
 function RecruiterLoad() {
-    const domain_inputField = document.getElementById("domainfieldaj");
-    const domain_addButton = document.getElementById("domainplusaj");
-    const domain_itemList = document.getElementById("domain-listaj");
-
-    domain_addButton.addEventListener("click", function () {
-        const domain_inputValue = domain_inputField.value.trim();
-
-        if (domain_inputValue !== "") {
-            const domain_newItem = document.createElement("div");
-            domain_newItem.classList.add("itemaj");
-            domain_newItem.innerHTML = `
-                        ${domain_inputValue}
-                        <button type="button" class="delbtncp">X</button>
-                    `;
-            domain_itemList.appendChild(domain_newItem);
-            domain_inputField.value = "";
-        }
-    });
-
-    domain_itemList.addEventListener("click", function (event) {
-        if (event.target.classList.contains("delbtncp")) {
-            event.target.parentNode.remove();
-        }
-    });
-
     const buttons = document.querySelectorAll(".buttongaj");
-
     buttons.forEach((button) => {
         button.addEventListener("click", function () {
             buttons.forEach((b) => b.classList.remove("activeaj"));
@@ -58,34 +32,92 @@ const initialJobForm = {
     Requirements: "",
     Deadline: "",
     Location: "",
-    salary: "",
+    salary: 0,
     work_days: "",
     work_hours: "",
     job_type: "",
-    "category": ""
+    "category": []
 }
 
 function recruiterFormReducer(jobDetails, action) {
     switch (action.type) {
         case 'InputChange':
             return {
-                ...candidateDetails,
+                ...jobDetails,
                 [action.fieldName]: action.value
             };
         case 'CommaInput':
             return {
-                ...candidateDetails,
-                [action.fieldName]: action.value.split(",")
+                ...jobDetails,
+                [languages]: action.value.split(",")
             }
+        case 'changed_arrayField':
+            return {
+                ...jobDetails,
+                draft: action.nextDraft,
+                [action.arrayName]: jobDetails[action.arrayName]
+            }
+        case 'added_arrayItem':
+            return {
+                ...jobDetails,
+                draft: '',
+                [action.arrayName]: [
+                    jobDetails.draft,
+                    ...jobDetails[action.arrayName]
+                ],
+            }
+        case 'deleted_arrayField':
+            return {
+                ...jobDetails,
+                [action.arrayName]: jobDetails[action.arrayName].filter(
+                    (item, i) => i !== action.index
+                ),
+            };
+        default: return jobDetails;
     }
 }
 
 function RecruiterAddJob() {
-    // useEffect(() => {
-    //     RecruiterLoad();
-    // }, []);
+    function handleSaveButton(e) {
+        e.preventDefault();
+    }
+
+    function handleInputChange(e) {
+        const { id } = e.target;
+        if (id === "onsite" || id === "wfh" || id === "hybrid") {
+            dispatch({
+                type: 'InputChange',
+                fieldName: 'job_type',
+                value: id,
+            });
+        } else {
+            const { name, value } = e.target;
+            dispatch({
+                type: 'InputChange',
+                fieldName: name,
+                value
+            });
+        }
+    }
+
+    function handleDeadline() {
+        const dateValue = document.getElementById("ajdate").value;
+        const timeValue = document.getElementById("ajtime").value;
+        const deadline = dateValue + " " + timeValue;
+
+        dispatch({
+            type: 'InputChange',
+            fieldName: 'Deadline',
+            value: deadline,
+        });
+    }
 
     const [jobDetails, dispatch] = useReducer(recruiterFormReducer, initialJobForm);
+
+    useEffect(() => {
+        RecruiterLoad();
+        console.log("Job Details: ", jobDetails);
+    }, [jobDetails])    
 
     return (
         <>
@@ -99,82 +131,95 @@ function RecruiterAddJob() {
                                 <div className="addjobbg">
                                     <div className="pettiaj">
                                         <div className="aj__field">
-                                            <label htmlFor="jobtitle" className="lbl">Job Title</label>
-                                            <input type="text" className="aj__input" id="jobtitle" aria-describedby="jobtitle"></input>
+                                            <label className="lbl">Job Title</label>
+                                            <input onChange={handleInputChange} name="title" type="text" className="aj__input" id="jobtitle"></input>
                                         </div>
                                         <div className="aj__field">
-                                            <label htmlFor="companyname" className="lbl">Company Name</label>
-                                            <input type="text" className="aj__input" id="companyname" placeholder="Company Name" disabled></input>
+                                            <label className="lbl">Company Name</label>
+                                            <input onChange={handleInputChange} name="org_name" type="text" className="aj__input" placeholder="Company Name" disabled></input>
                                         </div>
                                     </div>
                                     <div className="pettiaj">
                                         <div className="aj__field">
-                                            <label htmlFor="JobDescription" className="lbl">Job Description</label>
-                                            <textarea className="aj__input" id="JobDescription" rows="8"></textarea>
+                                            <label className="lbl">Job Description</label>
+                                            <textarea onChange={handleInputChange} name="Description" className="aj__input" rows="8" ></textarea>
                                         </div>
                                         <div className="aj__field">
-                                            <label htmlFor="domain" className="lbl">Required Domain</label>
+                                            <label className="lbl">Required Domain</label>
                                             <div className="catgrpaj">
-                                                <input type="text" id="domainfieldaj" className="aj__input"
-                                                    aria-describedby="domain"></input>
-                                                <button type="button" id="domainplusaj">ADD&nbsp;<FontAwesomeIcon icon={faPlus} /></button>
+                                                <input  name="category" type="text" className="aj__input" onChange={e => {
+                                                    dispatch({ type: 'changed_arrayField', arrayName: "category", nextDraft: e.target.value })
+                                                }}></input>
+                                                <button type="button" id="domainplusaj" onClick={e => {
+                                                    dispatch({ type: 'added_arrayItem', arrayName: "category" });
+                                                }}>ADD&nbsp;<FontAwesomeIcon icon={faPlus} /></button>
                                             </div>
-                                            <div id="domain-listaj"></div>
+                                            <div id="domain-listaj">
+                                                {
+                                                    jobDetails["category"].map((category, index) => (
+                                                        <div key = {index} className="itemaj">
+                                                            {category}
+                                                            <button type="button" className="delbtncp" onClick={() =>
+                                                            dispatch({ type: 'deleted_arrayField', arrayName: "category", index })}>X</button>
+                                                        </div>
+                                                    ))
+                                                }
+                                            </div>
                                         </div>
 
                                     </div>
                                     <div className="pettiaj">
                                         <div className="aj__field">
                                             <label htmlFor="location" className="lbl">Location</label>
-                                            <input type="text" className="aj__input" id="location"></input>
+                                            <input name="Location" onChange={handleInputChange} type="text" className="aj__input" id="location"></input>
                                         </div>
                                         <div className="aj__field">
                                             <label htmlFor="salary" className="lbl">Salary per annum</label>
-                                            <input type="number" className="aj__input" id="salary"></input>
+                                            <input name="salary" onChange={handleInputChange} type="number" className="aj__input" id="salary"></input>
                                         </div>
                                     </div>
                                     <div className="pettiaj">
                                         <div className="aj__field">
                                             <label htmlFor="workdays" className="lbl">Work Days</label>
-                                            <input type="text" className="aj__input" id="workdays" aria-describedby="workdays"></input>
+                                            <input name="work_days" onChange={handleInputChange} type="number" min = "1" max = "7" className="aj__input" id="workdays" aria-describedby="workdays"></input>
 
                                         </div>
                                         <div className="aj__field">
-                                            <label htmlFor="salary" className="lbl">Work Hours</label>
-                                            <input type="text" className="aj__input" id="salary" placeholder="[Start Time] - [End Time]"></input>
+                                            <label className="lbl">Work Hours</label>
+                                            <input name="work_hours" onChange={handleInputChange} type="text" className="aj__input" placeholder="[Start Time] - [End Time]"></input>
                                         </div>
                                     </div>
                                     <div className="pettiaj">
                                         <div className="aj__field">
                                             <label htmlFor="responsibility" className="lbl">Responsibility</label>
-                                            <textarea className="aj__input" id="responsibility" rows="5"></textarea>
+                                            <textarea name="Responsibility"onChange={handleInputChange} className="aj__input" id="responsibility" rows="5"></textarea>
                                         </div>
                                         <div className="aj__field">
                                             <label htmlFor="requirements" className="lbl">Requirements</label>
-                                            <textarea className="aj__input" id="requirements" rows="5"></textarea>
+                                            <textarea name="Requirements" onChange={handleInputChange} className="aj__input" id="requirements" rows="5"></textarea>
                                         </div>
                                     </div>
                                     <div className="pettiaj">
                                         <div className="aj__field">
                                             <label htmlFor="disability" className="lbl">Job Type</label>
                                             <div className="button-container-aj">
-                                                <button type="button" className="buttongaj" id="onsite">Onsite</button>
-                                                <button type="button" className="buttongaj" id="wfh">Work from Home</button>
-                                                <button type="button" className="buttongaj" id="hybrid">Hybrid</button>
+                                                <button id="onsite" onClick={handleInputChange} type="button" className="buttongaj">Onsite</button>
+                                                <button id="wfh" onClick={handleInputChange} type="button" className="buttongaj">Work from Home</button>
+                                                <button id="hybrid" onClick={handleInputChange} type="button" className="buttongaj">Hybrid</button>
                                             </div>
                                         </div>
                                         <div className="aj__field">
                                             <label htmlFor="deadline" className="lbl">Deadline</label>
                                             <div className="input-container">
-                                                <input type="date" className="aj__input" id="ajdate" name="deadline"></input>
-                                                <input type="time" className="aj__input" id="ajtime" name="time"></input>
+                                                <input onChange={handleDeadline} type="date" className="aj__input" id="ajdate" name="DeadlineDate"></input>
+                                                <input onChange={handleDeadline} type="time" className="aj__input" id="ajtime" name="DeadlineTime"></input>
                                             </div>
                                         </div>
                                     </div>
                                     <div id="formsavebtn">
-                                        <a className="savebtn" href="#">
+                                        <button type="submit" onClick={handleSaveButton} className="savebtn">
                                             <p>Save</p>
-                                        </a>
+                                        </button>
                                     </div>
                                 </div>
 
