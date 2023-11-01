@@ -41,7 +41,7 @@ function Button(props) {
   if (props.application.status === "Pending") { 
     return(
       <div className="cand_pro_buttons">
-        <InviteRejectButton fetchCand={props.fetchApp}/>
+        <InviteRejectButton fetchCand={props.fetchApp} app_id={props.app_id}/>
       </div>
     )
   } else if (props.application.status === "Shortlisted" && props.application.link === null) {
@@ -129,7 +129,7 @@ function CandidateProfle() {
                     src="https://i.redd.it/spe9d5vah8h81.jpg"
                   />
                 </div>
-                <div className="cand_name">{candidate[0][0].First_Name} {candidate[0][0].Last_Name}</div>               
+                <div className="cand_name">{candidate[0][0].First_name} {candidate[0][0].Last_name}</div>               
                 <div className="cand_element_box">
                   <div className="cand_element_box_left">
                     <div className="cand_line_left">

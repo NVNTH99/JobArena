@@ -4,27 +4,72 @@ import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import TimePicker from "react-time-picker";
+import axios from "axios";
 import 'react-time-picker/dist/TimePicker.css';
 // import '../Pages/RecruiterCandidateProfile.css'
 
-function InterviewSubmit(){
-
-}
-
-function InviteRejectButton({fetchCand}){
+function InviteRejectButton(props){
     const [isModalOpen, setModalOpen] = useState(false);
-    const [startDate, setStartDate] = useState(new Date());
-    const [value, onChange] = useState('10:00');
+    const [selectedValue, setSelectedValue] = useState('link');
+    // const [startDate, setStartDate] = useState(new Date());
+    // const [value, onChange] = useState('10:00');
+    const [interviewdetails,setinterview] = useState({
+      link: '',
+      venue:'',
+      date: '',
+      time:'10:00'
+    })
+
+    const handleChange = (e) => {
+      const { name, value } = e.target;
+      setinterview((prevdetails)=>({
+        ...prevdetails,
+        [name]: value
+      }));
+    };
+
     const openModal = () => {
       setModalOpen(true);
     }
     const closeModal = () => {
       setModalOpen(false);
     }
-    const [selectedValue, setSelectedValue] = useState('link');
+
     const handleRadioChange = (event) => {
       setSelectedValue(event.target.value);
     };
+
+    const scheduleInterview = () => {
+      let date_time = interviewdetails.date + ' ' + interviewdetails.time;
+      date_time = new Date(date_time).toISOString().slice(0,19).replace('T',' ')
+      axios.post('http://localhost:3000/application/statuschange',{
+        app_id: props.app_id,
+        tostatus: 'Shortlisted',
+        date_time: date_time,
+        venue: interviewdetails.venue,
+        link: interviewdetails.link
+      })
+      .then(response => {
+        props.fetchCand()
+      })
+      .catch(error => {
+        console.log(error, "Error while shortlisting candidate")
+      })
+    }
+
+    const Reject = () => {
+      axios.post('http://localhost:3000/application/statuschange',{
+        app_id: App_id,
+        tostatus: 'Rejected'
+      })
+      .then(response => {
+        props.fetchCand()
+      })
+      .catch(error=> {
+        console.log("Error while accepting application")
+      })
+    }
+
     return (
       <div>
         <button className="inviteButton" onClick={openModal}>Invite for interview</button>
@@ -55,9 +100,9 @@ function InviteRejectButton({fetchCand}){
             </div>
             <div className="interview_venue">
               {selectedValue === 'link' ? (
-                <div><input className="interview_form_input" type="text"/></div>
+                <div><input className="interview_form_input" type="text" value={interviewdetails.link} name="link" onChange={handleChange}/></div>
               ) : selectedValue === 'venue' ? (
-                <div><input className="interview_form_input" type="text"/></div>
+                <div><input className="interview_form_input" type="text" value={interviewdetails.venue} name="link" onChange={handleChange}/></div>
               ) : (
                 <div>Select an option</div>
               )}
@@ -65,17 +110,18 @@ function InviteRejectButton({fetchCand}){
             <div className="interview_date">
               Date
               {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
-              <input className="interview_form_input" name="date" type="date"/>
+              <input className="interview_form_input" name="date" value={interviewdetails.date} type="date" onChange={handleChange}/>
             </div>
             <div className="interview_time">
               Time
               {/* <TimePicker className="custom-time-picker-input" onChange={onChange} value={value} disableClock={true}/> */}
-              <input className="interview_form_input" name="time" value={"10:00"} type="time"/>
+              <input className="interview_form_input" name="time" value={interviewdetails.time} type="time" onChange={handleChange}/>
             </div>
-            <input className="submit" type="submit"/>
+            {/* <input className="submit" type="submit"/> */}
+            <button className="submit" onClick={scheduleInterview}>Submit</button>
           </form>
         </Model>
-        <button className="rejectButton">Reject</button>
+        <button className="rejectButton" onClick={Reject}>Reject</button>
       </div>
     )
 }
