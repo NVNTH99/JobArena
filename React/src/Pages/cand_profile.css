@@ -1,3 +1,48 @@
+/* .candidate-profile-body{
+    display: flex;
+    font-family: "Myanmar Khyay-Regular", Helvetica;
+}
+
+.candidate-profile-body input[type="text"]:focus{
+    height: 100%;
+    background-color: white;
+    outline-offset: 0;
+}
+
+.candidate-profile-left{
+    flex: 0 0 80%;
+    padding: 2%;
+}
+
+.form-label{
+    font-weight: bold;
+}
+
+.savebtn{
+    background-color: #E8ac66;
+    width: 10rem;
+    height: 2.5rem;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 0;   
+    text-decoration: none;
+}
+
+.savebtn p{
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin: 0;
+    color: black;
+}
+
+#formsavebtn{
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+} */
+
 
 .alllllcp *{
     font-family: "Myanmar Khyay-Regular", Helvetica;
@@ -33,7 +78,6 @@
 }
 
 .cpbg{
-    /* background-color:rgb(182, 182, 182); */
     position: relative;
     z-index: 5;
     
@@ -77,7 +121,6 @@
 
 .petticp{
     display: flex;
-    /* align-items: center; */
     justify-content: space-evenly;
 }
 
@@ -148,7 +191,6 @@ display: flex;
 
 .itemcp {
     border-radius: 10px;
-    /* background-color: #fca8ff; */
     background-color: #a6aaf5;
     padding: 5px;
     margin: 5px 0;
