@@ -1,7 +1,7 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
-import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faEyeDropper, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 // import { response } from "express";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
@@ -39,8 +39,8 @@ function RecruitersJobCard(props){
                 <p>{props.job.description}</p>
             </div>
             <div className="recruiters-job-card-buttons">
-                <button className="rec-job-card-button grey" onClick={viewApplication}>
-                    <p>View Application <FontAwesomeIcon icon={faPenToSquare}/></p>
+                <button className="rec-job-card-button blue" onClick={viewApplication}>
+                    <p>View Application <FontAwesomeIcon icon={faEye}/></p>
                 </button>
                 <button className="rec-job-card-button red" onClick={deleteJob}>
                     <p>Delete <FontAwesomeIcon icon={faTrashCan}/></p>

@@ -294,7 +294,7 @@ app.post('/candidate/jobapply',(req,res)=>{
     })
 })
 
-app.post('/candidate/profilesave',(req,res)=>{
+app.post('/candidate/profile',(req,res)=>{
 
 })
 

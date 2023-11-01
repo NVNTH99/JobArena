@@ -11,11 +11,11 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 
 function LoginBackground(){
-    // window.onload = function () {
-    //     Particles.init({
-    //         selector: ".background",
-    //     });
-    // };
+    window.onload = function () {
+        Particles.init({
+            selector: ".background",
+        });
+    };
     const particles = Particles.init({
     selector: ".background",
     color: ["#03dac6", "#6058A3", "#ff0266"],
