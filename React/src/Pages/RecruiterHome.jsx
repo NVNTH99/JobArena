@@ -94,7 +94,7 @@ function RecruiterHome(){
                         <h1>Your Jobs</h1>
                     </div>
                     <div>
-                        <Link className="add-job-button" to="/recruiter/add_job">
+                        <Link className="add-job-button" to="/recruiter/add_job" state={user_id}>
                             <p>Add Job</p>
                             <FontAwesomeIcon icon={faPlus}/>
                         </Link>
