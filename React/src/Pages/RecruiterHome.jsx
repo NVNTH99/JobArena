@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import "./RecruiterHome.css";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 // var jobs = [
 //     {
@@ -42,37 +43,46 @@ import axios from "axios";
 
 function RecruiterHome(){
     const location = useLocation() //Added by Nava
+    const navigate = useNavigate();
     const user_id = location.state //Added by Nava
     const [jobs,setJobs] = useState([]) //Added by Nava
     const [events,setevents] = useState({"upcoming":[]}) //Added by Nava
     // const [deleted,setDeleted] = useState(0)
 
     useEffect(()=>{
-        axios.get('http://localhost:3000/recruiter/jobs', {
-            params: {
-                user_id : user_id,
-            }
-        })
-        .then(response => {
-            setJobs(response.data)
-        })
-        .catch(error => {
-            console.error('Error fetching records', error);
-        })
+        if(!user_id)
+            navigate('/login')
+        else{
+            axios.get('http://localhost:3000/recruiter/jobs', {
+                params: {
+                    user_id : user_id,
+                }
+            })
+            .then(response => {
+                setJobs(response.data)
+            })
+            .catch(error => {
+                console.error('Error fetching records', error);
+            })
+        }
     },[]) //Added by Nava
 
     useEffect(() => {
-        axios.get('http://localhost:3000/recruiter/upcoming', {
-            params: {
-                user_id : user_id,
-            }
-        })
-        .then(response => {
-            setevents({"upcoming":response.data})
-        })
-        .catch(error => {
-            console.error('Error fetching records', error);
-        })
+        if(!user_id)
+            navigate('/login')
+        else{
+            axios.get('http://localhost:3000/recruiter/upcoming', {
+                params: {
+                    user_id : user_id,
+                }
+            })
+            .then(response => {
+                setevents({"upcoming":response.data})
+            })
+            .catch(error => {
+                console.error('Error fetching records', error);
+            })
+        }
     },[jobs]) // Added by Nava
 
     return (

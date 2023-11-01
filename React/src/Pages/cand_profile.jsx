@@ -6,6 +6,7 @@ import AdityaLoad from "./AdityaLoad";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import "./cand_profile.css"
+import { useLocation } from "react-router-dom";
 // import 'bootstrap/dist/css/bootstrap.min.css'
 
 var upcoming = [
@@ -17,14 +18,15 @@ var events = {"upcoming":upcoming};
 
 function Cand_profile() {
   // const [candidateDetails, setCandidateDetails] = useState({
-
+    const location = useLocation()
+    const user_id = location.state
   // })
   useEffect(()=>{
       AdityaLoad();
   },[])
   return (
     <>
-    <Navbar userType = "candidate"/>
+    <Navbar userType = "candidate" user_id={user_id}/>
     <Heading title = "Candidate Profile"/>
     <div className="candidate-profile-page">
         <div className="alllllcp">
