@@ -2,7 +2,6 @@ import React, { useEffect, useReducer, useState } from "react";
 import Navbar from "../components/Navbar";
 import Heading from "../components/Heading";
 import CandidateUpcomingCard from "../components/CandidateUpcomingCard";
-import AdityaLoad from "./AdityaLoad";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import "./cand_profile.css"
@@ -41,9 +40,10 @@ function formReducer(candidateDetails, action) {
                 [languages]: action.value.split(",")
             }
         case 'FileInput':
+            console.log(action.file)
             return {
                 ...candidateDetails,
-                [resume]: action.file
+                resume: action.file
             }
         case 'changed_arrayField':
             return {
@@ -115,6 +115,23 @@ function Cand_profile() {
         })
     }
 
+    function handleResumeChange(e) {
+        const file = e.target.files[0];
+        if (file) {
+            if (file.type === 'application/pdf') {
+                const reader = new FileReader();
+                reader.onload = function () {
+                    const resumeBlob = new Blob([reader.result], { type: file.type });
+                    dispatch({ type: 'FileInput', file: resumeBlob });
+                };
+                reader.readAsArrayBuffer(file);
+            } else {
+                console.error("Not a pdf file.")
+            }
+        }
+    }
+    
+
     const formFields = [
         { labelName: 'First Name', label: 'firstname', type: 'text' },
         { labelName: 'Last Name', label: 'lastname', type: 'text' },
@@ -164,7 +181,7 @@ function Cand_profile() {
                                     right={<CpField labelName="Skills" label="skills" onChange={handleInputChange} type="text" />}
                                 />
                                 <PettiCp
-                                    left={<CpField labelName="Resume" label="resume" onChange={handleInputChange} type="file" />}
+                                    left={<CpField labelName="Resume" label="resume" onChange={handleResumeChange} type="file" />}
                                     right={<div className="cp__field"></div>}
                                 />
                                 <div className="petticp">
