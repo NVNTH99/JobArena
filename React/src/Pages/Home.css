@@ -357,6 +357,7 @@ nav ul {
   margin-bottom: 6px;
   gap: 2px;
   flex-wrap: wrap;
+  align-items: center;
 }
 
 .propjob{

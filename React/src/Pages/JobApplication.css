@@ -80,6 +80,7 @@
 .job_application{
     font-family: "Myanmar Khyay-Regular", Helvetica;
     font-style: normal;
+    
 }
 
 .box .left{
@@ -163,5 +164,9 @@
 }
 
 .pulse{
-    animation: pulse 2s infinite;
+    animation: pulse 1.5s infinite;
+}
+
+.heading_size{
+    font-size: 23.5px;
 }

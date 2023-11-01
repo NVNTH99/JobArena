@@ -70,7 +70,7 @@ function InviteRejectButton({fetchCand}){
             <div className="interview_time">
               Time
               {/* <TimePicker className="custom-time-picker-input" onChange={onChange} value={value} disableClock={true}/> */}
-              <input className="interview_form_input" name="time" value={"10:00"} type="time"/>
+              <input className="interview_form_input" name="time" type="time"/>
             </div>
             <input className="submit" type="submit"/>
           </form>

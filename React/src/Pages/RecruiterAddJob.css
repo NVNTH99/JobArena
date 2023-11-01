@@ -66,6 +66,16 @@
     text-decoration: none;
 }
 
+.savebtn:hover{
+  background-color: #c79358;
+}
+
+.savebtn:active{
+  background-color: #946d41;
+  box-shadow: 0 2px #6307a4;
+  transform: translateY(0.5px);
+}
+
 .savebtn p{
     font-size: 1.3rem;
     font-weight: bold;

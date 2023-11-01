@@ -160,7 +160,7 @@
     background-color: #d9d9d9;
     border-radius: 10px;
     font-family: "Urbanist-SemiBold", Helvetica;
-    font-weight: 600;
+    /* font-weight: 600; */
     padding: 4%;
     box-sizing: border-box;
 }
