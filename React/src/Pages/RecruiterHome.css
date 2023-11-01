@@ -52,6 +52,16 @@
     font-size: 22px;
 }
 
+.add-job-button:hover{
+    background: #72b761 ;
+}
+
+.add-job-button:active {
+    background-color: #5b924d;
+    box-shadow: 0 2px #cecece;
+    transform: translateY(0.5px);
+}
+
 .recruiter-home-bottom{
     display: flex;
     height: 70vh;
@@ -62,7 +72,7 @@
     flex-direction: column;
     gap: 4%;
     padding: 1%;
-    justify-content: center;
+    /* justify-content: center; */
     margin: 0 6% 0 8%;
 }
 
@@ -139,4 +149,24 @@
 
 .red{
     background-color: #E46B6B;
+}
+
+.blue:hover{
+    background: #4f8dba ;
+}
+
+.blue:active {
+    background-color: #42779d;
+    box-shadow: 0 2px #cecece;
+    transform: translateY(0.5px);
+}
+
+.red:hover{
+    background: #cd6060;
+}
+
+.red:active {
+    background-color: #954545;
+    box-shadow: 0 2px #cecece;
+    transform: translateY(0.5px);
 }

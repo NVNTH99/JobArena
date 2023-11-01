@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBell } from "@fortawesome/free-solid-svg-icons"
+import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = React.memo((props)=>{
     // console.log("Navbar",props.user_id)
@@ -9,7 +11,7 @@ const Navbar = React.memo((props)=>{
         <header id="Navbar">
             <Logo/>
             <NavItems userType = {props.userType} user_id={props.user_id ? props.user_id : null}/>
-            <Profile/>
+            <Profile user_id={props.user_id} userType = {props.userType}/>
         </header>
     );
 })
@@ -32,9 +34,9 @@ function NavItems(props) {
       navitems = [
         {navTitle: "Home", link: "/candidate/home"}, 
         {navTitle: "Applied Jobs", link: "/candidate/applied_jobs"},
-        {navTitle: "Profile", link: "/candidate/profile"}, 
-        {navTitle: "notification", link: ""},
-        {navTitle: "Logout", link: "/home"}
+        // {navTitle: "Profile", link: "/candidate/profile"}, 
+        {navTitle: "notification", link: ""}
+        // {navTitle: "Logout", link: "/home"}
       ];
       notification = true;
     }
@@ -64,19 +66,35 @@ function NavItems(props) {
   }
 
 
-function NavLink(props){
+function NavLink(props){ //contains props.user_id
   
   function handleClick(){
     setToggleNotification(!toggleNotification);
   }
-
+  const [notification,setnotifs] = useState([])
   const [toggleNotification, setToggleNotification] = useState(false);
+
+  const fetchNotifs = () => {
+    axios.get('http://localhost:3000/notifications',{
+      params : {
+        cand_id: props.user_id
+      }
+    })
+    .then(response => {
+      setnotifs(response.data)
+    })
+    .catch(error => {
+      console.log(error,"Error retrieving notifications")
+    })
+  }
+
   useEffect(() =>{
     var box = document.getElementById('box');
     if(box)
       if(!toggleNotification)
         box.style.display = "none";
       else{
+        fetchNotifs()
         box.style.display = "block";
       }
   },[toggleNotification]);
@@ -89,8 +107,8 @@ function NavLink(props){
           <div><h3>Notifications <span>{notification.length}</span></h3></div>
           <hr/>
           <div className="notification_container">
-            {notification.map((message, index)=>
-              <div key={index} className="notification_element">{message}</div>
+            {notification.slice().reverse().map((message, index)=>
+              <div key={index} className="notification_element">{message.message}</div>
             )}
           </div>
         </div>
@@ -111,10 +129,26 @@ function NavLink(props){
     )
 }
 
-function Profile(){
+function Profile(props){
+  const navigate = useNavigate();
   function handleClick(){
     setToggleNotification(!toggleNotification);
   }
+
+  let profitems = [];
+    if(props.userType === "candidate"){
+      profitems = [
+        {profTitle: "Profile", link: "/candidate/profile"}, 
+        {profTitle: "Logout", link: "/home"}
+      ];
+      // notification = true;
+    }
+    else if(props.userType === "recruiter"){
+      profitems = [{profTitle: "Logout", link: "/home"}];
+    }
+    // else{
+    //   profitems = [{profTitle: "Login", link: "/login"}];
+    // }
 
   const [toggleNotification, setToggleNotification] = useState(false);
   useEffect(() =>{
@@ -127,6 +161,10 @@ function Profile(){
     }
   },[toggleNotification]);
 
+  const Redir = (link) => {
+    navigate(link, { state: props.user_id  })
+  }
+
   return(
       <div className="profile-icon">
           
@@ -136,9 +174,14 @@ function Profile(){
           <div><h3>Hi User,</h3></div>
           <hr/>
           <div className="profile_container">
-            <div className="profile_element">Profile</div>
+            {
+              profitems.map((profitem,index) => (
+                <div className="profile_element" onClick={() => Redir(profitem.link)}>{profitem.profTitle}</div>
+              ))
+            }
+            {/* <div className="profile_element">Profile</div>
             <div className="profile_element">Change Password</div>
-            <div className="profile_element">Log out</div>
+            <div className="profile_element">Log out</div> */}
           </div>
         </div>
       </div>
@@ -147,4 +190,3 @@ function Profile(){
 
 export default Navbar;
 
-let notification = ["You got placed bitch.", "Your application got rejected.","You are invited for an interview",]

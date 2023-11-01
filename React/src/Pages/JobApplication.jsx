@@ -5,6 +5,7 @@ import "./JobApplication.css";
 import UpcomingCard from "../components/UpcomingCard";
 import { useLocation } from "react-router-dom"; //Added by Nava
 import axios from "axios"; //Added by Nava
+import { useNavigate } from 'react-router-dom';
 // import { response } from "express";
 
 // var job = {title:"Job Title", companyName:"Company name", location:"Location", category:"Category",
@@ -48,6 +49,7 @@ let length = 0
 
 function JobApplication(){
     const location = useLocation() //Added by Nava
+    const navigate = useNavigate();
     const {job_id,user_id} = location.state //Added by Nava
     console.log(job_id,user_id)
     const [job,setJob] = useState({}) //Added by Nava
@@ -55,31 +57,39 @@ function JobApplication(){
     const [candidateList,setcandidateList] = useState({"Pending":[],"Rejected":[],"Shortlisted":[],"Offered":[]}) //Added by Nava
     
     useEffect(()=> {
-        axios.get('http://localhost:3000/recruiter/job',{
-            params : {
-                job_id: job_id
-            }
-        })
-        .then(response => {
-            setJob(response.data)
-        })
-        .catch(error => {
-            console.log("Error fetching job details")
-        })
+        if(!user_id)
+            navigate('/login')
+        else{
+            axios.get('http://localhost:3000/recruiter/job',{
+                params : {
+                    job_id: job_id
+                }
+            })
+            .then(response => {
+                setJob(response.data)
+            })
+            .catch(error => {
+                console.log("Error fetching job details")
+            })
+        }
     },[]) //Added by Nava
 
     useEffect(()=> {
-        axios.get('http://localhost:3000/recruiter/upcoming',{
-            params: {
-                user_id: user_id
-            }
-        })
-        .then(response => {
-            setevents({"upcoming":response.data})
-        })
-        .catch(error => {
-            console.log("Error fetching upcoming events")
-        })
+        if(!user_id)
+            navigate('/login')
+        else{
+            axios.get('http://localhost:3000/recruiter/upcoming',{
+                params: {
+                    user_id: user_id
+                }
+            })
+            .then(response => {
+                setevents({"upcoming":response.data})
+            })
+            .catch(error => {
+                console.log("Error fetching upcoming events")
+            })
+        }
     },[candidateList]) //Added by Nava
 
     const fetchCand = () => {
@@ -110,7 +120,11 @@ function JobApplication(){
     }
 
     useEffect(()=> {
-        fetchCand()
+        if(!user_id)
+            navigate('/login')
+        else{
+            fetchCand()
+        }
     },[]) //Added by Nava
 
     return(
@@ -119,9 +133,9 @@ function JobApplication(){
             <div className="box">
                 <div className="left">
                     <div className="margin">
-                        <h2 className="job_application">{job.title}</h2>
-                        <h2 className="job_application">{job.companyName + ", " + job.location}</h2>
-                        <h2 className="job_application">{job.category}</h2>
+                        <h3 className="job_application heading_size">{job.title}</h3>
+                        <h3 className="job_application heading_size">{job.companyName + ", " + job.location}</h3>
+                        <h3 className="job_application heading_size">{job.category}</h3>
                         <br/>
                         <p className="job_application desc">{job.description}</p>
                         

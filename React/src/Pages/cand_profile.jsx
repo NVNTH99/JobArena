@@ -6,6 +6,7 @@ import AdityaLoad from "./AdityaLoad";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import "./cand_profile.css"
+import { useLocation } from "react-router-dom";
 // import 'bootstrap/dist/css/bootstrap.min.css'
 
 const initialForm = {
