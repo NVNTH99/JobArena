@@ -197,7 +197,7 @@ function Cand_profile() {
                                             <input name="languages" className="cp__input" onChange={e => {
                                                 dispatch({ type: 'changed_arrayField', arrayName: "languages", nextDraft: e.target.value })
                                             }} type="text" id="languages" />
-                                            <button type="button" onClick={e => {
+                                            <button className="add_button" type="button" onClick={e => {
                                                 dispatch({ type: 'added_arrayItem', arrayName: "languages" });
                                             }} id="langpluscp">ADD <FontAwesomeIcon icon={faPlus} /></button>
                                         </div>
@@ -219,7 +219,7 @@ function Cand_profile() {
                                             <input name="domain" type="text" id="domain" className="cp__input" onChange={(e) => {
                                                 dispatch({ type: 'changed_arrayField', arrayName: "domain", nextDraft: e.target.value })
                                             }} />
-                                            <button type="button" id="domainpluscp" onClick={e => {
+                                            <button className="add_button" type="button" id="domainpluscp" onClick={e => {
                                                 dispatch({ type: 'added_arrayItem', arrayName: "domain" });
                                             }}>ADD <FontAwesomeIcon icon={faPlus} /></button>
                                         </div>
