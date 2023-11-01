@@ -331,10 +331,10 @@ INSERT INTO Jobs (job_id, Title, Description, Responsibility, Requirements, Dead
 (4, 'Software Development Engineer', 'Developing software', 'Developing software', 'B.Tech in Computer Science', '2024-05-30 00:00:00', 'Kochi', 50000, 5, '9:00-5:00', 'Full Time', 'Software Development', 8),
 (5, 'Software Engineer', 'Developing software', 'Developing software', 'B.Tech in Computer Science', '2024-05-30 00:00:00', 'Kochi', 50000, 5, '9:00-5:00', 'Full Time', 'Software Development', 10),
 (6, 'Data Scientist', 'Analyzing and interpreting complex data', 'Analyzing and interpreting complex data', 'M.Sc in Data Science', '2024-06-15 00:00:00', 'Mumbai', 70000, 5, '9:00-5:00', 'Full Time', 'Data Science', 12),
-(7, 'UI/UX Designer', 'Designing user interfaces and experiences', 'Designing user interfaces and experiences', 'B.Design in Graphic Design', '2024-06-15 00:00:00', 'Pune', 55000, 5, '9:00-5:00', 'Full Time', 'Design', 15),
+(7, 'UI/UX Designer', 'Designing user interfaces and experiences', 'Designing user interfaces and experiences', 'B.Design in Graphic Design', '2024-06-15 00:00:00', 'Pune', 55000, 5, '9:00-5:00', 'Full Time', 'Design', 16),
 (8, 'Network Engineer', 'Managing and maintaining computer networks', 'Managing and maintaining computer networks', 'B.Tech in Computer Science', '2024-06-15 00:00:00', 'Delhi', 48000, 5, '9:00-5:00', 'Full Time', 'Networking', 18),
 (9, 'Machine Learning Engineer', 'Developing machine learning algorithms', 'Developing machine learning algorithms', 'M.Tech in Artificial Intelligence', '2024-06-15 00:00:00', 'Hyderabad', 75000, 5, '9:00-5:00', 'Full Time', 'Machine Learning', 20),
-(10, 'Web Developer', 'Creating and maintaining websites', 'Creating and maintaining websites', 'B.Tech in Computer Science', '2024-06-15 00:00:00', 'Chennai', 45000, 5, '9:00-5:00', 'Full Time', 'Web Development', 22);
+(10, 'Web Developer', 'Creating and maintaining websites', 'Creating and maintaining websites', 'B.Tech in Computer Science', '2024-06-15 00:00:00', 'Chennai', 45000, 5, '9:00-5:00', 'Full Time', 'Web Development', 20);
 
 
 INSERT INTO Candidate_details (cand_id, First_name, Last_name, Gender, Disability, Date_of_Birth, Linkedin, Phone, Languages, Address, Nationality, Skills, preference_category,email)

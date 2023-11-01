@@ -65,13 +65,13 @@ app.post('/signup',(req,res)=>{
     const type = req.body.type;
     let organization = credentials.organization
     if(type === 'recruiter' && typeof organization === 'string'){
-        const query0 = `Insert into Organizations (Organization_name) values (${organization})`
-        requestQueue.push({ query: query0, params: [] }, (error, result) => {
+        const query0 = `Insert into Organizations (Organization_name) values (?)`
+        requestQueue.push({ query: query0, params: [organization] }, (error, result) => {
             if (error) {
                 res.status(500).send('Internal Server Error');
             } else {
-                const query = `Select id from Organizations where Organization_name='${organization}'`
-                requestQueue.push({ query: query, params: [] }, (error, result) => {
+                const query = `Select id from Organizations where Organization_name=?`
+                requestQueue.push({ query: query, params: [organization] }, (error, result) => {
                     if (error) {
                         res.status(500).send('Internal Server Error');
                     } else {
@@ -81,33 +81,38 @@ app.post('/signup',(req,res)=>{
             }
         });
     }
-    const query1 = `INSERT INTO login_details (username,password,type) VALUES ('${credentials.username}', '${credentials.password}' , '${type}');`
-    requestQueue.push({ query: query1, params: [] }, (error, result) => {
+    const query1 = `INSERT INTO login_details (username,password,type) VALUES (?, ? , ?);`
+    requestQueue.push({ query: query1, params: [credentials.username,credentials.password,type] }, (error, result) => {
         if (error) {
             console.log("Error1")
             res.status(500).send('Internal Server Error');
         } else {
-            const query2 = `Select id from login_details where username='${credentials.username}'`
+            const query2 = `Select id from login_details where username=?`
             // if(type === 'candidate'){
             //     query2 = `INSERT INTO Candidate_details (First_Name,Last_Name,preference category) values ('${credentials.firstname}','${credentials.lastname}','');`
             // }
             // else if(type === 'recruiter'){
             //     query2 = `INSERT INTO `
             // }
-            requestQueue.push({ query: query2, params: [] }, (error, result) => {
+            requestQueue.push({ query: query2, params: [credentials.username] }, (error, result) => {
                 if (error) {
                     console.log("Error2")
                     res.status(500).send('Internal Server Error');
                 } else {
                     const user_id = result[0].id
                     let query3
+                    let parameters = []
                     if(type === 'candidate'){
-                        query3 = `INSERT INTO Candidate_details (cand_id,First_Name,Last_Name,preference_category) values (${user_id},'${credentials.firstname}','${credentials.lastname}','');`
+                        // query3 = `INSERT INTO Candidate_details (cand_id,First_Name,Last_Name,preference_category) values (${user_id},'${credentials.firstname}','${credentials.lastname}','');`
+                        query3 = `INSERT INTO Candidate_details (cand_id,First_Name,Last_Name,preference_category) values (?,?,?,?);`
+                        parameters = [user_id,credentials.firstname,credentials.lastname,'']
                     }
                     else if(type === 'recruiter'){
-                        query3 = `INSERT INTO Recruiter_details (rec_id,First_Name,Last_Name,org_id) values (${user_id},'${credentials.firstname}','${credentials.lastname}',${organization})`
+                        // query3 = `INSERT INTO Recruiter_details (rec_id,First_Name,Last_Name,org_id) values (${user_id},'${credentials.firstname}','${credentials.lastname}',${organization})`
+                        query3 = `INSERT INTO Recruiter_details (rec_id,First_Name,Last_Name,org_id) values (?,?,?,?)`
+                        parameters = [user_id,credentials.firstname,credentials.lastname,organization]
                     }
-                    requestQueue.push({ query: query3, params: [] }, (error, result) => {
+                    requestQueue.push({ query: query3, params: parameters }, (error, result) => {
                         if (error) {
                             console.log("Error3")
                             res.status(500).send('Internal Server Error');
@@ -145,7 +150,7 @@ app.get('/jobs', (req, res) => {
         parameters.push(req.query.user_id)
     }
     // console.log(query)
-    requestQueue.push({ query: query, params: parameters }, (error, result) => {
+    requestQueue.push({ query: query, params: parameters }, (error, result) => {    
         if (error) {
             res.status(500).send('Internal Server Error');
         } else {
@@ -337,6 +342,19 @@ app.post('/candidate/appliedjobs/withdraw',(req,res)=>{ //consider for shortlist
                     res.send(true)
                 }
             })
+        }
+    })
+})
+
+app.get('/notifications',(req,res)=> {
+    const cand_id = req.query.cand_id
+    const query = `Select message from Notifications where cand_id=?;`
+    requestQueue.push({query: query, params: [cand_id]},(error,result)=>{
+        if(error){
+            res.status(500).send('Internal Server Error')
+        }
+        else{
+            res.send(result)
         }
     })
 })
