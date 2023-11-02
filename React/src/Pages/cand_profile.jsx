@@ -10,21 +10,22 @@ import axios from "axios";
 // import 'bootstrap/dist/css/bootstrap.min.css'
 
 const initialForm = {
-    firstname: '',
-    lastname: '',
-    linkedin: '',
-    dob: '',
-    phonenumber: '',
-    nationality: '',
+    firstname: null,
+    lastname: null,
+    linkedin: null,
+    dob: null,
+    phonenumber: null,
+    nationality: null,
     gender: 'male',
-    disability: '',
-    address: '',
-    skills: '',
+    disability:null,
+    address: null,
+    skills: null,
     resume: null,
     "languages": [],
     "domain": [],
     "workExperience": [{ job_Title: "", org_name: "", start_year: "", end_year: "" }],
     "projects": [{Project_Title: "", Project_Desc: "", start_date: "", end_year: ""}],
+    "education": [{Degree: "", Major: "", Institution: "", start_year: "", end_year: "", score: 0.0, max_score: 0.0}]
 };
 
 
@@ -107,7 +108,7 @@ function Cand_profile() {
 
     function handleSaveButton(e) {
         e.preventDefault();
-        axios.post('http://localhost:3000/candidate/profile',candidateDetails)
+        axios.post('http://localhost:3000/candidate/profile',{candidateDetails: candidateDetails, user_id: user_id})
         .then(response => {
             if(typeof response.data === 'object'){
                 // console.log(0)
@@ -147,9 +148,9 @@ function Cand_profile() {
         }
     }
     
-    // useEffect(() => {
-    //     console.log('Form Data: ', candidateDetails);
-    // }, [candidateDetails])
+    useEffect(() => {
+        console.log('Form Data: ', candidateDetails);
+    }, [candidateDetails])
     return (
         <>
             <Navbar userType="candidate" user_id = {user_id}/>
