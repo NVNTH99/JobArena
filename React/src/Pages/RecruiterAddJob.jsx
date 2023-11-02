@@ -116,9 +116,9 @@ function RecruiterAddJob() {
 
     function handleSaveButton(e) {
         e.preventDefault();
-        axios.post('recruiter/addjob',{initialJobForm,user_id})
+        axios.post('http://localhost:3000/recruiter/addjob',{initialJobForm: initialJobForm, user_id: user_id})
         .then(response => {
-            navigate("http://localhost:3000/recruiter/home", { state:  user_id.user_id })
+            navigate("/recruiter/home", { state:  user_id.user_id })
         })
         .catch(error => {
             console.log(error, "Error adding job")
@@ -179,7 +179,7 @@ function RecruiterAddJob() {
                                         </div>
                                         <div className="aj__field">
                                             <label className="lbl">Company Name</label>
-                                            <input onChange={handleInputChange} name="org_name" type="text" className="aj__input" placeholder="Company Name" disabled></input>
+                                            <input onChange={handleInputChange} name="org_name" type="text" className="aj__input" placeholder={initialJobForm.org_name} disabled></input>
                                         </div>
                                     </div>
                                     <div className="pettiaj">
