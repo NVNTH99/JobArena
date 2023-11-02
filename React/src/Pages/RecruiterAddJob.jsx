@@ -27,7 +27,7 @@ function RecruiterLoad() {
 
 }
 
-const initialJobForm = {
+let initialJobForm = {
     title: "",
     Description: "",
     org_name: "",
@@ -116,9 +116,9 @@ function RecruiterAddJob() {
 
     function handleSaveButton(e) {
         e.preventDefault();
-        axios.post('http://localhost:3000/recruiter/addjob',{initialJobForm: initialJobForm, user_id: user_id})
+        axios.post('http://localhost:3000/recruiter/addjob',{initialJobForm: jobDetails, user_id: user_id})
         .then(response => {
-            navigate("/recruiter/home", { state:  user_id.user_id })
+            navigate("/recruiter/home", { state: user_id })
         })
         .catch(error => {
             console.log(error, "Error adding job")
