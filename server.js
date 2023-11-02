@@ -388,7 +388,7 @@ app.get('/recruiter/organization',(req,res)=>{
 })
 
 app.post('/recruiter/addjob', (req, res) => {
-    const { title, Description, org_name, Responsibility, Requirements, Deadline, Location, salary, work_days, work_hours, job_type, category } = req.body.initialJobForm;
+    let { title, Description, org_name, Responsibility, Requirements, Deadline, Location, salary, work_days, work_hours, job_type, category } = req.body.initialJobForm;
     const user_id = req.body.user_id;
     category = category.join(",")
     console.log(title, Description, org_name, Responsibility, Requirements, Deadline, Location, salary, work_days, work_hours, job_type, category,user_id)
@@ -409,8 +409,8 @@ app.post('/recruiter/addjob', (req, res) => {
 
 
 app.post('/recruiter/removeJob',(req,res)=>{
-    const job_id = req.query.job_id
-    const user_id = req.query.job_id
+    const job_id = req.body.job_id
+    const user_id = req.body.user_id
     const notificationQuery = `INSERT INTO Notifications (cand_id, message) SELECT cand_id, 
         'You have been rejected for ' || Title || ' at ' || Organization_name as message 
         FROM Applications 
