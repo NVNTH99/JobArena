@@ -372,8 +372,9 @@ app.get('/recruiter/jobs',(req,res)=>{ //Recruiter homepage
     })
 }) //Query verified
 
-app.get('recruiter/organization',(req,res)=>{
+app.get('/recruiter/organization',(req,res)=>{
     const rec_id = req.query.user_id
+    // console.log(rec_id)
     const query = `Select Organization_name from Organizations o join Recruiter_details r on r.org_id=o.org_id where rec_id=?;`
     requestQueue.push({query: query, params: [rec_id]},(error,result)=>{
         if(error){
@@ -386,8 +387,10 @@ app.get('recruiter/organization',(req,res)=>{
 })
 
 app.post('/recruiter/addjob', (req, res) => {
-    const { title, Description, org_name, Responsibility, Requirements, Deadline, Location, salary, work_days, work_hours, job_type, category } = req.body.initialJobForm;
+    let { title, Description, org_name, Responsibility, Requirements, Deadline, Location, salary, work_days, work_hours, job_type, category } = req.body.initialJobForm;
     const user_id = req.body.user_id;
+    category = category.join(",")
+    console.log(title, Description, org_name, Responsibility, Requirements, Deadline, Location, salary, work_days, work_hours, job_type, category,user_id)
     
     const query = `INSERT INTO Jobs (Title, Description, Responsibility, Requirements, Deadline, Location, salary, work_days, work_hours, job_type, category, rec_id) 
                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
@@ -405,8 +408,8 @@ app.post('/recruiter/addjob', (req, res) => {
 
 
 app.post('/recruiter/removeJob',(req,res)=>{
-    const job_id = req.query.job_id
-    const user_id = req.query.job_id
+    const job_id = req.body.job_id
+    const user_id = req.body.user_id
     const notificationQuery = `INSERT INTO Notifications (cand_id, message) SELECT cand_id, 
         'You have been rejected for ' || Title || ' at ' || Organization_name as message 
         FROM Applications 
