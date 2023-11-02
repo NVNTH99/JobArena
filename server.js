@@ -299,6 +299,66 @@ app.post('/candidate/jobapply',(req,res)=>{
     })
 })
 
+app.get('/candidate/details',(req,res)=>{
+    const cand_id = req.query.cand_id
+    console.log("details")
+    const query = `Select* from Candidate_details where cand_id=?;`
+    requestQueue.push({query: query, params: [cand_id]},(error,result)=>{
+        if(error){
+            res.status(500).send('Internal Server Error')
+        }
+        else{
+            console.log(result)
+            res.send(result[0])
+        }
+    })
+})
+
+app.get('/candidate/work_exp',(req,res)=>{
+    const cand_id = req.query.cand_id
+    console.log("work_exp")
+    const query = `Select* from Work_Exp where cand_id=?;`
+    requestQueue.push({query: query, params: [cand_id]},(error,result)=>{
+        if(error){
+            res.status(500).send('Internal Server Error')
+        }
+        else{
+            console.log(result)
+            res.send(result)
+        }
+    })
+})
+
+app.get('/candidate/project',(req,res)=>{
+    const cand_id = req.query.cand_id
+    console.log("projects")
+    const query = `Select* from Projects where cand_id=?;`
+    requestQueue.push({query: query, params: [cand_id]},(error,result)=>{
+        if(error){
+            res.status(500).send('Internal Server Error')
+        }
+        else{
+            console.log(result)
+            res.send(result)
+        }
+    })
+})
+
+app.get('/candidate/education',(req,res)=>{
+    const cand_id = req.query.cand_id
+    console.log("education")
+    const query = `Select* from Education where cand_id=?;`
+    requestQueue.push({query: query, params: [cand_id]},(error,result)=>{
+        if(error){
+            res.status(500).send('Internal Server Error')
+        }
+        else{
+            console.log(result)
+            res.send(result)
+        }
+    })
+})
+
 app.post('/candidate/profile',(req,res)=>{
     console.log(req.body); 
 })
