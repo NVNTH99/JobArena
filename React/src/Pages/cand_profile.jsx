@@ -17,15 +17,15 @@ const initialForm = {
     phonenumber: null,
     nationality: null,
     gender: 'male',
-    disability:null,
+    disability: null,
     address: null,
     skills: null,
     resume: null,
     "languages": [],
     "domain": [],
     "workExperience": [{ job_Title: "", org_name: "", start_year: "", end_year: "" }],
-    "projects": [{Project_Title: "", Project_Desc: "", start_date: "", end_year: ""}],
-    "education": [{Degree: "", Major: "", Institution: "", start_year: "", end_year: "", score: 0.0, max_score: 0.0}]
+    "projects": [{ Project_Title: "", Project_Desc: "", start_date: "", end_year: "" }],
+    "education": [{ Degree: "", Major: "", Institution: "", start_year: "", end_year: "", score: 0.0, max_score: 0.0 }]
 };
 
 
@@ -63,10 +63,10 @@ function formReducer(candidateDetails, action) {
                 ],
             }
         case 'deleted_arrayField':
-            if(candidateDetails[action.arrayName].length === 1 && action.arrayName != "languages" && action.arrayName != "domain")
-                return{
+            if (candidateDetails[action.arrayName].length === 1 && action.arrayName != "languages" && action.arrayName != "domain")
+                return {
                     ...candidateDetails
-            }
+                }
             return {
                 ...candidateDetails,
                 [action.arrayName]: candidateDetails[action.arrayName].filter(
@@ -108,19 +108,19 @@ function Cand_profile() {
 
     function handleSaveButton(e) {
         e.preventDefault();
-        axios.post('http://localhost:3000/candidate/profile',{candidateDetails: candidateDetails, user_id: user_id})
-        .then(response => {
-            if(typeof response.data === 'object'){
-                // console.log(0)
-            }
-            else{
-                seterror('Invalid login credentials');
-            }
-        })
-        .catch(error => {
-            console.log("Error while saving candidate profile details");
-            seterror('An error occurred saving candidate profile details');
-        })
+        axios.post('http://localhost:3000/candidate/profile', { candidateDetails: candidateDetails, user_id: user_id })
+            .then(response => {
+                if (typeof response.data === 'object') {
+                    // console.log(0)
+                }
+                else {
+                    seterror('Invalid login credentials');
+                }
+            })
+            .catch(error => {
+                console.log("Error while saving candidate profile details");
+                seterror('An error occurred saving candidate profile details');
+            })
     }
 
     function handleInputChange(e) {
@@ -147,13 +147,13 @@ function Cand_profile() {
             }
         }
     }
-    
+
     useEffect(() => {
         console.log('Form Data: ', candidateDetails);
     }, [candidateDetails])
     return (
         <>
-            <Navbar userType="candidate" user_id = {user_id}/>
+            <Navbar userType="candidate" user_id={user_id} />
             <Heading title="Candidate Profile" />
             <div className="candidate-profile-page">
                 <div className="alllllcp">
@@ -238,6 +238,16 @@ function Cand_profile() {
                                     </div>
                                 </div>
                                 {
+                                    candidateDetails["education"].map((ed, index) => (
+                                        <Education
+                                            key = {index}
+                                            index = {index}
+                                            dispatch = {dispatch}
+                                        />
+                                    ))
+                                }
+
+                                {
                                     candidateDetails["workExperience"].map((we, index) => (
                                         <WorkExperienceForm
                                             key={index}
@@ -271,6 +281,66 @@ function Cand_profile() {
     );
 }
 
+function Education() {
+    return (
+        <>
+            <div className="xtra-formcp">
+                <h2 className="xtra-headingcp">Education</h2>
+                <hr className="hrrcp" />
+                <div className="xtra-form-container">
+                    <div className="petticp">
+                        <div className="cp__field">
+                            <label className="lblcp">Institution</label>
+                            <input name="Institution"  type="text" className="cp__input" />
+                        </div>
+                        <div className="cp__field">
+                            <label className="lblcp">Degree</label>
+                            <input name="Degree" type="text" className="cp__input" />
+                        </div>
+                    </div>
+                    <div className="petticp">
+                        <div className="cp__field">
+                            <label className="lblcp">Major</label>
+                            <input name="Major"  type="text" className="cp__input" />
+                        </div>
+                        <div className="cp__field"></div>
+                    </div>
+                    <div className="petticp">
+                        <div className="cp__field">
+                            <label className="lblcp">Start Year</label>
+                            <input name="start_year" type="number" className="cp__input" />
+                        </div>
+                        <div className="cp__field">
+                            <label className="lblcp">End Year</label>
+                            <input name="end_year" type="number" className="cp__input" />
+                        </div>
+                    </div>
+                    <div className="petticp">
+                        <div className="cp__field">
+                            <label className="lblcp">Score</label>
+                            <input name="score" min="0.00" step="0.01" type="number" className="cp__input" />
+                        </div>
+                        <div className="cp__field">
+                            <label className="lblcp">Max Score</label>
+                            <input name="max_score" min="0.00" step="0.01" type="number" className="cp__input" />
+                        </div>
+                    </div>
+                    <div className="petticp-btn">
+                        <button type="button" className="delwkcp" value="Delete" onClick={() =>
+                            props.dispatch({ type: 'deleted_arrayField', arrayName: "workExperience", index: props.index })}>Delete</button>
+                    </div>
+                    <hr className="smhrr" />
+                </div>
+                <div className="petticp-btn" id="xxx3">
+                    <button type="button" className="addwkcp" value="addmore" onClick={e => {
+                        props.dispatch({ type: "added_array", arrayName: "workExperience", addedArray: initialWorkExperience })
+                    }}>Add More</button>
+                </div>
+            </div>
+        </>
+    )
+}
+
 function WorkExperienceForm(props) {
     let initialWorkExperience = { job_Title: "", org_name: "", start_year: "", end_year: "" };
     let currentWorkExperience = { job_Title: "", org_name: "", start_year: "", end_year: "" };
@@ -291,17 +361,17 @@ function WorkExperienceForm(props) {
                     </div>
                     <div className="cp__field">
                         <label className="lblcp">Organisation Name</label>
-                        <input name="org_name" onChange={handleInputChange} type="text" className="cp__input"  />
+                        <input name="org_name" onChange={handleInputChange} type="text" className="cp__input" />
                     </div>
                 </div>
                 <div className="petticp">
                     <div className="cp__field">
                         <label className="lblcp">Start Year</label>
-                        <input name="start_year" onChange={handleInputChange} type="number" className="cp__input"/>
+                        <input name="start_year" onChange={handleInputChange} type="number" className="cp__input" />
                     </div>
                     <div className="cp__field">
                         <label className="lblcp">End Year</label>
-                        <input name="end_year" onChange={handleInputChange} type="text" className="cp__input"  />
+                        <input name="end_year" onChange={handleInputChange} type="number" className="cp__input" />
                     </div>
                 </div>
                 <div className="petticp-btn">
@@ -312,7 +382,7 @@ function WorkExperienceForm(props) {
             </div>
             <div className="petticp-btn" id="xxx3">
                 <button type="button" className="addwkcp" value="addmore" onClick={e => {
-                    props.dispatch({ type: "added_array", arrayName: "workExperience", addedArray: initialWorkExperience})
+                    props.dispatch({ type: "added_array", arrayName: "workExperience", addedArray: initialWorkExperience })
                 }}>Add More</button>
             </div>
         </div>
@@ -320,8 +390,8 @@ function WorkExperienceForm(props) {
 }
 
 function Projects(props) {
-    let initialProject = {Project_Title: "", Project_Desc: "", start_date: "", end_year: ""};
-    let currentProject = {Project_Title: "", Project_Desc: "", start_date: "", end_year: ""};
+    let initialProject = { Project_Title: "", Project_Desc: "", start_date: "", end_year: "" };
+    let currentProject = { Project_Title: "", Project_Desc: "", start_date: "", end_year: "" };
     function handleInputChange(e) {
         const { name, value } = e.target;
         currentProject = { ...props.currentProject, [name]: value };
@@ -346,7 +416,7 @@ function Projects(props) {
                     </div>
                     <div className="cp__field">
                         <label htmlFor="endyear2" className="lblcp">End Year</label>
-                        <input name="end_year" onChange={handleInputChange} type="text" className="cp__input i1" id="endyear2" />
+                        <input name="end_year" onChange={handleInputChange} type="number" className="cp__input i1" id="endyear2" />
                     </div>
                 </div>
                 <div className="petticp-btn">
@@ -355,8 +425,8 @@ function Projects(props) {
                 <hr className="smhrr" />
             </div>
             <div className="petticp-btn" id="xxx32">
-                <button type="button" className="addwkcp" id="addMoreButton2" value="addmore"onClick={e => {
-                    props.dispatch({ type: "added_array", arrayName: "projects", addedArray: initialProject})
+                <button type="button" className="addwkcp" id="addMoreButton2" value="addmore" onClick={e => {
+                    props.dispatch({ type: "added_array", arrayName: "projects", addedArray: initialProject })
                 }}>Add More</button>
             </div>
         </div>
