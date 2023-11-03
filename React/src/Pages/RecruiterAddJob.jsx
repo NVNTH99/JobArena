@@ -1,10 +1,13 @@
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import Navbar from "../components/Navbar";
 import Heading from "../components/Heading";
 import UpcomingCard from "../components/UpcomingCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import "./RecruiterAddJob.css";
+import axios from "axios";
+import { useLocation } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 var upcoming = [
     { title: "Job Title", name: "Candidate Name", id: "#CandidateID", date: "dd/mm/yyyy", time: "hh:mm" },
@@ -24,7 +27,7 @@ function RecruiterLoad() {
 
 }
 
-const initialJobForm = {
+let initialJobForm = {
     title: "",
     Description: "",
     org_name: "",
@@ -78,8 +81,48 @@ function recruiterFormReducer(jobDetails, action) {
 }
 
 function RecruiterAddJob() {
+    const location = useLocation()
+    const user_id = location.state
+    const [upcoming,setupcoming] = useState([])
+    const navigate = useNavigate();
+
+    useEffect(()=> {
+        axios.get('http://localhost:3000/recruiter/upcoming',{
+            params: {
+                user_id: user_id
+            }
+        })
+        .then(response => {
+            setupcoming(response.data)
+        })
+        .catch(error => {
+            console.log(error,"Error fetching upcoming events")
+        })
+    },[])
+
+    useEffect(()=>{
+        axios.get('http://localhost:3000/recruiter/organization',{
+            params: {
+                user_id: user_id
+            }
+        })
+        .then(response => {
+            initialJobForm.org_name = response.data
+        })
+        .catch(error => {
+            console.log(error,"Error fetching organization name")
+        })
+    },[])
+
     function handleSaveButton(e) {
         e.preventDefault();
+        axios.post('http://localhost:3000/recruiter/addjob',{initialJobForm: jobDetails, user_id: user_id})
+        .then(response => {
+            navigate("/recruiter/home", { state: user_id })
+        })
+        .catch(error => {
+            console.log(error, "Error adding job")
+        })
     }
 
     function handleInputChange(e) {
@@ -121,7 +164,7 @@ function RecruiterAddJob() {
 
     return (
         <>
-            <Navbar userType="recruiter" />
+            <Navbar userType="recruiter" user_id={user_id}/>
             <Heading title="Add Job" />
             <div className="add-job-body">
                 <div className="add-job-aditya">
@@ -136,7 +179,7 @@ function RecruiterAddJob() {
                                         </div>
                                         <div className="aj__field">
                                             <label className="lbl">Company Name</label>
-                                            <input onChange={handleInputChange} name="org_name" type="text" className="aj__input" placeholder="Company Name" disabled></input>
+                                            <input onChange={handleInputChange} name="org_name" type="text" className="aj__input" placeholder={initialJobForm.org_name} disabled></input>
                                         </div>
                                     </div>
                                     <div className="pettiaj">
@@ -218,7 +261,7 @@ function RecruiterAddJob() {
                                     </div>
                                     <div id="formsavebtn">
                                         <button type="submit" onClick={handleSaveButton} className="savebtn">
-                                            <p>Save</p>
+                                            <p>Submit</p>
                                         </button>
                                     </div>
                                 </div>
@@ -229,7 +272,7 @@ function RecruiterAddJob() {
                     </div>
                 </div>
                 <div className="add-job-right">
-                    <UpcomingCard event={events.upcoming} />
+                    {upcoming && <UpcomingCard event={events.upcoming} />}
                 </div>
             </div>
         </>

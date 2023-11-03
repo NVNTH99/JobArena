@@ -93,7 +93,7 @@ function InviteRejectButton(props){
         }}
         >
           <h2 className="interview_form_heading">Schedule interview</h2>
-          <form className="interview_form" onSubmit={InterviewSubmit}>
+          <form className="interview_form">
             <div className="interview_radio">
               <label><input type="radio" name="radio" value="link" checked={selectedValue === 'link'} onChange={handleRadioChange}/>Link</label>
               <label><input type="radio" name="radio" value="venue" checked={selectedValue === 'venue'} onChange={handleRadioChange}/>Venue</label>

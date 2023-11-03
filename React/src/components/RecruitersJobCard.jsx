@@ -12,10 +12,8 @@ function RecruitersJobCard(props){
     const deleteJob = (e) => {
         e.preventDefault(); // This idk might cause error, unnecessary so removable
         axios.post('http://localhost:3000/recruiter/removeJob',{
-            params : {
-                job_id: props.job.job_id,
-                user_id: props.user_id
-            }
+            job_id: props.job.job_id,
+            user_id: props.user_id
         })
         .then(response => {
             props.setJobs(response.data)

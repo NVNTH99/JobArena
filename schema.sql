@@ -75,27 +75,32 @@ CREATE TABLE Candidate_details(
 );
 
 CREATE TABLE Work_Exp(
+    work_id integer,
     cand_id integer,
     job_Title varchar(50),
     org_name varchar(100),
     start_year YEAR,
     end_year YEAR,
+    PRIMARY KEY (work_id),
     FOREIGN KEY (cand_id) REFERENCES Candidate_details(cand_id)
     -- FOREIGN KEY (org_id) REFERENCES Organizations(org_id)
 );
 
 CREATE TABLE Projects(
+    proj_id integer,
     cand_id integer,
     org_name varchar(100),
     Project_Title varchar(50),
     Project_Desc text,
     start_date DATE,
     end_date DATE,
+    PRIMARY KEY (proj_id),
     FOREIGN KEY (cand_id) REFERENCES Candidate_details(cand_id)
     -- FOREIGN KEY (org_id) REFERENCES Organizations(org_id)
 );
 
 CREATE TABLE Education(
+    edu_id integer,
     cand_id integer,
     Degree varchar(30),
     Major varchar(50),
@@ -104,6 +109,7 @@ CREATE TABLE Education(
     end_year YEAR,
     score DECIMAL(5,2),
     max_score integer,
+    PRIMARY KEY (edu_id),
     FOREIGN KEY (cand_id) REFERENCES Candidate_details(cand_id)
 );
 

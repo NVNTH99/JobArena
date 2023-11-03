@@ -274,7 +274,7 @@ app.post('/candidate/jobapply',(req,res)=>{
     // query below shd check whether any null values are there in candidat_details
     const query1 =  `SELECT * FROM Candidate_details 
     WHERE cand_id = ${user_id} 
-    AND (Gender IS NULL OR Disability IS NULL OR Date_of_Birth IS NULL OR Resume IS NULL OR Languages IS NULL);`
+    AND (Gender IS NULL OR Disability IS NULL OR Date_of_Birth IS NULL OR Languages IS NULL);`
     // const query1 = `INSERT INTO Applications (cand_id,job_id,status) values (${user_id},${job_id},'Pending')`
     requestQueue.push({query: query1, params: []},(error,result)=>{
         if(error){
@@ -299,8 +299,68 @@ app.post('/candidate/jobapply',(req,res)=>{
     })
 })
 
-app.post('/candidate/profile',(req,res)=>{
+app.get('/candidate/details',(req,res)=>{
+    const cand_id = req.query.cand_id
+    console.log("details")
+    const query = `Select* from Candidate_details where cand_id=?;`
+    requestQueue.push({query: query, params: [cand_id]},(error,result)=>{
+        if(error){
+            res.status(500).send('Internal Server Error')
+        }
+        else{
+            console.log(result)
+            res.send(result[0])
+        }
+    })
+})
 
+app.get('/candidate/work_exp',(req,res)=>{
+    const cand_id = req.query.cand_id
+    console.log("work_exp")
+    const query = `Select* from Work_Exp where cand_id=?;`
+    requestQueue.push({query: query, params: [cand_id]},(error,result)=>{
+        if(error){
+            res.status(500).send('Internal Server Error')
+        }
+        else{
+            console.log(result)
+            res.send(result)
+        }
+    })
+})
+
+app.get('/candidate/project',(req,res)=>{
+    const cand_id = req.query.cand_id
+    console.log("projects")
+    const query = `Select* from Projects where cand_id=?;`
+    requestQueue.push({query: query, params: [cand_id]},(error,result)=>{
+        if(error){
+            res.status(500).send('Internal Server Error')
+        }
+        else{
+            console.log(result)
+            res.send(result)
+        }
+    })
+})
+
+app.get('/candidate/education',(req,res)=>{
+    const cand_id = req.query.cand_id
+    console.log("education")
+    const query = `Select* from Education where cand_id=?;`
+    requestQueue.push({query: query, params: [cand_id]},(error,result)=>{
+        if(error){
+            res.status(500).send('Internal Server Error')
+        }
+        else{
+            console.log(result)
+            res.send(result)
+        }
+    })
+})
+
+app.post('/candidate/profile',(req,res)=>{
+    console.log(req.body); 
 })
 
 app.get('/candidate/appliedjobs',(req,res)=>{
@@ -372,9 +432,44 @@ app.get('/recruiter/jobs',(req,res)=>{ //Recruiter homepage
     })
 }) //Query verified
 
+app.get('/recruiter/organization',(req,res)=>{
+    const rec_id = req.query.user_id
+    // console.log(rec_id)
+    const query = `Select Organization_name from Organizations o join Recruiter_details r on r.org_id=o.org_id where rec_id=?;`
+    requestQueue.push({query: query, params: [rec_id]},(error,result)=>{
+        if(error){
+            res.status(500).send('Internal Server Error')
+        }
+        else{
+            res.send(result[0].Organization_name)
+        }
+    })
+})
+
+app.post('/recruiter/addjob', (req, res) => {
+    let { title, Description, org_name, Responsibility, Requirements, Deadline, Location, salary, work_days, work_hours, job_type, category } = req.body.initialJobForm;
+    const user_id = req.body.user_id;
+    category = category.join(",")
+    console.log(title, Description, org_name, Responsibility, Requirements, Deadline, Location, salary, work_days, work_hours, job_type, category,user_id)
+    
+    const query = `INSERT INTO Jobs (Title, Description, Responsibility, Requirements, Deadline, Location, salary, work_days, work_hours, job_type, category, rec_id) 
+                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+    
+    const parameters = [title, Description, Responsibility, Requirements, Deadline, Location, salary, work_days, work_hours, job_type, category, user_id];
+
+    requestQueue.push({ query: query, params: parameters }, (error, result) => {
+        if (error) {
+            res.status(500).send('Internal Server Error');
+        } else {
+            res.send(result);
+        }
+    });
+});
+
+
 app.post('/recruiter/removeJob',(req,res)=>{
-    const job_id = req.query.job_id
-    const user_id = req.query.job_id
+    const job_id = req.body.job_id
+    const user_id = req.body.user_id
     const notificationQuery = `INSERT INTO Notifications (cand_id, message) SELECT cand_id, 
         'You have been rejected for ' || Title || ' at ' || Organization_name as message 
         FROM Applications 
