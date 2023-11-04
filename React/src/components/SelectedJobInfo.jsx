@@ -26,6 +26,11 @@ function SelectedJobInfo(props){
               }
               else{
                 seterror('Please complete your profile')
+                const apply_error = document.getElementById("apply_error")
+                apply_error.style.display = "block"
+                setTimeout(function() {
+                  apply_error.style.display = "none";
+                }, 3000);
                 console.log(error)
               }
 
@@ -38,7 +43,7 @@ function SelectedJobInfo(props){
 
     return(
         <div className="selected-job-info">
-
+          {/* <div>{error}</div> */}
           <div className="selected-job-top">
             <div>
               <div>
@@ -48,6 +53,7 @@ function SelectedJobInfo(props){
               </div>
               <div className="apply-container"> 
                 <AppliedButtons app_id = {props.job.App_id} ActiveTab = {props.ActiveTab} Apply={Apply} fetchTemp={props.fetchTemp} setJobDetails = {props.setJobDetails}/>
+                <div className="apply_error" id="apply_error">{error}</div>
               </div>
             </div>
             <hr></hr>
