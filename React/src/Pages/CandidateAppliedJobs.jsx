@@ -64,7 +64,7 @@ function CandidateAppliedJobs(){
     const [ActiveTab, setActiveTab] = useState("Pending");
 
     const fetchTemp = () => {
-        axios.get('http://localhost:3000/candidate/appliedjobs',{
+        axios.get(`${import.meta.env.VITE_ROOT}/candidate/appliedjobs`,{
             params: {
                 user_id: user_id
             }
@@ -99,7 +99,7 @@ function CandidateAppliedJobs(){
     },[temp])
 
     useEffect(()=>{
-        axios.get('http://localhost:3000/candidate/upcoming', {
+        axios.get(`${import.meta.env.VITE_ROOT}/candidate/upcoming`, {
             params: {
                 user_id : user_id,
             }

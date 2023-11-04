@@ -54,7 +54,7 @@ function CandidateHome(){
     const [selectedRecommendedJob, setSelectedRecommendedJob] = useState(null);
 
     const fetchRec = () => {
-        axios.get('http://localhost:3000/candidate/recommended', {
+        axios.get(`${import.meta.env.VITE_ROOT}/candidate/recommended`, {
             params: {
                 user_id : user_id,
                 limit : 3
@@ -75,7 +75,7 @@ function CandidateHome(){
     useEffect(()=>{
         // console.log(user_id)
         // fetchRec()
-        axios.get('http://localhost:3000/candidate/upcoming', {
+        axios.get(`${import.meta.env.VITE_ROOT}/candidate/upcoming`, {
             params: {
                 user_id : user_id,
             }

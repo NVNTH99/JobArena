@@ -53,7 +53,7 @@ function RecruiterHome(){
         if(!user_id)
             navigate('/login')
         else{
-            axios.get('http://localhost:3000/recruiter/jobs', {
+            axios.get(`${import.meta.env.VITE_ROOT}/recruiter/jobs`, {
                 params: {
                     user_id : user_id,
                 }
@@ -71,7 +71,7 @@ function RecruiterHome(){
         if(!user_id)
             navigate('/login')
         else{
-            axios.get('http://localhost:3000/recruiter/upcoming', {
+            axios.get(`${import.meta.env.VITE_ROOT}/recruiter/upcoming`, {
                 params: {
                     user_id : user_id,
                 }

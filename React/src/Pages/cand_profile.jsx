@@ -108,7 +108,7 @@ function Cand_profile() {
 
     function handleSaveButton(e) {
         e.preventDefault();
-        axios.post('http://localhost:3000/candidate/profile',{candidateDetails: candidateDetails, user_id: user_id})
+        axios.post(`${import.meta.env.VITE_ROOT}/candidate/profile`,{candidateDetails: candidateDetails, user_id: user_id})
         .then(response => {
             if(typeof response.data === 'object'){
                 // console.log(0)

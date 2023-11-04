@@ -11,7 +11,7 @@ function RecruitersJobCard(props){
 
     const deleteJob = (e) => {
         e.preventDefault(); // This idk might cause error, unnecessary so removable
-        axios.post('http://localhost:3000/recruiter/removeJob',{
+        axios.post(`${import.meta.env.VITE_ROOT}/recruiter/removeJob`,{
             job_id: props.job.job_id,
             user_id: props.user_id
         })

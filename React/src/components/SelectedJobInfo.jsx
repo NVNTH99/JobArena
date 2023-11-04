@@ -15,7 +15,7 @@ function SelectedJobInfo(props){
             navigate('/login')
         }
         else{
-            axios.post('http://localhost:3000/candidate/jobapply',{
+            axios.post(`${import.meta.env.VITE_ROOT}/candidate/jobapply`,{
               user_id : props.user_id,
               job_id : props.job.job_id
             })
@@ -92,7 +92,7 @@ function SelectedJobInfo(props){
 function AppliedButtons(props){
 
   const Withdraw = () => {
-    axios.post('http://localhost:3000/candidate/appliedjobs/withdraw',{
+    axios.post(`${import.meta.env.VITE_ROOT}/candidate/appliedjobs/withdraw`,{
       app_id : props.app_id
     })
     .then(response => {
@@ -106,7 +106,7 @@ function AppliedButtons(props){
   }
 
   const Accept = () => {
-    axios.post('http://localhost:3000/application/statuschange',{
+    axios.post(`${import.meta.env.VITE_ROOT}/application/statuschange`,{
       app_id: props.app_id,
       tostatus: 'Accepted'
     })
@@ -121,7 +121,7 @@ function AppliedButtons(props){
   }
 
   const Reject = () => {
-    axios.post('http://localhost:3000/application/statuschange',{
+    axios.post(`${import.meta.env.VITE_ROOT}/application/statuschange`,{
       app_id: props.app_id,
       tostatus: 'Candidate_Rejected'
     })

@@ -41,8 +41,9 @@ function InviteRejectButton(props){
 
     const scheduleInterview = () => {
       let date_time = interviewdetails.date + ' ' + interviewdetails.time;
+      console.log(interviewdetails.time)
       date_time = new Date(date_time).toISOString().slice(0,19).replace('T',' ')
-      axios.post('http://localhost:3000/application/statuschange',{
+      axios.post(`${import.meta.env.VITE_ROOT}/application/statuschange`,{
         app_id: props.app_id,
         tostatus: 'Shortlisted',
         date_time: date_time,
@@ -58,8 +59,8 @@ function InviteRejectButton(props){
     }
 
     const Reject = () => {
-      axios.post('http://localhost:3000/application/statuschange',{
-        app_id: App_id,
+      axios.post(`${import.meta.env.VITE_ROOT}/application/statuschange`,{
+        app_id: props.app_id,
         tostatus: 'Rejected'
       })
       .then(response => {
@@ -102,7 +103,7 @@ function InviteRejectButton(props){
               {selectedValue === 'link' ? (
                 <div><input className="interview_form_input" type="text" value={interviewdetails.link} name="link" onChange={handleChange}/></div>
               ) : selectedValue === 'venue' ? (
-                <div><input className="interview_form_input" type="text" value={interviewdetails.venue} name="link" onChange={handleChange}/></div>
+                <div><input className="interview_form_input" type="text" value={interviewdetails.venue} name="venue" onChange={handleChange}/></div>
               ) : (
                 <div>Select an option</div>
               )}
@@ -118,8 +119,9 @@ function InviteRejectButton(props){
               <input className="interview_form_input" name="time" value={interviewdetails.time} type="time" onChange={handleChange}/>
             </div>
             {/* <input className="submit" type="submit"/> */}
-            <button className="submit" onClick={scheduleInterview}>Submit</button>
+            {/* <button className="submit" onClick={scheduleInterview}>Submit</button> */}
           </form>
+          <button className="submit" onClick={scheduleInterview}>Submit</button>
         </Model>
         <button className="rejectButton" onClick={Reject}>Reject</button>
       </div>

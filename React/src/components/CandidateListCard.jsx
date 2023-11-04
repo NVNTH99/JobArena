@@ -10,7 +10,7 @@ function invite(App_id){
 }
 
 function reject(App_id,fetchCand){
-  axios.post('http://localhost:3000/application/statuschange',{
+  axios.post(`${import.meta.env.VITE_ROOT}/application/statuschange`,{
     app_id: App_id,
     tostatus: 'Rejected'
   })
@@ -24,7 +24,7 @@ function reject(App_id,fetchCand){
 
 function accept(App_id,fetchCand){
   alert("you clicked accept");
-  axios.post('http://localhost:3000/application/statuschange',{
+  axios.post(`${import.meta.env.VITE_ROOT}/application/statuschange`,{
     app_id: App_id,
     tostatus: 'Offered'
   })

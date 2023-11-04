@@ -122,7 +122,7 @@ function SignUp(){
 
     useEffect(()=>{
         loadfunc()
-        axios.get('http://localhost:3000/organizations')
+        axios.get(`${import.meta.env.VITE_ROOT}/organizations`)
         .then(response => {
             setorganizations(response.data)
         })
@@ -142,7 +142,7 @@ function SignUp(){
 
     const signupfunc = (e) => {
         e.preventDefault()
-        axios.post('http://localhost:3000/login',{username: credentials.username})
+        axios.post(`${import.meta.env.VITE_ROOT}/login`,{username: credentials.username})
         .then(response => {
             if(typeof response.data === 'object'){
                 setusernameerror('Username taken');
@@ -207,7 +207,7 @@ function SignUp(){
         console.log(usernameerror,passworderror,organizationerror,"3")
         if(typeof passworderror === 'string'){
             if(usernameerror==='' && passworderror === '' && organizationerror === ''){
-                axios.post('http://localhost:3000/signup', { credential: credentials, type: type })
+                axios.post(`${import.meta.env.VITE_ROOT}/signup`, { credential: credentials, type: type })
                 .then(response => {
                     // console.log(response.data)
                     setuser(response.data)
