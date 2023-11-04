@@ -59,7 +59,7 @@ function InviteRejectButton(props){
 
     const Reject = () => {
       axios.post('http://localhost:3000/application/statuschange',{
-        app_id: App_id,
+        app_id: props.app_id,
         tostatus: 'Rejected'
       })
       .then(response => {
@@ -118,8 +118,9 @@ function InviteRejectButton(props){
               <input className="interview_form_input" name="time" value={interviewdetails.time} type="time" onChange={handleChange}/>
             </div>
             {/* <input className="submit" type="submit"/> */}
-            <button className="submit" onClick={scheduleInterview}>Submit</button>
+            <button type="button" className="submit" onClick={scheduleInterview}>Submit</button>
           </form>
+          {/* <button className="submit" onClick={scheduleInterview}>Submit</button> */}
         </Model>
         <button className="rejectButton" onClick={Reject}>Reject</button>
       </div>
