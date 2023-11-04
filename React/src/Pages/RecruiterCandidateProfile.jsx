@@ -10,7 +10,7 @@ import { useLocation } from "react-router-dom";
 function reject(App_id,fetchApp){
   alert("you clicked reject");
   alert("you clicked accept");
-  axios.post('http://localhost:3000/application/statuschange',{
+  axios.post(`${import.meta.env.VITE_ROOT}/application/statuschange`,{
     app_id: App_id,
     tostatus: 'Rejected'
   })
@@ -24,7 +24,7 @@ function reject(App_id,fetchApp){
 
 function accept(App_id,fetchApp){
   alert("you clicked accept");
-  axios.post('http://localhost:3000/application/statuschange',{
+  axios.post(`${import.meta.env.VITE_ROOT}/application/statuschange`,{
     app_id: App_id,
     tostatus: 'Offered'
   })
@@ -65,7 +65,7 @@ function CandidateProfle() {
   // console.log(candidate)
 
   useEffect(()=>{
-    axios.get('http://localhost:3000/recruiter/candidateprofile',{
+    axios.get(`${import.meta.env.VITE_ROOT}/recruiter/candidateprofile`,{
       params : {
         cand_id: cand_id
       }
@@ -80,7 +80,7 @@ function CandidateProfle() {
   },[])
 
   const fetchApp = () => {
-    axios.get('http://localhost:3000/application',{
+    axios.get(`${import.meta.env.VITE_ROOT}/application`,{
         params: {
             app_id: app_id
         }
@@ -98,7 +98,7 @@ function CandidateProfle() {
   },[])
 
   useEffect(()=> {
-    axios.get('http://localhost:3000/recruiter/upcoming',{
+    axios.get(`${import.meta.env.VITE_ROOT}/recruiter/upcoming`,{
         params: {
             user_id: user_id
         }

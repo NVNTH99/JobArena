@@ -87,7 +87,7 @@ function RecruiterAddJob() {
     const navigate = useNavigate();
 
     useEffect(()=> {
-        axios.get('http://localhost:3000/recruiter/upcoming',{
+        axios.get(`${import.meta.env.VITE_ROOT}/recruiter/upcoming`,{
             params: {
                 user_id: user_id
             }
@@ -101,7 +101,7 @@ function RecruiterAddJob() {
     },[])
 
     useEffect(()=>{
-        axios.get('http://localhost:3000/recruiter/organization',{
+        axios.get(`${import.meta.env.VITE_ROOT}/recruiter/organization`,{
             params: {
                 user_id: user_id
             }
@@ -116,7 +116,7 @@ function RecruiterAddJob() {
 
     function handleSaveButton(e) {
         e.preventDefault();
-        axios.post('http://localhost:3000/recruiter/addjob',{initialJobForm: jobDetails, user_id: user_id})
+        axios.post(`${import.meta.env.VITE_ROOT}/recruiter/addjob`,{initialJobForm: jobDetails, user_id: user_id})
         .then(response => {
             navigate("/recruiter/home", { state: user_id })
         })

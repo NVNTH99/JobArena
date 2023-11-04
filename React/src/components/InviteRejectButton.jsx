@@ -41,8 +41,9 @@ function InviteRejectButton(props){
 
     const scheduleInterview = () => {
       let date_time = interviewdetails.date + ' ' + interviewdetails.time;
+      console.log(interviewdetails.time)
       date_time = new Date(date_time).toISOString().slice(0,19).replace('T',' ')
-      axios.post('http://localhost:3000/application/statuschange',{
+      axios.post(`${import.meta.env.VITE_ROOT}/application/statuschange`,{
         app_id: props.app_id,
         tostatus: 'Shortlisted',
         date_time: date_time,

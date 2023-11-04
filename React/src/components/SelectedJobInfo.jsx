@@ -15,7 +15,7 @@ function SelectedJobInfo(props){
             navigate('/login')
         }
         else{
-            axios.post('http://localhost:3000/candidate/jobapply',{
+            axios.post(`${import.meta.env.VITE_ROOT}/candidate/jobapply`,{
               user_id : props.user_id,
               job_id : props.job.job_id
             })
@@ -26,6 +26,11 @@ function SelectedJobInfo(props){
               }
               else{
                 seterror('Please complete your profile')
+                const apply_error = document.getElementById("apply_error")
+                apply_error.style.display = "block"
+                setTimeout(function() {
+                  apply_error.style.display = "none";
+                }, 3000);
                 console.log(error)
               }
 
@@ -38,7 +43,7 @@ function SelectedJobInfo(props){
 
     return(
         <div className="selected-job-info">
-
+          {/* <div>{error}</div> */}
           <div className="selected-job-top">
             <div>
               <div>
@@ -48,6 +53,7 @@ function SelectedJobInfo(props){
               </div>
               <div className="apply-container"> 
                 <AppliedButtons app_id = {props.job.App_id} ActiveTab = {props.ActiveTab} Apply={Apply} fetchTemp={props.fetchTemp} setJobDetails = {props.setJobDetails}/>
+                <div className="apply_error" id="apply_error">{error}</div>
               </div>
             </div>
             <hr></hr>
@@ -92,7 +98,7 @@ function SelectedJobInfo(props){
 function AppliedButtons(props){
 
   const Withdraw = () => {
-    axios.post('http://localhost:3000/candidate/appliedjobs/withdraw',{
+    axios.post(`${import.meta.env.VITE_ROOT}/candidate/appliedjobs/withdraw`,{
       app_id : props.app_id
     })
     .then(response => {
@@ -106,7 +112,7 @@ function AppliedButtons(props){
   }
 
   const Accept = () => {
-    axios.post('http://localhost:3000/application/statuschange',{
+    axios.post(`${import.meta.env.VITE_ROOT}/application/statuschange`,{
       app_id: props.app_id,
       tostatus: 'Accepted'
     })
@@ -121,7 +127,7 @@ function AppliedButtons(props){
   }
 
   const Reject = () => {
-    axios.post('http://localhost:3000/application/statuschange',{
+    axios.post(`${import.meta.env.VITE_ROOT}/application/statuschange`,{
       app_id: props.app_id,
       tostatus: 'Candidate_Rejected'
     })

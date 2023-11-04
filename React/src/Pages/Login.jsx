@@ -49,7 +49,7 @@ function Login(){
     const loginfunc = (e) => {
         e.preventDefault();
         // console.log(`${process.env.ROOT}/login`)
-        axios.post('http://localhost:3000/login',credentials)
+        axios.post(`${import.meta.env.VITE_ROOT}/login`,credentials)
         .then(response => {
             if(typeof response.data === 'object'){
                 // console.log(0)

@@ -75,7 +75,7 @@ function NavLink(props){ //contains props.user_id
   const [toggleNotification, setToggleNotification] = useState(false);
 
   const fetchNotifs = () => {
-    axios.get('http://localhost:3000/notifications',{
+    axios.get(`${import.meta.env.VITE_ROOT}/notifications`,{
       params : {
         cand_id: props.user_id
       }

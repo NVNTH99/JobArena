@@ -398,3 +398,29 @@ nav ul {
   min-width: min-content;
   cursor: pointer;
 }
+
+.apply-button:hover{
+  background-color: #7bc5d5;
+}
+
+.apply-button:active{
+  background-color: #5c929f;
+  transform: translateY(0.5px);
+}
+
+.selected-job-top .apply-container{
+  display: flex;
+  flex-direction: column;
+  align-items:end;
+  gap: 10px;
+}
+
+.apply-container .apply_error{
+  display: none;
+  text-align: center;
+  background: rgb(246, 143, 143);
+  color: rgb(208, 24, 24);
+  padding: 5px;
+  border-radius: 5px;
+  align-items: center;
+}

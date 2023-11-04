@@ -13,7 +13,7 @@ const Search = React.memo(( props ) => {
     const fetchData = async () => {
         try {
         //   console.log("Here",props.user_id)      
-          const response = await axios.get('http://localhost:3000/jobs', {
+          const response = await axios.get(`${import.meta.env.VITE_ROOT}/jobs`, {
             params: {
               searchQuery: searchQuery,
               user_id: props.user_id

@@ -60,7 +60,7 @@ function JobApplication(){
         if(!user_id)
             navigate('/login')
         else{
-            axios.get('http://localhost:3000/recruiter/job',{
+            axios.get(`${import.meta.env.VITE_ROOT}/recruiter/job`,{
                 params : {
                     job_id: job_id
                 }
@@ -78,7 +78,7 @@ function JobApplication(){
         if(!user_id)
             navigate('/login')
         else{
-            axios.get('http://localhost:3000/recruiter/upcoming',{
+            axios.get(`${import.meta.env.VITE_ROOT}/recruiter/upcoming`,{
                 params: {
                     user_id: user_id
                 }
@@ -93,7 +93,7 @@ function JobApplication(){
     },[candidateList]) //Added by Nava
 
     const fetchCand = () => {
-        axios.get('http://localhost:3000/recruiter/job/candidates',{
+        axios.get(`${import.meta.env.VITE_ROOT}/recruiter/job/candidates`,{
             params : {
                 job_id : job_id
             }
