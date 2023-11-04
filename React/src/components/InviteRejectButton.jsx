@@ -102,7 +102,7 @@ function InviteRejectButton(props){
               {selectedValue === 'link' ? (
                 <div><input className="interview_form_input" type="text" value={interviewdetails.link} name="link" onChange={handleChange}/></div>
               ) : selectedValue === 'venue' ? (
-                <div><input className="interview_form_input" type="text" value={interviewdetails.venue} name="link" onChange={handleChange}/></div>
+                <div><input className="interview_form_input" type="text" value={interviewdetails.venue} name="venue" onChange={handleChange}/></div>
               ) : (
                 <div>Select an option</div>
               )}

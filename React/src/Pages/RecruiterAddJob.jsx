@@ -9,12 +9,12 @@ import axios from "axios";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 
-var upcoming = [
-    { title: "Job Title", name: "Candidate Name", id: "#CandidateID", date: "dd/mm/yyyy", time: "hh:mm" },
-    { title: "Job Title", name: "Candidate Name", id: "#CandidateID", date: "dd/mm/yyyy", time: "hh:mm" },
-    { title: "Job Title", name: "Candidate Name", id: "#CandidateID", date: "dd/mm/yyyy", time: "hh:mm" },
-]
-var events = { "upcoming": upcoming };
+// var upcoming = [
+//     { title: "Job Title", name: "Candidate Name", id: "#CandidateID", date: "dd/mm/yyyy", time: "hh:mm" },
+//     { title: "Job Title", name: "Candidate Name", id: "#CandidateID", date: "dd/mm/yyyy", time: "hh:mm" },
+//     { title: "Job Title", name: "Candidate Name", id: "#CandidateID", date: "dd/mm/yyyy", time: "hh:mm" },
+// ]
+// var events = { "upcoming": upcoming };
 
 function RecruiterLoad() {
     const buttons = document.querySelectorAll(".buttongaj");
@@ -272,7 +272,7 @@ function RecruiterAddJob() {
                     </div>
                 </div>
                 <div className="add-job-right">
-                    {upcoming && <UpcomingCard event={events.upcoming} />}
+                    {upcoming && <UpcomingCard event={upcoming} />}
                 </div>
             </div>
         </>

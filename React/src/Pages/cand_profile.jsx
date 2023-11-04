@@ -106,12 +106,10 @@ function formReducer(candidateDetails, action) {
                 ["preference_category"]: action.preLoadedDetails.preference_category.split(",")
             }
         case 'preloaded_array':
-            console.log("dispatched:", action.preLoadedArray);
+            // console.log("dispatched:", action.preLoadedArray);
             return {
                 ...candidateDetails,
-                [action.arrayName]: [...(action.preLoadedArray || []),
-                ...(candidateDetails[action.arrayName] || []),
-                ],
+                [action.arrayName]: action.preLoadedArray
             }
         default: return candidateDetails;
     }
@@ -182,10 +180,9 @@ function Cand_profile() {
     useEffect(() => {
         if (preLoadedDetails != null && preloadedEdu != null && preloadedProjects != null && preloadedWE != null) {
             dispatch({ type: "preload_candidateDetails", preLoadedDetails: preLoadedDetails });
-            console.log("preloaded Edu:", preloadedEdu);
             dispatch({ type: 'preloaded_array', arrayName: "education", preLoadedArray: preloadedEdu });
-            // dispatch({ type: 'preloaded_array', arrayName: "workExperience", preLoadedArray: preloadedWE});
-            // dispatch({ type: 'preloaded_array', arrayName: "projects", preLoadedArray: preloadedProjects});
+            dispatch({ type: 'preloaded_array', arrayName: "workExperience", preLoadedArray: preloadedWE});
+            dispatch({ type: 'preloaded_array', arrayName: "projects", preLoadedArray: preloadedProjects});
         }
 
     }, [preLoadedDetails, preloadedEdu, preloadedProjects, preloadedWE])
@@ -193,18 +190,17 @@ function Cand_profile() {
 
     function handleSaveButton(e) {
         e.preventDefault();
-        axios.post('http://localhost:3000/candidate/profile', { candidateDetails: candidateDetails, user_id: user_id })
+        axios.post('http://localhost:3000/candidate/profile', { candidateDetails: candidateDetails })
             .then(response => {
                 if (typeof response.data === 'object') {
                     console.log(0)
                 }
                 else {
-                    seterror('Invalid login credentials');
+                    seterror('Error in saving candidate profile');
                 }
             })
             .catch(error => {
-                console.log("Error while saving candidate profile details");
-                seterror('An error occurred saving candidate profile details');
+                console.log(error);
             })
     }
 
@@ -322,10 +318,8 @@ function Cand_profile() {
                                         </div>
                                     </div>
                                 </div>
-                                {console.log(candidateDetails["education"])}
                                 {
                                     candidateDetails["education"].map((ed, index) => {
-                                        {/* console.log("before entering component map: ", ed); */}
                                         return (
                                             <Education
                                                 key={index}
@@ -355,6 +349,7 @@ function Cand_profile() {
                                             key={index}
                                             index={index}
                                             dispatch={dispatch}
+                                            p = {p}
                                         />
                                     ))
                                 }
@@ -406,34 +401,34 @@ function Education(props) {
                         </div>
                         <div className="cp__field">
                             <label className="lblcp">Degree</label>
-                            <input name="Degree" type="text" className="cp__input" onChange={handleInputChange} />
+                            <input value={props.ed.Degree} name="Degree" type="text" className="cp__input" onChange={handleInputChange} />
                         </div>
                     </div>
                     <div className="petticp">
                         <div className="cp__field">
                             <label className="lblcp">Major</label>
-                            <input name="Major" type="text" className="cp__input" onChange={handleInputChange} />
+                            <input value={props.ed.Major} name="Major" type="text" className="cp__input" onChange={handleInputChange} />
                         </div>
                         <div className="cp__field"></div>
                     </div>
                     <div className="petticp">
                         <div className="cp__field">
                             <label className="lblcp">Start Year</label>
-                            <input name="start_year" type="number" className="cp__input" onChange={handleInputChange} />
+                            <input value={props.ed.start_year} name="start_year" type="number" className="cp__input" onChange={handleInputChange} />
                         </div>
                         <div className="cp__field">
                             <label className="lblcp">End Year</label>
-                            <input name="end_year" type="number" className="cp__input" onChange={handleInputChange} />
+                            <input value={props.ed.end_year} name="end_year" type="number" className="cp__input" onChange={handleInputChange} />
                         </div>
                     </div>
                     <div className="petticp">
                         <div className="cp__field">
                             <label className="lblcp">Score</label>
-                            <input name="score" min="0.00" step="0.01" type="number" className="cp__input" onChange={handleInputChange} />
+                            <input value={props.ed.score} name="score" min="0.00" step="0.01" type="number" className="cp__input" onChange={handleInputChange} />
                         </div>
                         <div className="cp__field">
                             <label className="lblcp">Max Score</label>
-                            <input name="max_score" min="0.00" step="0.01" type="number" className="cp__input" onChange={handleInputChange} />
+                            <input value={props.ed.max_score} name="max_score" min="0.00" step="0.01" type="number" className="cp__input" onChange={handleInputChange} />
                         </div>
                     </div>
                     <div className="petticp-btn">
@@ -454,20 +449,13 @@ function Education(props) {
 
 function WorkExperienceForm(props) {
     let initialWorkExperience = { job_Title: "", org_name: "", start_year: "", end_year: "" };
-    const [currentWorkExperience, setCurrentWorkExperience] = useState({
-        job_Title: "",
-        org_name: "",
-        start_year: "",
-        end_year: ""
-    });
 
     function handleInputChange(e) {
         const { name, value } = e.target;
         const updatedWorkExperience = {
-            ...currentWorkExperience,
+            ...props.we,
             [name]: value
         };
-        setCurrentWorkExperience(updatedWorkExperience);
         props.dispatch({
             type: "edit_arrayItem",
             arrayName: "workExperience",
@@ -484,21 +472,21 @@ function WorkExperienceForm(props) {
                 <div className="petticp">
                     <div className="cp__field">
                         <label className="lblcp">Job Title</label>
-                        <input name="job_Title" onChange={handleInputChange} type="text" className="cp__input" />
+                        <input value={props.we.job_Title} name="job_Title" onChange={handleInputChange} type="text" className="cp__input" />
                     </div>
                     <div className="cp__field">
                         <label className="lblcp">Organisation Name</label>
-                        <input name="org_name" onChange={handleInputChange} type="text" className="cp__input" />
+                        <input value={props.we.org_name} name="org_name" onChange={handleInputChange} type="text" className="cp__input" />
                     </div>
                 </div>
                 <div className="petticp">
                     <div className="cp__field">
                         <label className="lblcp">Start Year</label>
-                        <input name="start_year" onChange={handleInputChange} type="number" className="cp__input" />
+                        <input value={props.we.start_year} name="start_year" onChange={handleInputChange} type="number" className="cp__input" />
                     </div>
                     <div className="cp__field">
                         <label className="lblcp">End Year</label>
-                        <input name="end_year" onChange={handleInputChange} type="number" className="cp__input" />
+                        <input value={props.we.end_year} name="end_year" onChange={handleInputChange} type="number" className="cp__input" />
                     </div>
                 </div>
                 <div className="petticp-btn">
@@ -518,13 +506,11 @@ function WorkExperienceForm(props) {
 
 function Projects(props) {
     let initialProject = { Project_Title: "", Project_Desc: "", start_date: "", end_year: "" };
-    const [currentProject, setCurrentProject] = useState({
-        Project_Title: "", Project_Desc: "", start_date: "", end_year: ""
-    });
+
     function handleInputChange(e) {
         const { name, value } = e.target;
         const updatedProject = {
-            ...currentProject,
+            ...props.p,
             [name]: value
         };
         setCurrentProject(updatedProject);
@@ -543,18 +529,18 @@ function Projects(props) {
                 <div className="petticp">
                     <div className="cp__field">
                         <label htmlFor="projecttitle" className="lblcp">Project Title</label>
-                        <input name="Project_Title" onChange={handleInputChange} type="text" className="cp__input i1" id="projecttitle" />
+                        <input value={props.p.Project_Title} name="Project_Title" onChange={handleInputChange} type="text" className="cp__input i1" id="projecttitle" />
                     </div>
                     <div className="cp__field"></div>
                 </div>
                 <div className="petticp">
                     <div className="cp__field">
-                        <label htmlFor="startyear2" className="lblcp">Start Year</label>
-                        <input name="start_year" onChange={handleInputChange} type="number" className="cp__input i1" id="startyear2" />
+                        <label htmlFor="startyear2" className="lblcp">Start Date</label>
+                        <input value={props.p.start_date} name="start_date" onChange={handleInputChange} type="date" className="cp__input i1" id="startyear2" />
                     </div>
                     <div className="cp__field">
-                        <label htmlFor="endyear2" className="lblcp">End Year</label>
-                        <input name="end_year" onChange={handleInputChange} type="number" className="cp__input i1" id="endyear2" />
+                        <label htmlFor="endyear2" className="lblcp">End Date</label>
+                        <input value={props.p.end_date} name="end_date" onChange={handleInputChange} type="date" className="cp__input i1" id="endyear2" />
                     </div>
                 </div>
                 <div className="petticp-btn">

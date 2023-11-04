@@ -301,7 +301,7 @@ app.post('/candidate/jobapply',(req,res)=>{
 
 app.get('/candidate/details',(req,res)=>{
     const cand_id = req.query.cand_id
-    console.log("details")
+    // console.log("details")
     const query = `Select* from Candidate_details where cand_id=?;`
     requestQueue.push({query: query, params: [cand_id]},(error,result)=>{
         if(error){
@@ -316,7 +316,7 @@ app.get('/candidate/details',(req,res)=>{
 
 app.get('/candidate/work_exp',(req,res)=>{
     const cand_id = req.query.cand_id
-    console.log("work_exp")
+    // console.log("work_exp")
     const query = `Select* from Work_Exp where cand_id=?;`
     requestQueue.push({query: query, params: [cand_id]},(error,result)=>{
         if(error){
@@ -329,9 +329,9 @@ app.get('/candidate/work_exp',(req,res)=>{
     })
 })
 
-app.get('/candidate/project',(req,res)=>{
+app.get('/candidate/projects',(req,res)=>{
     const cand_id = req.query.cand_id
-    console.log("projects")
+    // console.log("projects")
     const query = `Select* from Projects where cand_id=?;`
     requestQueue.push({query: query, params: [cand_id]},(error,result)=>{
         if(error){
@@ -346,7 +346,7 @@ app.get('/candidate/project',(req,res)=>{
 
 app.get('/candidate/education',(req,res)=>{
     const cand_id = req.query.cand_id
-    console.log("education")
+    // console.log("education")
     const query = `Select* from Education where cand_id=?;`
     requestQueue.push({query: query, params: [cand_id]},(error,result)=>{
         if(error){
@@ -360,7 +360,36 @@ app.get('/candidate/education',(req,res)=>{
 })
 
 app.post('/candidate/profile',(req,res)=>{
-    console.log(req.body); 
+    const candidateDetails = req.body.candidateDetails;
+    console.log(candidateDetails);
+    const query1 = `
+    UPDATE Candidate_details
+    SET First_name = ${candidateDetails.First_name},
+        Last_name = ${candidateDetails.Last_name},
+        Gender = ${candidateDetails.Gender},
+        Disability = ${candidateDetails.Disability},
+        Date_of_Birth = ${candidateDetails.Date_of_Birth},
+        Linkedin = ${candidateDetails.Linkedin},
+        Phone = ${candidateDetails.Phone},
+        Languages = ${candidateDetails.Languages.join(',')},
+        Address = ${candidateDetails.Address},
+        Nationality = ${candidateDetails.Nationality},
+        Resume = ${candidateDetails.Resume},
+        Skills = ${candidateDetails.Skills},
+        preference_category = ${candidateDetails.preference_category.join(',')},
+        email = ${candidateDetails.email}
+    WHERE
+        cand_id = ${candidateDetails.cand_id}
+    `;
+    requestQueue.push({query: query1, params: []},(error,result)=>{
+        if(error){
+            console.log(error)
+            res.status(500).send('Internal Server Error')
+        }
+        else{
+            console.log("updated")
+        }
+    })
 })
 
 app.get('/candidate/appliedjobs',(req,res)=>{
