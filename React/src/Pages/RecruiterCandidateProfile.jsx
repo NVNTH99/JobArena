@@ -112,12 +112,18 @@ function CandidateProfle() {
 },[application])
 
 const handleDownload = () => {
+  var a = document.createElement("a");
+  document.body.appendChild(a);
+  a.style = "display: none";
   const resumeData = candidate[0][0].Resume; // Assuming this is the resume data received
   const blob = new Blob([resumeData], { type: 'application/pdf' });
-  const blobUrl = URL.createObjectURL(blob);
-
-  const newTab = window.open();
-  newTab.location.href = blobUrl;
+  const blobUrl = window.URL.createObjectURL(blob);
+  a.href = blobUrl;
+  a.download = candidate[0][0].First_name + "_" + candidate[0][0].Last_name + ".pdf";
+  a.click();
+  window.URL.revokeObjectURL(blobUrl);
+  // const newTab = window.open();
+  // newTab.location.href = blobUrl;
 };
   
 
