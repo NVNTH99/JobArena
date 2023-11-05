@@ -112,7 +112,7 @@ function CandidateProfle() {
 },[application])
 
 const handleDownload = () => {
-  const resumeData = candidate[0][0].Resume; // Assuming this is the resume data received
+  const resumeData = candidate[0][0].Resume;
   const blob = new Blob([resumeData], { type: 'application/pdf' });
   const blobUrl = URL.createObjectURL(blob);
 
