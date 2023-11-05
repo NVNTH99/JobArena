@@ -59,7 +59,7 @@ function InviteRejectButton(props){
     }
 
     const Reject = () => {
-      axios.post('http://localhost:3000/application/statuschange',{
+      axios.post(`${import.meta.env.VITE_ROOT}/application/statuschange`,{
         app_id: props.app_id,
         tostatus: 'Rejected'
       })

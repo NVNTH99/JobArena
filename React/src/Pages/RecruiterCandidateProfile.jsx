@@ -110,6 +110,15 @@ function CandidateProfle() {
         console.log(error,"Error fetching upcoming events")
     })
 },[application])
+
+const handleDownload = () => {
+  const resumeData = candidate[0][0].Resume; // Assuming this is the resume data received
+  const blob = new Blob([resumeData], { type: 'application/pdf' });
+  const blobUrl = URL.createObjectURL(blob);
+
+  const newTab = window.open();
+  newTab.location.href = blobUrl;
+};
   
 
   return (
@@ -145,7 +154,7 @@ function CandidateProfle() {
                       <div className="cand_data_box">
                         <span className="cand_label">LINKEDIN PROFILE</span>
                         <br />
-                        <div className="cand_data"><a href={candidate[0][0].linkedin}>{candidate[0][0].Linkedin}</a></div>
+                        <div className="cand_data"><a href={"https://www." + candidate[0][0].Linkedin}>{candidate[0][0].Linkedin}</a></div>
                       </div>
                     </div>
                     <div className="cand_line_left">
@@ -277,8 +286,10 @@ function CandidateProfle() {
                 <div className="cand_resume">
                   <div className="cand_label">RESUME</div>
                   <div className="cand_resume_box">
-                      <div>{candidate[0][0].Resume}</div>
-                      <button className="cand_download">Download</button>
+                    <div>RESUME.pdf</div>
+                    <button className="cand_download" onClick={handleDownload}>
+                      Download
+                    </button>
                   </div>
                 </div>
                 <div className="cand_disability">

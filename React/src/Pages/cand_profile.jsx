@@ -26,7 +26,10 @@ const initialForm = {
     "preference_category": [],
     "workExperience": [{ job_Title: "", org_name: "", start_year: "", end_year: "" }],
     "projects": [{ Project_Title: "", Project_Desc: "", start_date: "", end_year: "" }],
-    "education": [{ Degree: "", Major: "", Institution: "", start_year: "", end_year: "", score: 0.0, max_score: 0.0 }]
+    "education": [{ Degree: "", Major: "", Institution: "", start_year: "", end_year: "", score: 0.0, max_score: 0.0 }],
+    "deletedWorkExperience": [],
+    "deletedEducation": [],
+    "deletedProjects": []
 };
 
 
@@ -106,11 +109,21 @@ function formReducer(candidateDetails, action) {
                 ["preference_category"]: action.preLoadedDetails.preference_category.split(",")
             }
         case 'preloaded_array':
-            // console.log("dispatched:", action.preLoadedArray);
+            if(action.preLoadedArray.length===0)
+            return{
+                ...candidateDetails
+            }
             return {
                 ...candidateDetails,
                 [action.arrayName]: action.preLoadedArray
             }
+        case 'deleteFromDatabase':
+            if(candidateDetails[action.mainArray].length > 1){
+                return{
+                    ...candidateDetails,
+                    [action.arrayName]: [...candidateDetails[action.arrayName], action.deletedArray] 
+                }}
+            else return{...candidateDetails}
         default: return candidateDetails;
     }
 }
@@ -127,7 +140,7 @@ function Cand_profile() {
     useEffect(() => {
         async function fetchCandidateDetails() {
             try {
-                const response = await axios.get('http://localhost:3000/candidate/details', {
+                const response = await axios.get(`${import.meta.env.VITE_ROOT}/candidate/details`, {
                     params: { cand_id: user_id }
                 });
                 setPreLoadedDetails(response.data);
@@ -139,7 +152,7 @@ function Cand_profile() {
 
         async function fetchWorkExperience() {
             try {
-                const response = await axios.get('http://localhost:3000/candidate/work_exp', {
+                const response = await axios.get(`${import.meta.env.VITE_ROOT}/candidate/work_exp`, {
                     params: { cand_id: user_id }
                 });
                 setPreLoadedWE(response.data)
@@ -150,7 +163,7 @@ function Cand_profile() {
 
         async function fetchEducation() {
             try {
-                const response = await axios.get('http://localhost:3000/candidate/education', {
+                const response = await axios.get(`${import.meta.env.VITE_ROOT}/candidate/education`, {
                     params: { cand_id: user_id }
                 });
                 setPreloadedEdu(response.data)
@@ -161,7 +174,7 @@ function Cand_profile() {
 
         async function fetchProjects() {
             try {
-                const response = await axios.get('http://localhost:3000/candidate/projects', {
+                const response = await axios.get(`${import.meta.env.VITE_ROOT}/candidate/projects`, {
                     params: { cand_id: user_id }
                 });
                 setPreloadedProjects(response.data);
@@ -190,7 +203,7 @@ function Cand_profile() {
 
     function handleSaveButton(e) {
         e.preventDefault();
-        axios.post('http://localhost:3000/candidate/profile', { candidateDetails: candidateDetails })
+        axios.post(`${import.meta.env.VITE_ROOT}/candidate/profile`, { candidateDetails: candidateDetails })
             .then(response => {
                 if (typeof response.data === 'object') {
                     console.log(0)
@@ -432,8 +445,11 @@ function Education(props) {
                         </div>
                     </div>
                     <div className="petticp-btn">
-                        <button type="button" className="delwkcp" value="Delete" onClick={() =>
-                            props.dispatch({ type: 'deleted_arrayField', arrayName: "education", index: props.index })}>Delete</button>
+                        <button type="button" className="delwkcp" value="Delete" onClick={() =>{
+                            {props.ed.edu_id && props.dispatch({ type: 'deleteFromDatabase', mainArray: "education", arrayName: "deletedEducation", deletedArray: props.ed})}
+                            props.dispatch({ type: 'deleted_arrayField', arrayName: "education", index: props.index, deletedArrayName: "deletedEducation", deletedArray: props.ed });
+                            {console.log(props.ed.edu_id)}                  
+                            }}>Delete</button>
                     </div>
                     <hr className="smhrr" />
                 </div>
@@ -490,8 +506,10 @@ function WorkExperienceForm(props) {
                     </div>
                 </div>
                 <div className="petticp-btn">
-                    <button type="button" className="delwkcp" value="Delete" onClick={() =>
-                        props.dispatch({ type: 'deleted_arrayField', arrayName: "workExperience", index: props.index })}>Delete</button>
+                    <button type="button" className="delwkcp" value="Delete" onClick={() =>{
+                        {props.we.work_id && props.dispatch({ type: 'deleteFromDatabase', mainArray: "workExperience", arrayName: "deletedWorkExperience", deletedArray: props.we})}
+                        props.dispatch({ type: 'deleted_arrayField', arrayName: "workExperience", index: props.index })
+                        }}>Delete</button>
                 </div>
                 <hr className="smhrr" />
             </div>
@@ -513,7 +531,6 @@ function Projects(props) {
             ...props.p,
             [name]: value
         };
-        setCurrentProject(updatedProject);
         props.dispatch({
             type: "edit_arrayItem",
             arrayName: "projects",
@@ -544,8 +561,10 @@ function Projects(props) {
                     </div>
                 </div>
                 <div className="petticp-btn">
-                    <button type="button" className="delwkcp" id="deleteButton1" value="Delete" onClick={() =>
-                        props.dispatch({ type: 'deleted_arrayField', arrayName: "projects", index: props.index })}>Delete</button>
+                    <button type="button" className="delwkcp" id="deleteButton1" value="Delete" onClick={() =>{
+                        {props.p.proj_id && props.dispatch({ type: 'deleteFromDatabase', mainArray: "projects", arrayName: "deletedProjects", deletedArray: props.p})}
+                        props.dispatch({ type: 'deleted_arrayField', arrayName: "projects", index: props.index })
+                        }}>Delete</button>
                 </div>
                 <hr className="smhrr" />
             </div>
