@@ -365,7 +365,7 @@ app.post('/candidate/profile', (req, res) => {
     let initialProject = { Project_Title: "", Project_Desc: "", start_date: "", end_year: "" };
 
     const candidateDetails = req.body.candidateDetails;
-    console.log(candidateDetails);
+    // console.log(candidateDetails);
     const query1 = `
     UPDATE Candidate_details
     SET First_name = ?,

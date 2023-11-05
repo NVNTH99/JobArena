@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar";
 import Search from "../components/Search";
 import JobInfo from "../components/JobInfo";
 import CandidateUpcomingCard from "../components/CandidateUpcomingCard";
-import RecommendedCard from "../components/recommendedCard";
+import RecommendedCard from "../components/RecommendedCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
