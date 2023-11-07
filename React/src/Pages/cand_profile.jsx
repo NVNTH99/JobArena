@@ -203,6 +203,7 @@ function Cand_profile() {
 
     function handleSaveButton(e) {
         e.preventDefault();
+        console.log(typeof candidateDetails.Resume)
         axios.post(`${import.meta.env.VITE_ROOT}/candidate/profile`, { candidateDetails: candidateDetails })
             .then(response => {
                 if (typeof response.data === 'object') {
@@ -233,7 +234,25 @@ function Cand_profile() {
                 const reader = new FileReader();
                 reader.onload = function () {
                     const resumeBlob = new Blob([reader.result], { type: file.type });
-                    dispatch({ type: 'FileInput', file: resumeBlob });
+                    // dispatch({ type: 'FileInput', file: resumeBlob });
+                    const formData = new FormData();
+                    formData.append("cand_id", candidateDetails.cand_id);
+                    formData.append("Resume", resumeBlob, `${candidateDetails.First_name }_${candidateDetails.Last_name}.pdf`);
+                    axios.post(`${import.meta.env.VITE_ROOT}/candidate/resume`, formData, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    })
+                    .then(response => {
+                        if (typeof response.data === 'object') {
+                            console.log(0);
+                        } else {
+                            seterror('Error in saving candidate resume');
+                        }
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
                 };
                 reader.readAsArrayBuffer(file);
             } else {
@@ -591,7 +610,7 @@ function CpField(props) {
         return (
             <div className="cp__field">
                 <label htmlFor={props.label} className={"lblcp " + props.label}>{props.labelName}</label>
-                <input name={props.label} onChange={props.onChange} type={props.type} className="cp__input" id={props.label} />
+                <input name={props.label} accept=".pdf" onChange={props.onChange} type={props.type} className="cp__input" id={props.label} />
 
             </div>
         )

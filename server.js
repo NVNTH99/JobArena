@@ -4,7 +4,11 @@ const path = require('path')
 const bodyParser = require('body-parser');
 const async = require('async')
 const cors = require('cors')
+const multer = require( 'multer');
 
+
+const storage = multer.memoryStorage(); // Store uploaded file in memory
+const upload = multer({ storage: storage });
 const app = new express()
 const dbPath = path.join(__dirname, 'jobarena.db')
 const conn = new sqlite3.Database(dbPath);
@@ -17,7 +21,7 @@ const requestQueue = async.queue((task, callback) => {
 
 app.use(cors())
 app.use(express.static(path.join(__dirname, 'React')));
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '50mb'}));
 
 app.get('/', (req, res) => { //When the user visits localhost:3000 it redirects him into our website's page
     res.sendFile(path.join(__dirname, 'React', 'index.html'));
@@ -359,13 +363,53 @@ app.get('/candidate/education', (req, res) => {
     })
 })
 
+// app.get('/getResume/:cand_id', (req, res) =>{
+//     const cand_id = req.params.cand_id;
+//     const query = `SELECT Resume FROM Candidate_details WHERE cand_id = ?`;
+//     requestQueue.push({ query: query, params: [cand_id] }, (error, result) => {
+//         if (error) {
+//             console.log(error)  
+//             res.status(500).send('Internal Server Error')
+//         }
+//         else {
+//                 // Set the appropriate response headers for binary data (e.g., PDF)
+//                 // res.setHeader('Content-Type', 'application/pdf');
+//                 // res.setHeader('Content-Disposition', 'inline; filename=resume.pdf');
+//                 // Send the binary data as the response
+//                 res.end(result);
+//         }
+//     })
+// });
+
+app.post('/candidate/resume', upload.single('Resume'), (req, res) =>{
+    const resumeBinaryData = req.file.buffer;
+    const {cand_id} = req.body;
+    // console.log("resume binary data: ", resumeBinaryData);
+    // console.log("received from cid:", cand_id);
+    const query = `
+    UPDATE Candidate_details
+    SET Resume = ?
+    WHERE cand_id = ?
+    `;
+    requestQueue.push({ query: query, params: [resumeBinaryData, cand_id] }, (error, result) => {
+        if (error) {
+            console.log(error)
+            res.status(500).send('Internal Server Error')
+        }
+        else {
+            // console.log("updated")
+        }
+    })
+});
+
 app.post('/candidate/profile', (req, res) => {
     let initialEducation = { Degree: "", Major: "", Institution: "", start_year: "", end_year: "", score: 0.0, max_score: 0.0 };
     let initialWorkExperience = { job_Title: "", org_name: "", start_year: "", end_year: "" };
     let initialProject = { Project_Title: "", Project_Desc: "", start_date: "", end_year: "" };
-
+    
     const candidateDetails = req.body.candidateDetails;
-    // console.log(candidateDetails);
+    // console.log("RESUME:", typeof candidateDetails.Resume)
+    console.log("RECIEVED FROM SAVE: ", candidateDetails);
     const query1 = `
     UPDATE Candidate_details
     SET First_name = ?,
@@ -377,8 +421,7 @@ app.post('/candidate/profile', (req, res) => {
         Phone = ?,
         Languages = ?,
         Address = ?,
-        Nationality = ?,
-        Resume = ?,
+        Nationality = ?, 
         Skills = ?,
         preference_category = ?,
         email = ?
@@ -390,7 +433,7 @@ app.post('/candidate/profile', (req, res) => {
         candidateDetails.First_name, candidateDetails.Last_name, candidateDetails.Gender,
         candidateDetails.Disability, candidateDetails.Date_of_Birth, candidateDetails.Linkedin,
         candidateDetails.Phone, candidateDetails.Languages.join(','), candidateDetails.Address,
-        candidateDetails.Nationality, candidateDetails.Resume, candidateDetails.Skills,
+        candidateDetails.Nationality, candidateDetails.Skills,
         candidateDetails.preference_category.join(','), candidateDetails.email, candidateDetails.cand_id]
     requestQueue.push({ query: query1, params: parameters }, (error, result) => {
         if (error) {
@@ -398,7 +441,7 @@ app.post('/candidate/profile', (req, res) => {
             res.status(500).send('Internal Server Error')
         }
         else {
-            console.log("updated")
+            // console.log("updated")
         }
     })
 
@@ -412,7 +455,7 @@ app.post('/candidate/profile', (req, res) => {
                 if (error) {
                     console.log(error);
                 } else {
-                    console.log(`Deleted work experience with ID: ${workExp.work_id}`);
+                    // console.log(`Deleted work experience with ID: ${workExp.work_id}`);
                 }
             });
         }
@@ -429,7 +472,7 @@ app.post('/candidate/profile', (req, res) => {
                 if (error) {
                     console.log(error);
                 } else {
-                    console.log(`Deleted education with ID: ${education.edu_id}`);
+                    // console.log(`Deleted education with ID: ${education.edu_id}`);
                 }
             });
         }
@@ -446,7 +489,7 @@ app.post('/candidate/profile', (req, res) => {
                 if (error) {
                     console.log(error);
                 } else {
-                    console.log(`Deleted project with ID: ${project.proj_id}`);
+                    // console.log(`Deleted project with ID: ${project.proj_id}`);
                 }
             });
         }
@@ -471,7 +514,7 @@ app.post('/candidate/profile', (req, res) => {
                     if (error) {
                         console.log(error);
                     } else {
-                        console.log(`inserted`);
+                        // console.log(`inserted`);
                     }
                 });
             }
@@ -483,7 +526,7 @@ app.post('/candidate/profile', (req, res) => {
                     if (error) {
                         console.log(error);
                     } else {
-                        console.log(`inserted`);
+                        // console.log(`inserted`);
                     }
                 });
             }
@@ -507,7 +550,7 @@ app.post('/candidate/profile', (req, res) => {
                     if (error) {
                         console.log(error);
                     } else {
-                        console.log(`inserted`);
+                        // console.log(`inserted`);
                     }
                 });
             }
@@ -517,7 +560,7 @@ app.post('/candidate/profile', (req, res) => {
                     if (error) {
                         console.log(error);
                     } else {
-                        console.log(`inserted`);
+                        // console.log(`inserted`);
                     }
                 });
             }
@@ -541,7 +584,7 @@ app.post('/candidate/profile', (req, res) => {
                     if (error) {
                         console.log(error);
                     } else {
-                        console.log(`inserted`);
+                        // console.log(`inserted`);
                     }
                 });
             }
@@ -551,7 +594,7 @@ app.post('/candidate/profile', (req, res) => {
                     if (error) {
                         console.log(error);
                     } else {
-                        console.log(`inserted`);
+                        // console.log(`inserted`);
                     }
                 });
             }

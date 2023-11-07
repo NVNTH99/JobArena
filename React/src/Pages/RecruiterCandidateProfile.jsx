@@ -59,6 +59,7 @@ function CandidateProfle() {
   const [candidate, setCandidate] = useState([])
   const [upcoming,setupcoming] = useState([])
   const [application,setapplication] = useState({})
+  const [resumeBlob, setResumeBlob] = useState(null);
   const location = useLocation() //Added by Nava
   const {cand_id,user_id,app_id} = location.state //Added by Nava
   console.log(cand_id,user_id,app_id)
@@ -111,20 +112,23 @@ function CandidateProfle() {
     })
 },[application])
 
-const handleDownload = () => {
-  var a = document.createElement("a");
-  document.body.appendChild(a);
-  a.style = "display: none";
-  const resumeData = candidate[0][0].Resume; // Assuming this is the resume data received
-  const blob = new Blob([resumeData], { type: 'application/pdf' });
-  const blobUrl = window.URL.createObjectURL(blob);
-  a.href = blobUrl;
-  a.download = candidate[0][0].First_name + "_" + candidate[0][0].Last_name + ".pdf";
-  a.click();
-  window.URL.revokeObjectURL(blobUrl);
-  // const newTab = window.open();
-  // newTab.location.href = blobUrl;
-};
+  const handleDownload = () => {
+    try {
+      const resumeData = candidate[0][0].Resume; // Assuming this is the resume data received
+      console.log(resumeData);
+      const blob = new Blob([new Uint8Array(resumeData.data).buffer], { type: 'application/pdf' });
+      console.log(blob);
+      const blobUrl = window.URL.createObjectURL(blob);
+      const downloadLink = document.createElement('a');
+      downloadLink.href = blobUrl;
+      downloadLink.download = `${candidate[0][0].First_name}_${candidate[0][0].Last_name}.pdf`;
+      downloadLink.click();
+      window.URL.revokeObjectURL(blobUrl);
+    } catch (error) {
+      console.error('Error handling the download:', error);
+    }
+  };
+
   
 
   return (
@@ -292,7 +296,7 @@ const handleDownload = () => {
                 <div className="cand_resume">
                   <div className="cand_label">RESUME</div>
                   <div className="cand_resume_box">
-                    <div>RESUME.pdf</div>
+                    <div>{candidate[0][0].First_name+"_"+candidate[0][0].Last_name +".pdf"}</div>
                     <button className="cand_download" onClick={handleDownload}>
                       Download
                     </button>
