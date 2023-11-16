@@ -167,9 +167,7 @@ function Profile(props){
 
   return(
       <div className="profile-icon">
-          
-          {/* <img src="/User_circle.png"></img> */}
-          <button className="profile_button" onClick={handleClick}><div className="ellipse"><img src="/User_circle.png"></img></div></button>
+        <button className="profile_button" onClick={handleClick}><div className="ellipse"><img src="/User_circle.png"></img></div></button>
         <div id="profile_box" className="profile_box">
           <div><h3>Hi User,</h3></div>
           <hr/>
@@ -179,9 +177,6 @@ function Profile(props){
                 <div key = {index} className="profile_element" onClick={() => Redir(profitem.link)}>{profitem.profTitle}</div>
               ))
             }
-            {/* <div className="profile_element">Profile</div>
-            <div className="profile_element">Change Password</div>
-            <div className="profile_element">Log out</div> */}
           </div>
         </div>
       </div>

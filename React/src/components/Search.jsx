@@ -29,7 +29,7 @@ const Search = React.memo(( props ) => {
 
     useEffect(() => {
      fetchData();
-  }, [searchQuery]);
+  }, [searchQuery,props.recJobs]);
 
     return(
         <section className="search-container">
