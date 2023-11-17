@@ -41,9 +41,13 @@ function formReducer(candidateDetails, action) {
                 [action.fieldName]: action.value
             };
         case 'CommaInput':
+            if(action.value != null)
             return {
                 ...candidateDetails,
                 [languages]: action.value.split(",")
+            }
+            else return{
+                ...candidateDetails
             }
         case 'FileInput':
             console.log(action.file)
@@ -102,11 +106,13 @@ function formReducer(candidateDetails, action) {
                 ]
             }
         case 'preload_candidateDetails':
+            const languagesArray = action.preLoadedDetails.Languages ? action.preLoadedDetails.Languages.split(",") : [];
+            const categoryArray = action.preLoadedDetails.preference_category ? action.preLoadedDetails.preference_category.split(",") : [];
             return {
                 ...candidateDetails,
                 ...action.preLoadedDetails,
-                ["Languages"]: action.preLoadedDetails.Languages.split(","),
-                ["preference_category"]: action.preLoadedDetails.preference_category.split(",")
+                ["Languages"]: languagesArray,
+                ["preference_category"]: categoryArray
             }
         case 'preloaded_array':
             if(action.preLoadedArray.length===0)
