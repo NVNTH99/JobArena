@@ -70,7 +70,7 @@ function CandidateHome(){
 
     useEffect(()=>{
         fetchRec()
-    },[jobs])
+    },[])
 
     useEffect(()=>{
         // console.log(user_id)
